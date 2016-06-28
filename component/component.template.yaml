@@ -1,0 +1,50 @@
+%YAML 1.2
+---
+version: {VERSION}
+name: Settings Plugin
+id: SettingsPlugin
+publisher: James Montemagno
+license: License.md
+skip_docs: true
+icons: 
+  - SettingsPlugin_128x128.png
+  - SettingsPlugin_512x512.png
+publisher-url: http://www.github.com/jamesmontemagno/SettingsPlugin
+is_shell: true
+packages:
+  ios: Xam.Plugins.Settings, Version={VERSION}
+  ios-unified: Xam.Plugins.Settings, Version={VERSION}
+  android: Xam.Plugins.Settings, Version={VERSION}
+  winphone-8.0: Xam.Plugins.Settings, Version={VERSION}
+  winphone-8.1: Xam.Plugins.Settings, Version={VERSION}
+  winuniversal-10.0: Xam.Plugins.Settings, Version={VERSION}
+summary: Easily access the Settings feature of any device.
+details: Details.md
+getting-started: GettingStarted.md
+samples: 
+  - name: Settings Samples (iOS, Android, and Windows)
+    path: "../Samples/SettingsSample.sln"
+    removeProjects: 
+      - Plugin.Settings
+      - Plugin.Settings.Abstractions
+      - Plugin.Settings.Android
+      - Plugin.Settings.iOSUnified
+      - Plugin.Settings.WinPhone
+    installNuGets:
+      - project: SettingsSample
+        packages: 
+          - Xam.Plugins.Settings
+      - project: SettingsSample.iOS
+        packages: 
+          - Xam.Plugins.Settings
+      - project: SettingsSample.Droid
+        packages: 
+          - Xam.Plugins.Settings
+      - project: SettingsSample.WinPhone
+        packages: 
+          - Xam.Plugins.Settings
+    no_build: true
+    skip_docs: true  
+local-nuget-repo: ../Build/nuget
+no_build: true
+...
