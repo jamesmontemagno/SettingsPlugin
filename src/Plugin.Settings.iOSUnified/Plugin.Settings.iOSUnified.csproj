@@ -35,11 +35,8 @@
     <DocumentationFile>bin\Release\Plugin.Settings.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\Refractored.Xam.Settings.iOS\Settings.cs">
+    <Compile Include="..\Plugin.Settings.iOS\Settings.cs">
       <Link>Settings.cs</Link>
-    </Compile>
-    <Compile Include="..\Refractored.Xam.Settings\CrossSettings.cs">
-      <Link>CrossSettings.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -55,5 +52,6 @@
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
+  <Import Project="..\Plugin.Settings.Shared\Plugin.Settings.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

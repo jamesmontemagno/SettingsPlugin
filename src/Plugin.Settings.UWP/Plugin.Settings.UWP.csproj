@@ -109,11 +109,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Refractored.Xam.Settings.WindowsPhone81\Settings.cs">
+    <Compile Include="..\Plugin.Settings.WindowsPhone81\Settings.cs">
       <Link>Settings.cs</Link>
-    </Compile>
-    <Compile Include="..\Refractored.Xam.Settings\CrossSettings.cs">
-      <Link>CrossSettings.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Properties\Plugin.Settings.rd.xml" />
@@ -124,6 +121,7 @@
       <Name>Refractored.Xam.Settings.Abstractions</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\Plugin.Settings.Shared\Plugin.Settings.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
