@@ -1,4 +1,4 @@
-## ![](https://raw.githubusercontent.com/jamesmontemagno/Xamarin.Plugins/master/Settings/Common/pcl_settings_icon_small.png) Settings Plugin for Xamarin And Windows
+## Settings Plugin for Xamarin And Windows
 
 Create and access settings from shared code across all of your mobile apps!
 
@@ -14,6 +14,7 @@ Create and access settings from shared code across all of your mobile apps!
 * Open up Helpers/Settings.cs in your PCL for directions on how to use.
 * If you are not using a PCL you will find an _SettingsStarted.txt file under properties to get started. Else you can follow this guide:
 
+Build Status: [![Build status](https://ci.appveyor.com/api/projects/status/24dn7jw4it6jbd39?svg=true)](https://ci.appveyor.com/project/JamesMontemagno/settingsplugin)
 
 **Platform Support**
 
@@ -320,11 +321,3 @@ Notice that we are now inheriting from BaseViewModel, which means our command ca
 ```
 Notice I am setting the BindingContext to our Settings, which is in our BaseViewModel for the Label, this must be done because that is where it is located now. And there you have it.
 
-
-#### Contributors
-* [jamesmontemagno](https://github.com/jamesmontemagno)
-
-Thanks!
-
-#### License
-Main license of Repo
