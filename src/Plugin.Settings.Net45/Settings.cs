@@ -13,7 +13,7 @@ namespace Plugin.Settings
     {
         private static IsolatedStorageFile Store
         {
-            get { return IsolatedStorageFile.GetMachineStoreForAssembly(); }
+            get { return IsolatedStorageFile.GetUserStoreForAssembly(); }
         }
 
         private readonly object locker = new object();
@@ -223,5 +223,31 @@ namespace Plugin.Settings
             if (Store.FileExists(key))
                 Store.DeleteFile(key);
         }
+
+        /// <summary>
+        /// Clear all keys from settings
+        /// </summary>
+        public void Clear()
+        {
+            try
+            {
+                foreach(var file in Store.GetFileNames())
+                {
+                    Store.DeleteFile(file);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unable to clear all defaults. Message: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the key has been added.
+        /// </summary>
+        /// <param name="key">Key to check</param>
+        /// <returns>True if contains key, else false</returns>
+        public bool Contains(string key) => Store.FileExists(key);
+            
     }
 }

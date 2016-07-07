@@ -273,5 +273,39 @@ namespace Plugin.Settings
                 }
             }
         }
+
+        /// <summary>
+        /// Clear all keys from settings
+        /// </summary>
+        public void Clear()
+        {
+            lock (locker)
+            {
+                using (var sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(Application.Context))
+                {
+                    using (var sharedPreferencesEditor = sharedPreferences.Edit())
+                    {
+                        sharedPreferencesEditor.Clear();
+                        sharedPreferencesEditor.Commit();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the key has been added.
+        /// </summary>
+        /// <param name="key">Key to check</param>
+        /// <returns>True if contains key, else false</returns>
+        public bool Contains(string key)
+        {
+            lock (locker)
+            {
+                using (var sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(Application.Context))
+                {
+                    return sharedPreferences.Contains(key);
+                }
+            }
+        }
     }
 }

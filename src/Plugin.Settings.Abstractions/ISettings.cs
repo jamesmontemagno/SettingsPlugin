@@ -31,5 +31,17 @@ namespace Plugin.Settings.Abstractions
         /// </summary>
         /// <param name="key">Key for setting</param>
         void Remove(string key);
+
+        /// <summary>
+        /// Clear all keys from settings
+        /// </summary>
+        void Clear();
+
+        /// <summary>
+        /// Checks to see if the key has been added.
+        /// </summary>
+        /// <param name="key">Key to check</param>
+        /// <returns>True if contains key, else false</returns>
+        bool Contains(string key);
     }
 }
