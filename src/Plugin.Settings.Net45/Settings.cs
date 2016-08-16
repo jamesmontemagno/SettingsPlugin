@@ -13,7 +13,7 @@ namespace Plugin.Settings
     {
         private static IsolatedStorageFile Store
         {
-            get { return IsolatedStorageFile.GetMachineStoreForAssembly(); }
+            get { return IsolatedStorageFile.GetUserStoreForAssembly(); }
         }
 
         private readonly object locker = new object();
