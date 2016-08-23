@@ -9,7 +9,7 @@ namespace Plugin.Settings
     /// </summary>
     public class SettingsImplementation : ISettings
     {
-        static IsolatedStorageSettings IsoSettings { get { return IsolatedStorageSettings.ApplicationSettings; } }
+        static IsolatedStorageSettings IsoSettings => IsolatedStorageSettings.ApplicationSettings;
         private readonly object locker = new object();
 
         /// <summary>
@@ -109,5 +109,44 @@ namespace Plugin.Settings
             }
         }
 
+        /// <summary>
+        /// Clear all keys from settings
+        /// </summary>
+        public void Clear()
+        {
+            lock (locker)
+            {
+                try
+                {
+                    IsoSettings.Clear();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Unable to clear all defaults. Message: " + ex.Message);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the key has been added.
+        /// </summary>
+        /// <param name="key">Key to check</param>
+        /// <returns>True if contains key, else false</returns>
+        public bool Contains(string key)
+        {
+            lock (locker)
+            {
+                try
+                {
+                    return IsoSettings.Contains(key);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Unable to check " + key + " Message: " + ex.Message);
+                }
+
+                return false;
+            }
+        }
     }
 }

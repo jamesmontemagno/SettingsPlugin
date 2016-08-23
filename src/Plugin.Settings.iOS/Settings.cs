@@ -225,6 +225,51 @@ namespace Plugin.Settings
             }
         }
 
+        /// <summary>
+        /// Clear all keys from settings
+        /// </summary>
+        public void Clear()
+        {
+            lock (locker)
+            {
+                var defaults = NSUserDefaults.StandardUserDefaults;
+                try
+                {
+                    defaults.RemovePersistentDomain(NSBundle.MainBundle.BundleIdentifier);
+                    defaults.Synchronize();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Unable to clear all defaults. Message: " + ex.Message);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the key has been added.
+        /// </summary>
+        /// <param name="key">Key to check</param>
+        /// <returns>True if contains key, else false</returns>
+        public bool Contains(string key)
+        {
+            lock (locker)
+            {
+                var defaults = NSUserDefaults.StandardUserDefaults;
+                try
+                {
+                    var nsString = new NSString(key);
+                    var setting = defaults.ValueForKey(nsString);
+                    return setting != null;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Unable to clear all defaults. Message: " + ex.Message);
+                }
+
+                return false;
+            }
+        }
+
     }
 
 }

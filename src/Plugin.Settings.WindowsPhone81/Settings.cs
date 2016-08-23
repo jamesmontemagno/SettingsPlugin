@@ -3,6 +3,7 @@
 using Windows.Storage;
 using Plugin.Settings.Abstractions;
 using System;
+using System.Diagnostics;
 
 namespace Plugin.Settings
 {
@@ -163,6 +164,46 @@ namespace Plugin.Settings
                 {
                     AppSettings.Values.Remove(key);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Clear all keys from settings
+        /// </summary>
+        public void Clear()
+        {
+            lock (locker)
+            {
+                try
+                {
+                    AppSettings.Values.Clear();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Unable to clear all defaults. Message: " + ex.Message);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the key has been added.
+        /// </summary>
+        /// <param name="key">Key to check</param>
+        /// <returns>True if contains key, else false</returns>
+        public bool Contains(string key)
+        {
+            lock (locker)
+            {
+                try
+                {
+                    return AppSettings.Values.ContainsKey(key);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Unable to check " + key + " Message: " + ex.Message);
+                }
+
+                return false;
             }
         }
     }
