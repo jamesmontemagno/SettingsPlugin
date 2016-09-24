@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProjectGuid>{0C283E74-8FEF-4441-A9B4-708DC70C3E35}</ProjectGuid>
+    <ProjectGuid>{38DD1031-7DA2-4F7D-B6EF-060317B34950}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
     <RootNamespace>Refractored.Xam.Settings.NUnitTest.iOSUnified</RootNamespace>
@@ -50,7 +50,6 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
-    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
   </PropertyGroup>
@@ -91,8 +90,8 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\Refractored.Xam.Settings.NUnitTest.Android\TestSample.cs">
-      <Link>TestSample.cs</Link>
+    <Compile Include="..\Plugin.Settings.NUnitTest.Android\Tests.cs">
+      <Link>Tests.cs</Link>
     </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
@@ -114,17 +113,19 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Refractored.Xam.Settings.Abstractions\Refractored.Xam.Settings.Abstractions.csproj">
+    <ProjectReference Include="..\..\src\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj">
       <Project>{d12d6afa-0696-4177-9c85-ec576277ef8e}</Project>
-      <Name>Refractored.Xam.Settings.Abstractions</Name>
+      <Name>Plugin.Settings.Abstractions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Refractored.Xam.Settings.iOSUnified\Refractored.Xam.Settings.iOSUnified.csproj">
+    <ProjectReference Include="..\..\src\Plugin.Settings.iOSUnified\Plugin.Settings.iOSUnified.csproj">
       <Project>{fcf19725-8c2f-44c5-aa52-513ee32469e2}</Project>
-      <Name>Refractored.Xam.Settings.iOSUnified</Name>
+      <Name>Plugin.Settings.iOSUnified</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
-    <ProjectReference Include="..\Refractored.Xam.Settings.Tests.Portable\Refractored.Xam.Settings.Tests.Portable.csproj">
+    <ProjectReference Include="..\Plugin.Settings.Tests.Portable\Plugin.Settings.Tests.Portable.csproj">
       <Project>{2961bec8-6e97-4943-af17-491e25309619}</Project>
-      <Name>Refractored.Xam.Settings.Tests.Portable</Name>
+      <Name>Plugin.Settings.Tests.Portable</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

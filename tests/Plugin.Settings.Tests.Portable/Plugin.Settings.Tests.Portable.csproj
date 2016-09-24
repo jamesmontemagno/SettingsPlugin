@@ -37,13 +37,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Refractored.Xam.Settings.Abstractions\Refractored.Xam.Settings.Abstractions.csproj">
+    <ProjectReference Include="..\..\src\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj">
       <Project>{d12d6afa-0696-4177-9c85-ec576277ef8e}</Project>
-      <Name>Refractored.Xam.Settings.Abstractions</Name>
+      <Name>Plugin.Settings.Abstractions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Refractored.Xam.Settings\Refractored.Xam.Settings.csproj">
+    <ProjectReference Include="..\..\src\Plugin.Settings\Plugin.Settings.csproj">
       <Project>{747706f4-ecbf-4d50-8d72-b0ddcc18395c}</Project>
-      <Name>Refractored.Xam.Settings</Name>
+      <Name>Plugin.Settings</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
