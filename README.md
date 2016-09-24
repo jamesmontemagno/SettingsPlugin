@@ -21,7 +21,6 @@ Build Status: [![Build status](https://ci.appveyor.com/api/projects/status/24dn7
 |Platform|Supported|Version|
 | ------------------- | :-----------: | :------------------: |
 |Xamarin.iOS|Yes|iOS 7+|
-|Xamarin.iOS Unified|Yes|iOS 7+|
 |Xamarin.Android|Yes|API 10+|
 |Windows Phone Silverlight|Yes|8.0+|
 |Windows Phone RT|Yes|8.1+|
