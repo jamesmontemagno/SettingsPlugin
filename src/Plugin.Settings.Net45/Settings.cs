@@ -24,8 +24,9 @@ namespace Plugin.Settings
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="value"></param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
         /// <returns></returns>
-        public bool AddOrUpdateValue<T>(string key, T value)
+        public bool AddOrUpdateValue<T>(string key, T value, string fileName = null)
         {
             if (value == null)
             {
@@ -97,15 +98,16 @@ namespace Plugin.Settings
 
             throw new ArgumentException(string.Format("Value of type {0} is not supported.", type.Name));
         }
-    
+
         /// <summary>
         /// Get Value
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="key"></param>
         /// <param name="defaultValue"></param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
         /// <returns></returns>
-        public T GetValueOrDefault<T>(string key, T defaultValue = default(T))
+        public T GetValueOrDefault<T>(string key, T defaultValue = default(T), string fileName = null)
         {
             object value = null;
             lock (locker)
@@ -217,8 +219,9 @@ namespace Plugin.Settings
         /// <summary>
         /// Remove key
         /// </summary>
-        /// <param name="key"></param>
-        public void Remove(string key)
+        /// <param name="key">Key to remove</param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
+        public void Remove(string key, string fileName = null)
         {
             if (Store.FileExists(key))
                 Store.DeleteFile(key);
@@ -227,7 +230,8 @@ namespace Plugin.Settings
         /// <summary>
         /// Clear all keys from settings
         /// </summary>
-        public void Clear()
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
+        public void Clear(string fileName = null)
         {
             try
             {
@@ -246,8 +250,9 @@ namespace Plugin.Settings
         /// Checks to see if the key has been added.
         /// </summary>
         /// <param name="key">Key to check</param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
         /// <returns>True if contains key, else false</returns>
-        public bool Contains(string key) => Store.FileExists(key);
+        public bool Contains(string key, string fileName = null) => Store.FileExists(key);
             
     }
 }

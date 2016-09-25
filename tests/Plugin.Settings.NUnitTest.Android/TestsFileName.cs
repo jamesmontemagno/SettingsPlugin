@@ -6,17 +6,16 @@ using Plugin.Settings.Tests.Portable.Helpers;
 namespace Plugin.Settings.NUnitTest
 {
     [TestFixture]
-    public class TestsSample
+    public class TestsFileNameSample
     {
 
         [SetUp]
         public void Setup()
         {
-            TestSettings.FileName = null;
+            TestSettings.FileName = "Test";
             TestSettings.Clear();
         }
 
-        
 
         [TearDown]
         public void Tear() { }
@@ -38,9 +37,14 @@ namespace Plugin.Settings.NUnitTest
             TestSettings.Int64Setting = test;
             Assert.True(TestSettings.Int64Setting == test, "Int64 not saved");
 
+            var contains = TestSettings.AppSettings.Contains("int64_setting", TestSettings.FileName);
+
             TestSettings.Clear();
 
-            Assert.IsFalse(TestSettings.AppSettings.Contains("int64_setting"), "Setting was not removed");
+
+            contains = TestSettings.AppSettings.Contains("int64_setting", TestSettings.FileName);
+
+            Assert.IsFalse(contains, "Setting was not removed");
         }
 
         [Test]
@@ -48,11 +52,11 @@ namespace Plugin.Settings.NUnitTest
         {
             Int64 test = 10;
 
-            Assert.IsFalse(TestSettings.AppSettings.Contains("int64_setting"), "Key should not exist, but does");
+            Assert.IsFalse(TestSettings.AppSettings.Contains("int64_setting", TestSettings.FileName), "Default value was not false");
 
             TestSettings.Int64Setting = test;
 
-            Assert.IsTrue(TestSettings.AppSettings.Contains("int64_setting"), "Key should exist, but doesn't");
+            Assert.IsTrue(TestSettings.AppSettings.Contains("int64_setting", TestSettings.FileName), "Default value was not false");
 
         }
 
@@ -165,7 +169,6 @@ namespace Plugin.Settings.NUnitTest
 
             Assert.IsFalse(TestSettings.DateTimeSetting.HasValue, "String should be back to default of string.empty, it is: " + TestSettings.StringSetting);
         }
-
 
     }
 }

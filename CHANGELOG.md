@@ -1,3 +1,8 @@
+### 2.6.0
+* Added ability to specify file name
+* iOS: SuiteName
+* Android: SharedPreferences name
+* UWP/WinRT Container Name
 
 ### 2.5.0
 * Ability to clear all settings

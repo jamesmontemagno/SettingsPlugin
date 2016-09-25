@@ -22,7 +22,7 @@
     <MtouchArch>i386, x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -92,6 +92,9 @@
   <ItemGroup>
     <Compile Include="..\Plugin.Settings.NUnitTest.Android\Tests.cs">
       <Link>Tests.cs</Link>
+    </Compile>
+    <Compile Include="..\Plugin.Settings.NUnitTest.Android\TestsFileName.cs">
+      <Link>TestsFileName.cs</Link>
     </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />

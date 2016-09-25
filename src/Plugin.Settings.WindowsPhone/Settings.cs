@@ -18,9 +18,11 @@ namespace Plugin.Settings
         /// <typeparam name="T">Vaue of t (bool, int, float, long, string)</typeparam>
         /// <param name="key">Key for settings</param>
         /// <param name="defaultValue">default value if not set</param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
         /// <returns>Value or default</returns>
-        public T GetValueOrDefault<T>(string key, T defaultValue = default(T))
+        public T GetValueOrDefault<T>(string key, T defaultValue = default(T), string fileName = null)
         {
+            
             T value;
             lock (locker)
             {
@@ -48,14 +50,15 @@ namespace Plugin.Settings
         /// </summary>
         /// <param name="key">key to update</param>
         /// <param name="value">value to set</param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
         /// <returns>True if added or update and you need to save</returns>
-        public bool AddOrUpdateValue<T>(string key, T value)
+        public bool AddOrUpdateValue<T>(string key, T value, string fileName = null)
         {
-            return InternalAddOrUpdateValue(key, value);
+            return InternalAddOrUpdateValue(key, value, fileName);
         }
 
 
-        private bool InternalAddOrUpdateValue(string key, object value)
+        private bool InternalAddOrUpdateValue(string key, object value, string fileName)
         {
             bool valueChanged = false;
 
@@ -97,7 +100,8 @@ namespace Plugin.Settings
         /// Removes a desired key from the settings
         /// </summary>
         /// <param name="key">Key for setting</param>
-        public void Remove(string key)
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
+        public void Remove(string key, string fileName = null)
         {
             lock (locker)
             {
@@ -112,7 +116,8 @@ namespace Plugin.Settings
         /// <summary>
         /// Clear all keys from settings
         /// </summary>
-        public void Clear()
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
+        public void Clear(string fileName = null)
         {
             lock (locker)
             {
@@ -131,8 +136,9 @@ namespace Plugin.Settings
         /// Checks to see if the key has been added.
         /// </summary>
         /// <param name="key">Key to check</param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
         /// <returns>True if contains key, else false</returns>
-        public bool Contains(string key)
+        public bool Contains(string key, string fileName = null)
         {
             lock (locker)
             {
