@@ -30,7 +30,7 @@ namespace Plugin.Settings
             {
                 var defaults = NSUserDefaults.StandardUserDefaults;
 
-                if (defaults.ValueForKey(new NSString(key)) == null)
+                if (defaults[key] == null)
                     return defaultValue;
 
                 Type typeOf = typeof(T);
@@ -211,8 +211,8 @@ namespace Plugin.Settings
                 var defaults = NSUserDefaults.StandardUserDefaults;
                 try
                 {
-                    var nsString = new NSString(key);
-                    if (defaults.ValueForKey(nsString) != null)
+                    
+                    if (defaults[key] != null)
                     {
                         defaults.RemoveObject(key);
                         defaults.Synchronize();
@@ -235,7 +235,14 @@ namespace Plugin.Settings
                 var defaults = NSUserDefaults.StandardUserDefaults;
                 try
                 {
-                    defaults.RemovePersistentDomain(NSBundle.MainBundle.BundleIdentifier);
+                    var items = defaults.ToDictionary();
+
+                    foreach (var item in items.Keys)
+                    {
+                        var nsString = item as NSString;
+                        if (nsString != null)
+                            defaults.RemoveObject(nsString);
+                    }
                     defaults.Synchronize();
                 }
                 catch (Exception ex)
@@ -257,8 +264,7 @@ namespace Plugin.Settings
                 var defaults = NSUserDefaults.StandardUserDefaults;
                 try
                 {
-                    var nsString = new NSString(key);
-                    var setting = defaults.ValueForKey(nsString);
+                    var setting = defaults[key];
                     return setting != null;
                 }
                 catch (Exception ex)
