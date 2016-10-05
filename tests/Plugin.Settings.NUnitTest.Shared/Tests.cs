@@ -6,16 +6,17 @@ using Plugin.Settings.Tests.Portable.Helpers;
 namespace Plugin.Settings.NUnitTest
 {
     [TestFixture]
-    public class TestsFileNameSample
+    public class TestsSample
     {
 
         [SetUp]
         public void Setup()
         {
-            TestSettings.FileName = "Test";
+            TestSettings.FileName = null;
             TestSettings.Clear();
         }
 
+        
 
         [TearDown]
         public void Tear() { }
@@ -37,14 +38,9 @@ namespace Plugin.Settings.NUnitTest
             TestSettings.Int64Setting = test;
             Assert.True(TestSettings.Int64Setting == test, "Int64 not saved");
 
-            var contains = TestSettings.AppSettings.Contains("int64_setting", TestSettings.FileName);
-
             TestSettings.Clear();
 
-
-            contains = TestSettings.AppSettings.Contains("int64_setting", TestSettings.FileName);
-
-            Assert.IsFalse(contains, "Setting was not removed");
+            Assert.IsFalse(TestSettings.AppSettings.Contains("int64_setting"), "Setting was not removed");
         }
 
         [Test]
@@ -52,11 +48,11 @@ namespace Plugin.Settings.NUnitTest
         {
             Int64 test = 10;
 
-            Assert.IsFalse(TestSettings.AppSettings.Contains("int64_setting", TestSettings.FileName), "Default value was not false");
+            Assert.IsFalse(TestSettings.AppSettings.Contains("int64_setting"), "Key should not exist, but does");
 
             TestSettings.Int64Setting = test;
 
-            Assert.IsTrue(TestSettings.AppSettings.Contains("int64_setting", TestSettings.FileName), "Default value was not false");
+            Assert.IsTrue(TestSettings.AppSettings.Contains("int64_setting"), "Key should exist, but doesn't");
 
         }
 
@@ -141,7 +137,7 @@ namespace Plugin.Settings.NUnitTest
             DateTime test = new DateTime(1986, 6, 25, 4, 0, 0).ToUniversalTime();
 
             TestSettings.DateTimeSetting = test;
-            Assert.True(TestSettings.DateTimeSetting.Value.Ticks == test.Ticks, "DateTime not saved");
+            Assert.True(TestSettings.DateTimeSetting.Ticks == test.Ticks, "DateTime not saved");
         }
 
         [Test]
@@ -159,16 +155,20 @@ namespace Plugin.Settings.NUnitTest
         {
             TestSettings.StringSetting = "Hello World";
 
-            TestSettings.DateTimeSetting = null;
+            Assert.AreEqual(TestSettings.StringSetting, "Hello World", "Date wasn't set to null, it is: " + TestSettings.StringSetting);
 
-            Assert.IsTrue(TestSettings.DateTimeSetting.HasValue, "Date wasn't set to null, it is: " + TestSettings.StringSetting);
+            var contains = TestSettings.AppSettings.Contains("settings_key");
+
+            Assert.IsTrue(contains, "String wasn't added" + TestSettings.StringSetting);
 
 
+            TestSettings.Remove("settings_key");
 
-            TestSettings.Remove("date_setting");
+            contains = TestSettings.AppSettings.Contains("settings_key");
 
-            Assert.IsFalse(TestSettings.DateTimeSetting.HasValue, "String should be back to default of string.empty, it is: " + TestSettings.StringSetting);
+            Assert.IsFalse(contains, "String wasn't removed" + TestSettings.StringSetting);
         }
+
 
     }
 }

@@ -228,7 +228,7 @@ namespace Plugin.Settings
                 try
                 {
                     var items = defaults.ToDictionary();
-
+                    
                     foreach (var item in items.Keys)
                     {
                         var nsString = item as NSString;

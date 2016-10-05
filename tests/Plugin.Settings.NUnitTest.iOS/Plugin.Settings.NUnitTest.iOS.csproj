@@ -90,12 +90,6 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\Plugin.Settings.NUnitTest.Android\Tests.cs">
-      <Link>Tests.cs</Link>
-    </Compile>
-    <Compile Include="..\Plugin.Settings.NUnitTest.Android\TestsFileName.cs">
-      <Link>TestsFileName.cs</Link>
-    </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Info.plist" />
@@ -131,5 +125,6 @@
       <Name>Plugin.Settings.Tests.Portable</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\Plugin.Settings.NUnitTest.Shared\Plugin.Settings.NUnitTest.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
