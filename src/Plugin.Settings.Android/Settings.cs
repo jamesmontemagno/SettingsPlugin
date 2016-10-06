@@ -28,7 +28,7 @@ namespace Plugin.Settings
         {
             lock (locker)
             {
-                using (var sharedPreferences = GetSharedPrefence(fileName))
+                using (var sharedPreferences = GetSharedPreference(fileName))
                 {
                     return GetValueOrDefaultCore(sharedPreferences, key, defaultValue);
                 }
@@ -210,7 +210,7 @@ namespace Plugin.Settings
         {
             lock (locker)
             {
-                using (var sharedPreferences = GetSharedPrefence(fileName))
+                using (var sharedPreferences = GetSharedPreference(fileName))
                 {
                     using (var sharedPreferencesEditor = sharedPreferences.Edit())
                     {
@@ -277,7 +277,7 @@ namespace Plugin.Settings
         {
             lock (locker)
             {
-                using (var sharedPreferences = GetSharedPrefence(fileName))
+                using (var sharedPreferences = GetSharedPreference(fileName))
                 {
                     using (var sharedPreferencesEditor = sharedPreferences.Edit())
                     {
@@ -296,7 +296,7 @@ namespace Plugin.Settings
         {
             lock (locker)
             {
-                using (var sharedPreferences = GetSharedPrefence(fileName))
+                using (var sharedPreferences = GetSharedPreference(fileName))
                 {
                     using (var sharedPreferencesEditor = sharedPreferences.Edit())
                     {
@@ -317,14 +317,14 @@ namespace Plugin.Settings
         {
             lock (locker)
             {
-                using (var sharedPreferences = GetSharedPrefence(fileName))
+                using (var sharedPreferences = GetSharedPreference(fileName))
                 {
                     return sharedPreferences.Contains(key);
                 }
             }
         }
 
-        ISharedPreferences GetSharedPrefence(string fileName) =>
+        ISharedPreferences GetSharedPreference(string fileName) =>
             string.IsNullOrWhiteSpace(fileName) ?
             PreferenceManager.GetDefaultSharedPreferences(Application.Context) :
             Application.Context.GetSharedPreferences(fileName, FileCreationMode.Private);

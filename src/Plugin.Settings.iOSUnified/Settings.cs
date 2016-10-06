@@ -202,7 +202,6 @@ namespace Plugin.Settings
                 var defaults = GetUserDefaults(fileName);
                 try
                 {
-                    //var nsString = new NSString(key);
                     if (defaults[key] != null)
                     {
                         defaults.RemoveObject(key);

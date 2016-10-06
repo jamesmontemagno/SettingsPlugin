@@ -152,7 +152,7 @@ namespace Plugin.Settings
                 // Otherwise create the key.
                 else
                 {
-                    settings.CreateContainer(key, ApplicationDataCreateDisposition.Always);
+                    //settings.CreateContainer(key, ApplicationDataCreateDisposition.Always);
                     settings.Values[key] = value;
                     valueChanged = true;
                 }
