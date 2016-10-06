@@ -1,3 +1,6 @@
+### 2.6.0-beta
+* Ability to store a setting in different file/container/usersettings (simply pass file name in as last parameter)
+* Fixed issues with double parsing on Android
 
 ### 2.5.0
 * Ability to clear all settings
