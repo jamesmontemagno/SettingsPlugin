@@ -123,10 +123,20 @@ namespace Plugin.Settings
                         Remove(key);
                         resave = true;
                     }
+
                     if (string.IsNullOrWhiteSpace(savedDouble))
-                        value = Convert.ToDouble(defaultValue, System.Globalization.CultureInfo.InvariantCulture);
+                        value = defaultValue;
                     else
-                        value = Convert.ToDouble(savedDouble, System.Globalization.CultureInfo.InvariantCulture);
+                    {
+                        double outDouble;
+                        if (!double.TryParse(savedDouble, out outDouble))
+                        {
+                            var maxString = Convert.ToString(double.MaxValue, System.Globalization.CultureInfo.InvariantCulture);
+                            outDouble = savedDouble.Equals(maxString) ? double.MaxValue : double.MinValue;
+                        }
+
+                        value = outDouble;
+                    }
 
                     if (resave)
                         AddOrUpdateValue(key, value);
@@ -221,8 +231,9 @@ namespace Plugin.Settings
                                 sharedPreferencesEditor.PutString(key, Convert.ToString(value));
                                 break;
                             case TypeCode.Double:
-                                sharedPreferencesEditor.PutString(key,
-                                    Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture));
+
+                                var valueString = Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture);
+                                sharedPreferencesEditor.PutString(key, valueString);
                                 break;
                             case TypeCode.Int32:
                                 sharedPreferencesEditor.PutInt(key,
