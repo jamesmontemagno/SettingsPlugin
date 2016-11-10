@@ -97,7 +97,7 @@ You must enable generic type sharing in the settings. It is on by default on new
 * Guid 
 * Double 
 * Decimal 
-* DateTime
+* DateTime (Will always be stored and retrieved in UTC)
 
 ### NuGet Creation & Packaging
 
