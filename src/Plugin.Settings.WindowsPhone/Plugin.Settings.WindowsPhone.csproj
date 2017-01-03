@@ -112,7 +112,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj">
       <Project>{D12D6AFA-0696-4177-9C85-EC576277EF8E}</Project>
-      <Name>Refractored.Xam.Settings.Abstractions</Name>
+      <Name>Plugin.Settings.Abstractions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\Plugin.Settings.Shared\Plugin.Settings.Shared.projitems" Label="Shared" />
