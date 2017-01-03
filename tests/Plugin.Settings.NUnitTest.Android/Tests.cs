@@ -125,6 +125,25 @@ namespace Plugin.Settings.NUnitTest
             Assert.True(TestSettings.DecimalSetting == test, "Decimal not saved");
         }
 
+
+        [Test]
+        public void Decimal_Max()
+        {
+            decimal test = decimal.MaxValue;
+
+            TestSettings.DecimalSetting = test;
+            Assert.True(TestSettings.DecimalSetting == test, "DecimalSetting not saved");
+        }
+
+        [Test]
+        public void Decimal_Min()
+        {
+            decimal test = decimal.MinValue;
+
+            TestSettings.DecimalSetting = test;
+            Assert.True(TestSettings.DecimalSetting == test, "DecimalSetting not saved");
+        }
+
         [Test]
         public void DateTime()
         {
