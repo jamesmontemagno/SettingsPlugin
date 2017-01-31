@@ -71,7 +71,7 @@ namespace Plugin.Settings
                         {
                             Console.WriteLine("Could not parse old value, will be lost.");
                         }
-                        Remove("key");
+                        Remove(key);
                         resave = true;
                     }
                     if (string.IsNullOrWhiteSpace(savedDecimal))
