@@ -1,7 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
 using Plugin.Settings.Tests.Portable.Helpers;
-
+using System.Globalization;
+using System.Threading;
 
 namespace Plugin.Settings.NUnitTest
 {
@@ -86,6 +87,19 @@ namespace Plugin.Settings.NUnitTest
             double test = 10.001;
 
             TestSettings.DoubleSetting = test;
+            Assert.True(TestSettings.DoubleSetting == test, "Double not saved");
+        }
+
+        [Test]
+        public void Double15Comma()
+        {
+            double test = 1.5;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("es-ES");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("es-ES");
+
+            TestSettings.DoubleSetting = test;
+
+            var output = TestSettings.DoubleSetting;
             Assert.True(TestSettings.DoubleSetting == test, "Double not saved");
         }
 

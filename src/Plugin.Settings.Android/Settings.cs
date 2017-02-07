@@ -1,6 +1,7 @@
 
 
 using System;
+using System.Globalization;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -128,7 +129,7 @@ namespace Plugin.Settings
                     else
                     {
                         double outDouble;
-                        if (!double.TryParse(savedDouble, out outDouble))
+                        if (!double.TryParse(savedDouble, NumberStyles.Number, CultureInfo.InvariantCulture, out outDouble))
                         {
                             var maxString = Convert.ToString(double.MaxValue, System.Globalization.CultureInfo.InvariantCulture);
                             outDouble = savedDouble.Equals(maxString) ? double.MaxValue : double.MinValue;
