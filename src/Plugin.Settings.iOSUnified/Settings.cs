@@ -8,6 +8,7 @@ namespace Plugin.Settings
     /// <summary>
     /// Main implementation for ISettings
     /// </summary>
+    [Preserve(AllMembers =true)]
     public class SettingsImplementation : ISettings
     {
 

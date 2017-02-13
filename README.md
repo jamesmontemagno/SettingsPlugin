@@ -4,7 +4,7 @@ Create and access settings from shared code across all of your mobile apps!
 
 ### Uses the native settings management
 * Android: SharedPreferences
-* iOS: NSUserDefaults
+* iOS/macOS: NSUserDefaults
 * Windows Phone: IsolatedStorageSettings
 * Windows RT / UWP: ApplicationDataContainer
 * Ability to override default save location with file name parameter
@@ -27,7 +27,8 @@ Build Status: [![Build status](https://ci.appveyor.com/api/projects/status/24dn7
 |Windows Phone RT|Yes|8.1+|
 |Windows Store RT|Yes|8.1+|
 |Windows 10 UWP|Yes|10+|
-|Xamarin.Mac|No||
+|Xamarin.Mac|Yes|All|
+|.NET 4.5|Yes|All|
 
 #### Create a new static class
 You will want to create a new `static` class called "Settings" in your shared code project or PCL that will house all of your settings.
@@ -100,7 +101,7 @@ Each method takes an additional parameter called `fileName`, which enables the s
 * Guid 
 * Double 
 * Decimal 
-* DateTime
+* DateTime (Will always be stored and retrieved in UTC)
 
 ### NuGet Creation & Packaging
 

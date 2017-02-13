@@ -1,17 +1,20 @@
 
 
 using System;
+using System.Globalization;
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Preferences;
 using Plugin.Settings.Abstractions;
+using Android.Runtime;
 
 namespace Plugin.Settings
 {
     /// <summary>
     /// Main Implementation for ISettings
     /// </summary>
+    [Preserve(AllMembers = true)]
     public class SettingsImplementation : ISettings
     {
         private readonly object locker = new object();
@@ -72,7 +75,7 @@ namespace Plugin.Settings
                         {
                             Console.WriteLine("Could not parse old value, will be lost.");
                         }
-                        Remove("key");
+                        Remove(key);
                         resave = true;
                     }
                     if (string.IsNullOrWhiteSpace(savedDecimal))
@@ -129,7 +132,8 @@ namespace Plugin.Settings
                     else
                     {
                         double outDouble;
-                        if (!double.TryParse(savedDouble, out outDouble))
+
+                        if (!double.TryParse(savedDouble, NumberStyles.Number, CultureInfo.InvariantCulture, out outDouble))
                         {
                             var maxString = Convert.ToString(double.MaxValue, System.Globalization.CultureInfo.InvariantCulture);
                             outDouble = savedDouble.Equals(maxString) ? double.MaxValue : double.MinValue;
@@ -140,6 +144,7 @@ namespace Plugin.Settings
 
                     if (resave)
                         AddOrUpdateValue(key, value);
+
                     break;
                 case TypeCode.Int32:
                     value = sharedPreferences.GetInt(key,
@@ -231,7 +236,6 @@ namespace Plugin.Settings
                                 sharedPreferencesEditor.PutString(key, Convert.ToString(value));
                                 break;
                             case TypeCode.Double:
-
                                 var valueString = Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture);
                                 sharedPreferencesEditor.PutString(key, valueString);
                                 break;

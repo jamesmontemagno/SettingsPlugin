@@ -1,7 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
 using Plugin.Settings.Tests.Portable.Helpers;
-
+using System.Globalization;
+using System.Threading;
 
 namespace Plugin.Settings.NUnitTest
 {
@@ -95,6 +96,19 @@ namespace Plugin.Settings.NUnitTest
         }
 
         [Test]
+        public void Double15Comma()
+        {
+            double test = 1.5;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("es-ES");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("es-ES");
+
+            TestSettings.DoubleSetting = test;
+
+            var output = TestSettings.DoubleSetting;
+            Assert.True(TestSettings.DoubleSetting == test, "Double not saved");
+        }
+
+        [Test]
         public void Double_Zero()
         {
             double test = 0.0D;
@@ -147,6 +161,25 @@ namespace Plugin.Settings.NUnitTest
 
             TestSettings.DecimalSetting = test;
             Assert.True(TestSettings.DecimalSetting == test, "Decimal not saved");
+        }
+
+
+        [Test]
+        public void Decimal_Max()
+        {
+            decimal test = decimal.MaxValue;
+
+            TestSettings.DecimalSetting = test;
+            Assert.True(TestSettings.DecimalSetting == test, "DecimalSetting not saved");
+        }
+
+        [Test]
+        public void Decimal_Min()
+        {
+            decimal test = decimal.MinValue;
+
+            TestSettings.DecimalSetting = test;
+            Assert.True(TestSettings.DecimalSetting == test, "DecimalSetting not saved");
         }
 
         [Test]
