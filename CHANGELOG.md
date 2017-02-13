@@ -2,6 +2,9 @@
 * Ability to store a setting in different file/container/usersettings (simply pass file name in as last parameter)
 * Fixed issues with double parsing on Android
 
+### 2.5.4
+* Add macOS Support
+
 ### 2.5.0
 * Ability to clear all settings
 * .NET 4.5 now stores to user instead of global
