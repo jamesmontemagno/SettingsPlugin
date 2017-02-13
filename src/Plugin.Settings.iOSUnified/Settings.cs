@@ -1,10 +1,6 @@
 ﻿
 using System;
-#if __UNIFIED__
 using Foundation;
-#else
-using MonoTouch.Foundation;
-#endif
 using Plugin.Settings.Abstractions;
 
 namespace Plugin.Settings
@@ -12,6 +8,7 @@ namespace Plugin.Settings
     /// <summary>
     /// Main implementation for ISettings
     /// </summary>
+    [Preserve(AllMembers =true)]
     public class SettingsImplementation : ISettings
     {
 
@@ -60,18 +57,10 @@ namespace Plugin.Settings
                         value = defaults.StringForKey(key);
                         break;
                     case TypeCode.Int32:
-#if __UNIFIED__
-            value = (Int32)defaults.IntForKey(key);
-#else
-                        value = defaults.IntForKey(key);
-#endif
+                        value = (Int32)defaults.IntForKey(key);
                         break;
                     case TypeCode.Single:
-#if __UNIFIED__
-            value = (float)defaults.FloatForKey(key);
-#else
-                        value = defaults.FloatForKey(key);
-#endif
+                        value = (float)defaults.FloatForKey(key);
                         break;
 
                     case TypeCode.DateTime:

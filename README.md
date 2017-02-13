@@ -26,7 +26,7 @@ Build Status: [![Build status](https://ci.appveyor.com/api/projects/status/24dn7
 |Windows Phone RT|Yes|8.1+|
 |Windows Store RT|Yes|8.1+|
 |Windows 10 UWP|Yes|10+|
-|Xamarin.Mac|No||
+|Xamarin.Mac|Yes|All|
 
 #### Create a new static class
 You will want to create a new `static` class called "Settings" in your shared code project or PCL that will house all of your settings.

@@ -7,12 +7,14 @@ using Android.Content;
 using Android.OS;
 using Android.Preferences;
 using Plugin.Settings.Abstractions;
+using Android.Runtime;
 
 namespace Plugin.Settings
 {
     /// <summary>
     /// Main Implementation for ISettings
     /// </summary>
+    [Preserve(AllMembers = true)]
     public class SettingsImplementation : ISettings
     {
         private readonly object locker = new object();
