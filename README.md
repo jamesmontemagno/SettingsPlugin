@@ -29,6 +29,14 @@ Build Status: [![Build status](https://ci.appveyor.com/api/projects/status/24dn7
 |Xamarin.Mac|Yes|All|
 |.NET 4.5|Yes|All|
 
+
+#### Settings Pluggin or Xamarin.Forms App.Properties
+I get this question a lot, so here it is from a recent issue opened up. This plugin saves specific properties directly to each platforms native settings APIs (NSUserDefaults, SharedPreferences, etc). This ensures the fastest, most secure, and reliable creation and editing settings per application. Additionally, it works with **any Xamarin application**, not just Xamarin.Forms.
+
+App.Current.Properties actually serializes and deserializes items to disk as per implementations such as: https://github.com/xamarin/Xamarin.Forms/blob/e6d5186c8acbf37b877c7ca3c77a378352a3743d/Xamarin.Forms.Platform.iOS/Deserializer.cs
+
+To me that isn't as reliable as saving direct to the native platforms settings.
+
 #### Create a new static class
 You will want to create a new `static` class called "Settings" in your shared code project or PCL that will house all of your settings.
 
