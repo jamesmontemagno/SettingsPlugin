@@ -112,7 +112,7 @@ You must enable generic type sharing in the settings. It is on by default on new
 
 I created this NuGet PCL package by creating an interface that I would implement on each platform. This lives inside of my .Abstractions.dll that will be installed on each platform. I then create a base PCL project that has a Settings.cs file with an internal IoC to new up a CrossSettings class. The key here is that this file is linked to all of my platform specific projects to new up the correct version.
 
-You can find my nuspec here: https://github.com/jamesmontemagno/Xam.PCL.Plugins/blob/master/Settings/Common/Xam.Plugins.Settings.nuspec
+You can find my nuspec here: https://github.com/jamesmontemagno/SettingsPlugin/blob/master/nuget/Plugin.nuspec
 
 
 ### DataBinding in Xamarin.Forms
