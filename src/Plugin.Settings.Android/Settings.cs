@@ -35,14 +35,13 @@ namespace Plugin.Settings
 
             lock (locker)
             {
-				if (Application.Context == null)
-					return defaultValue;
+		if (Application.Context == null)
+			return defaultValue;
 
-				using (var sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(Application.Context))
+		using (var sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(Application.Context))
                 {
                     return GetValueOrDefaultCore(sharedPreferences, key, defaultValue);
                 }
-
             }
         }
 
