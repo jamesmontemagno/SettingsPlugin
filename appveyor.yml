@@ -1,4 +1,4 @@
-version: 2.5.5.{build}-beta
+version: 2.5.5
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
