@@ -28,11 +28,6 @@ namespace Plugin.Settings
         /// <returns>Value or default</returns>
         public T GetValueOrDefault<T>(string key, T defaultValue = default(T))
         {
-            if (defaultValue == null)
-            {
-                throw new ArgumentNullException(nameof(defaultValue), "Default value can not be null");
-            }
-
             lock (locker)
             {
                 using (var sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(Application.Context))
@@ -204,11 +199,6 @@ namespace Plugin.Settings
         /// <returns>True if added or update and you need to save</returns>
         public bool AddOrUpdateValue<T>(string key, T value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value), "Value can not be null");
-            }
-
             Type typeOf = typeof(T);
             if (typeOf.IsGenericType && typeOf.GetGenericTypeDefinition() == typeof(Nullable<>))
             {

@@ -3,8 +3,7 @@
 * Fixed issues with double parsing on Android
 
 
-### 2.5.5
-* Enhance Null Checks for Default Values and Values passed in
+### 2.5.8
 * Fixed possible null reference exception when type is not supported.
 
 ### 2.5.4
