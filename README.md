@@ -8,6 +8,7 @@ Create and access settings from shared code across all of your mobile apps!
 * Windows Phone: IsolatedStorageSettings
 * Windows RT / UWP: ApplicationDataContainer
 
+
 ### Setup & Usage
 * Available on NuGet: https://www.nuget.org/packages/Xam.Plugins.Settings/ [![NuGet](https://img.shields.io/nuget/v/Xam.Plugins.Settings.svg?label=NuGet)](https://www.nuget.org/packages/Xam.Plugins.Settings/)
 * Install into your PCL project and Client projects.
@@ -107,6 +108,8 @@ You must enable generic type sharing in the settings. It is on by default on new
 * Double 
 * Decimal 
 * DateTime (Will always be stored and retrieved in UTC)
+
+Note that while the methods are generic that you may only pass in these specific data types. Additionally any default or values set must NOT be null as it is an illegal argument that can not be parsed correctly on all platforms, and will throw an exception.
 
 ### NuGet Creation & Packaging
 
