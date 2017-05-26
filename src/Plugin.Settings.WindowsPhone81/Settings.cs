@@ -12,10 +12,7 @@ namespace Plugin.Settings
     /// </summary>
     public class SettingsImplementation : ISettings
     {
-        private static ApplicationDataContainer AppSettings
-        {
-            get { return ApplicationData.Current.LocalSettings; }
-        }
+        private static ApplicationDataContainer AppSettings => ApplicationData.Current.LocalSettings;
 
         private readonly object locker = new object();
 
