@@ -114,9 +114,9 @@
       <Project>{d12d6afa-0696-4177-9c85-ec576277ef8e}</Project>
       <Name>Plugin.Settings.Abstractions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Plugin.Settings.iOSUnified\Plugin.Settings.iOSUnified.csproj">
+    <ProjectReference Include="..\..\src\Plugin.Settings.iOS\Plugin.Settings.iOS.csproj">
       <Project>{fcf19725-8c2f-44c5-aa52-513ee32469e2}</Project>
-      <Name>Plugin.Settings.iOSUnified</Name>
+      <Name>Plugin.Settings.iOS</Name>
       <IsAppExtension>false</IsAppExtension>
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>

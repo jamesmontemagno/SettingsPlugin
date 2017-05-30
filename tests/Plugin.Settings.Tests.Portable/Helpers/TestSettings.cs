@@ -110,12 +110,12 @@ namespace Plugin.Settings.Tests.Portable.Helpers
         {
             get
             {
-                return AppSettings.GetValueOrDefault<DateTime>("date_setting", DateTime.Now, FileName);
+                return AppSettings.GetValueOrDefault("date_setting", DateTime.Now, FileName);
             }
             set
             {
                 //if value has changed then save it!
-                AppSettings.AddOrUpdateValue<DateTime>("date_setting", value, FileName);
+                AppSettings.AddOrUpdateValue("date_setting", value, FileName);
             }
         }
 

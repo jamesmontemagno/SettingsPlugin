@@ -1,4 +1,5 @@
-version: 2.6.0.{build}-beta
+version: 3.0.0.{build}-beta
+image: Visual Studio 2017
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
@@ -13,5 +14,3 @@ build_script:
 artifacts:
 - path: ./Build/nuget/*.nupkg
   name: NuGet
-- path: ./component/*.xam
-  name: Component

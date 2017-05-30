@@ -1,25 +1,16 @@
-using Windows.Storage;
-using Plugin.Settings.Abstractions;
+﻿
 using System;
-using System.Diagnostics;
+using Foundation;
+using Plugin.Settings.Abstractions;
 
 namespace Plugin.Settings
 {
     /// <summary>
-    /// Main ISettings Implementation
+    /// Main implementation for ISettings
     /// </summary>
+    [Preserve(AllMembers =true)]
     public class SettingsImplementation : ISettings
     {
-        ApplicationDataContainer GetAppSettings(string fileName = null)
-        {
-            if (string.IsNullOrWhiteSpace(fileName))
-                return ApplicationData.Current.LocalSettings;
-
-            if (!ApplicationData.Current.LocalSettings.Containers.ContainsKey(fileName))
-                ApplicationData.Current.LocalSettings.CreateContainer(fileName, ApplicationDataCreateDisposition.Always);
-
-            return ApplicationData.Current.LocalSettings.Containers[fileName];
-        }
 
         readonly object locker = new object();
 
@@ -33,79 +24,94 @@ namespace Plugin.Settings
         /// <returns>Value or default</returns>
         T GetValueOrDefaultInternal<T>(string key, T defaultValue = default(T), string fileName = null)
         {
-            
-
-            object value;
             lock (locker)
             {
-                var settings = GetAppSettings(fileName);
+                var defaults = GetUserDefaults(fileName);
 
-                if (typeof(T) == typeof(decimal))
+                if (defaults[key] == null)
+                    return defaultValue;
+
+                Type typeOf = typeof(T);
+                if (typeOf.IsGenericType && typeOf.GetGenericTypeDefinition() == typeof(Nullable<>))
                 {
-                    string savedDecimal;
-                    // If the key exists, retrieve the value.
-                    if (settings.Values.ContainsKey(key))
-                    {
-                        savedDecimal = Convert.ToString(settings.Values[key]);
-                    }
-                    // Otherwise, use the default value.
-                    else
-                    {
-                        savedDecimal = defaultValue == null ? default(decimal).ToString() : defaultValue.ToString();
-                    }
-
-                    value = Convert.ToDecimal(savedDecimal, System.Globalization.CultureInfo.InvariantCulture);
-
-                    return null != value ? (T)value : defaultValue;
+                    typeOf = Nullable.GetUnderlyingType(typeOf);
                 }
-                else if (typeof(T) == typeof(DateTime))
+                object value = null;
+                var typeCode = Type.GetTypeCode(typeOf);
+                switch (typeCode)
                 {
-                    string savedTime = null;
-                    // If the key exists, retrieve the value.
-                    if (settings.Values.ContainsKey(key))
-                    {
-                        savedTime = Convert.ToString(settings.Values[key]);
-                    }
+                    case TypeCode.Decimal:
+                        var savedDecimal = defaults.StringForKey(key);
+                        value = Convert.ToDecimal(savedDecimal, System.Globalization.CultureInfo.InvariantCulture);
+                        break;
+                    case TypeCode.Boolean:
+                        value = defaults.BoolForKey(key);
+                        break;
+                    case TypeCode.Int64:
+                        var savedInt64 = defaults.StringForKey(key);
+                        value = Convert.ToInt64(savedInt64, System.Globalization.CultureInfo.InvariantCulture);
+                        break;
+                    case TypeCode.Double:
+                        value = defaults.DoubleForKey(key);
+                        break;
+                    case TypeCode.String:
+                        value = defaults.StringForKey(key);
+                        break;
+                    case TypeCode.Int32:
+                        value = (Int32)defaults.IntForKey(key);
+                        break;
+                    case TypeCode.Single:
+                        value = defaults.FloatForKey(key);
+                        break;
 
-                    if (string.IsNullOrWhiteSpace(savedTime))
-                    {
-                        value = defaultValue;
-                    }
-                    else
-                    {
-                        var ticks = Convert.ToInt64(savedTime, System.Globalization.CultureInfo.InvariantCulture);
-                        if (ticks >= 0)
+                    case TypeCode.DateTime:
+                        var savedTime = defaults.StringForKey(key);
+                        if (string.IsNullOrWhiteSpace(savedTime))
                         {
-                            //Old value, stored before update to UTC values
-                            value = new DateTime(ticks);
+                            value = defaultValue;
                         }
                         else
                         {
-                            //New value, UTC
-                            value = new DateTime(-ticks, DateTimeKind.Utc);
+                            var ticks = Convert.ToInt64(savedTime, System.Globalization.CultureInfo.InvariantCulture);
+                            if (ticks >= 0)
+                            {
+                                //Old value, stored before update to UTC values
+                                value = new DateTime(ticks);
+                            }
+                            else
+                            {
+                                //New value, UTC
+                                value = new DateTime(-ticks, DateTimeKind.Utc);
+                            }
                         }
-                    }
+                        break;
+                    default:
 
-                    return (T)value;
+                        if (defaultValue is Guid)
+                        {
+                            var outGuid = Guid.Empty;
+                            var savedGuid = defaults.StringForKey(key);
+                            if (string.IsNullOrWhiteSpace(savedGuid))
+                            {
+                                value = outGuid;
+                            }
+                            else
+                            {
+                                Guid.TryParse(savedGuid, out outGuid);
+                                value = outGuid;
+                            }
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"Value of type {typeCode} is not supported.");
+                        }
+
+                        break;
                 }
 
-                // If the key exists, retrieve the value.
-                if (settings.Values.ContainsKey(key))
-                {
-                    var tempValue = settings.Values[key];
-                    if (tempValue != null)
-                        value = (T)tempValue;
-                    else
-                        value = defaultValue;
-                }
-                // Otherwise, use the default value.
-                else
-                {
-                    value = defaultValue;
-                }
+
+                return null != value ? (T)value : defaultValue;
             }
-
-            return null != value ? (T)value : defaultValue;
         }
 
         /// <summary>
@@ -123,48 +129,72 @@ namespace Plugin.Settings
                 return true;
             }
 
-            return AddOrUpdateValueCore(key, value, fileName);
+            Type typeOf = typeof(T);
+            if (typeOf.IsGenericType && typeOf.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                typeOf = Nullable.GetUnderlyingType(typeOf);
+            }
+            var typeCode = Type.GetTypeCode(typeOf);
+            return AddOrUpdateValueCore(key, value, typeCode, fileName);
         }
-        
 
-        bool AddOrUpdateValueCore(string key, object value, string fileName)
+        bool AddOrUpdateValueCore(string key, object value, TypeCode typeCode, string fileName)
         {
-            bool valueChanged = false;
             lock (locker)
             {
-                var settings = GetAppSettings(fileName);
-                if (value is decimal)
+                var defaults = GetUserDefaults(fileName);
+                switch (typeCode)
                 {
-                    return AddOrUpdateValueInternal(key, Convert.ToString(Convert.ToDecimal(value), System.Globalization.CultureInfo.InvariantCulture), fileName);
-                }
-                else if (value is DateTime)
-                {
-                    return AddOrUpdateValueInternal(key, Convert.ToString(-(Convert.ToDateTime(value)).ToUniversalTime().Ticks, System.Globalization.CultureInfo.InvariantCulture), fileName);
-                }
+                    case TypeCode.Decimal:
+                        defaults.SetString(Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture), key);
+                        break;
+                    case TypeCode.Boolean:
+                        defaults.SetBool(Convert.ToBoolean(value), key);
+                        break;
+                    case TypeCode.Int64:
+                        defaults.SetString(Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture), key);
+                        break;
+                    case TypeCode.Double:
+                        defaults.SetDouble(Convert.ToDouble(value, System.Globalization.CultureInfo.InvariantCulture), key);
+                        break;
+                    case TypeCode.String:
+                        defaults.SetString(Convert.ToString(value), key);
+                        break;
+                    case TypeCode.Int32:
+                        defaults.SetInt(Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture), key);
+                        break;
+                    case TypeCode.Single:
+                        defaults.SetFloat(Convert.ToSingle(value, System.Globalization.CultureInfo.InvariantCulture), key);
+                        break;
+                    case TypeCode.DateTime:
+                        defaults.SetString(Convert.ToString(-(Convert.ToDateTime(value)).ToUniversalTime().Ticks), key);
+                        break;
+                    default:
+                        if (value is Guid)
+                        {
+                            if (value == null)
+                                value = Guid.Empty;
 
-
-                // If the key exists
-                if (settings.Values.ContainsKey(key))
-                {
-
-                    // If the value has changed
-                    if (settings.Values[key] != value)
-                    {
-                        // Store key new value
-                        settings.Values[key] = value;
-                        valueChanged = true;
-                    }
+                            defaults.SetString(((Guid)value).ToString(), key);
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"Value of type {typeCode} is not supported.");
+                        }
+                        break;
                 }
-                // Otherwise create the key.
-                else
+                try
                 {
-                    //settings.CreateContainer(key, ApplicationDataCreateDisposition.Always);
-                    settings.Values[key] = value;
-                    valueChanged = true;
+                    defaults.Synchronize();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Unable to save: " + key, " Message: " + ex.Message);
                 }
             }
 
-            return valueChanged;
+
+            return true;
         }
 
         /// <summary>
@@ -176,11 +206,18 @@ namespace Plugin.Settings
         {
             lock (locker)
             {
-                var settings = GetAppSettings(fileName);
-                // If the key exists remove
-                if (settings.Values.ContainsKey(key))
+                var defaults = GetUserDefaults(fileName);
+                try
                 {
-                    settings.Values.Remove(key);
+                    if (defaults[key] != null)
+                    {
+                        defaults.RemoveObject(key);
+                        defaults.Synchronize();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Unable to remove: " + key, " Message: " + ex.Message);
                 }
             }
         }
@@ -193,14 +230,21 @@ namespace Plugin.Settings
         {
             lock (locker)
             {
+                var defaults = GetUserDefaults(fileName);
                 try
                 {
-                    var settings = GetAppSettings(fileName);
-                    settings.Values.Clear();
+                    var items = defaults.ToDictionary();
+                    
+                    foreach (var item in items.Keys)
+                    {
+                        if (item is NSString nsString)
+                            defaults.RemoveObject(nsString);
+                    }
+                    defaults.Synchronize();
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("Unable to clear all defaults. Message: " + ex.Message);
+                    Console.WriteLine("Unable to clear all defaults. Message: " + ex.Message);
                 }
             }
         }
@@ -215,19 +259,26 @@ namespace Plugin.Settings
         {
             lock (locker)
             {
+                var defaults = GetUserDefaults(fileName);
                 try
                 {
-                    var settings = GetAppSettings(fileName);
-                    return settings.Values.ContainsKey(key);
+                    var setting = defaults[key];
+                    return setting != null;
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("Unable to check " + key + " Message: " + ex.Message);
+                    Console.WriteLine("Unable to clear all defaults. Message: " + ex.Message);
                 }
 
                 return false;
             }
         }
+
+        NSUserDefaults GetUserDefaults(string fileName = null) =>
+            string.IsNullOrWhiteSpace(fileName) ?
+            NSUserDefaults.StandardUserDefaults :
+            new NSUserDefaults(fileName, NSUserDefaultsType.SuiteName);
+
 
 
         #region GetValueOrDefault
@@ -398,5 +449,7 @@ namespace Plugin.Settings
             AddOrUpdateValueInternal(key, value, fileName);
 
         #endregion
+
     }
+
 }

@@ -55,6 +55,8 @@
     <XamMacArch>
     </XamMacArch>
     <DocumentationFile>bin\Release\Plugin.Settings.XML</DocumentationFile>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -62,14 +64,14 @@
     <Reference Include="Xamarin.Mac" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\Plugin.Settings.iOSUnified\Settings.cs">
+    <Compile Include="..\Plugin.Settings.iOS\Settings.cs">
       <Link>Settings.cs</Link>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj">
-      <Project>{D12D6AFA-0696-4177-9C85-EC576277EF8E}</Project>
+      <Project>{b0596e33-ea85-41b5-9cb5-94df3c06d213}</Project>
       <Name>Plugin.Settings.Abstractions</Name>
     </ProjectReference>
   </ItemGroup>
