@@ -1,17 +1,20 @@
 ﻿using System;
 using NUnit.Framework;
 using Plugin.Settings.Tests.Portable.Helpers;
-using System.Globalization;
-using System.Threading;
+
 
 namespace Plugin.Settings.NUnitTest
 {
     [TestFixture]
-    public class TestsSample
+    public class TestsFileNameSample
     {
 
         [SetUp]
-        public void Setup() { }
+        public void Setup()
+        {
+            TestSettings.FileName = "Test";
+            TestSettings.Clear();
+        }
 
 
         [TearDown]
@@ -34,9 +37,14 @@ namespace Plugin.Settings.NUnitTest
             TestSettings.Int64Setting = test;
             Assert.True(TestSettings.Int64Setting == test, "Int64 not saved");
 
-            TestSettings.AppSettings.Clear();
+            var contains = TestSettings.AppSettings.Contains("int64_setting", TestSettings.FileName);
 
-            Assert.IsFalse(TestSettings.AppSettings.Contains("int64_setting"), "Setting was not removed");
+            TestSettings.Clear();
+
+
+            contains = TestSettings.AppSettings.Contains("int64_setting", TestSettings.FileName);
+
+            Assert.IsFalse(contains, "Setting was not removed");
         }
 
         [Test]
@@ -44,11 +52,11 @@ namespace Plugin.Settings.NUnitTest
         {
             Int64 test = 10;
 
-            Assert.IsFalse(TestSettings.AppSettings.Contains("int64_setting"), "Default value was not false");
+            Assert.IsFalse(TestSettings.AppSettings.Contains("int64_setting", TestSettings.FileName), "Default value was not false");
 
             TestSettings.Int64Setting = test;
 
-            Assert.IsTrue(TestSettings.AppSettings.Contains("int64_setting"), "Default value was not false");
+            Assert.IsTrue(TestSettings.AppSettings.Contains("int64_setting", TestSettings.FileName), "Default value was not false");
 
         }
 
@@ -91,19 +99,6 @@ namespace Plugin.Settings.NUnitTest
         }
 
         [Test]
-        public void Double15Comma()
-        {
-            double test = 1.5;
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("es-ES");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("es-ES");
-
-            TestSettings.DoubleSetting = test;
-
-            var output = TestSettings.DoubleSetting;
-            Assert.True(TestSettings.DoubleSetting == test, "Double not saved");
-        }
-
-        [Test]
         public void Double_Zero()
         {
             double test = 0.0D;
@@ -139,25 +134,6 @@ namespace Plugin.Settings.NUnitTest
             Assert.True(TestSettings.DecimalSetting == test, "Decimal not saved");
         }
 
-
-        [Test]
-        public void Decimal_Max()
-        {
-            decimal test = decimal.MaxValue;
-
-            TestSettings.DecimalSetting = test;
-            Assert.True(TestSettings.DecimalSetting == test, "DecimalSetting not saved");
-        }
-
-        [Test]
-        public void Decimal_Min()
-        {
-            decimal test = decimal.MinValue;
-
-            TestSettings.DecimalSetting = test;
-            Assert.True(TestSettings.DecimalSetting == test, "DecimalSetting not saved");
-        }
-
         [Test]
         public void DateTime()
         {
@@ -165,7 +141,7 @@ namespace Plugin.Settings.NUnitTest
             DateTime test = new DateTime(1986, 6, 25, 4, 0, 0).ToUniversalTime();
 
             TestSettings.DateTimeSetting = test;
-            Assert.True(TestSettings.DateTimeSetting.Value.Ticks == test.Ticks, "DateTime not saved");
+            Assert.True(TestSettings.DateTimeSetting.Ticks == test.Ticks, "DateTime not saved");
         }
 
         [Test]
@@ -183,33 +159,18 @@ namespace Plugin.Settings.NUnitTest
         {
             TestSettings.StringSetting = "Hello World";
 
-            TestSettings.DateTimeSetting = null;
+            Assert.AreEqual(TestSettings.StringSetting, "Hello World", "Date wasn't set to null, it is: " + TestSettings.StringSetting);
 
-            Assert.IsTrue(TestSettings.DateTimeSetting.HasValue, "Date wasn't set to null, it is: " + TestSettings.StringSetting);
+            var contains = TestSettings.AppSettings.Contains("settings_key", TestSettings.FileName);
 
-
-
-            TestSettings.Remove("date_setting");
-
-            Assert.IsFalse(TestSettings.DateTimeSetting.HasValue, "String should be back to default of string.empty, it is: " + TestSettings.StringSetting);
-        }
-
-        [Test]
-        public void Upgrade140To150TestAddAndUpdate()
-        {
-            //old value was stored as a long to test
-            TestSettings.AppSettings.AddOrUpdateValue("test1", (long)100);
-            //new value is stored as a string via decimal
-            TestSettings.AppSettings.AddOrUpdateValue("test1", (decimal)100.01M);
-
-            Assert.IsTrue(TestSettings.AppSettings.GetValueOrDefault<decimal>("test1", (decimal)100.02M) == (decimal)100.01M, "Decimal did not upgrade correctly");
+            Assert.IsTrue(contains, "String wasn't added" + TestSettings.StringSetting);
 
 
-            //old value was stored as a long to test
-            TestSettings.AppSettings.AddOrUpdateValue("test2", (long)100);
-            TestSettings.AppSettings.AddOrUpdateValue("test2", (double)100.01);
+            TestSettings.Remove("settings_key");
 
-            Assert.IsTrue(TestSettings.AppSettings.GetValueOrDefault<double>("test2", (double)100.02) == (double)100.01, "Double did not upgrade correctly");
+            contains = TestSettings.AppSettings.Contains("settings_key", TestSettings.FileName);
+
+            Assert.IsFalse(contains, "String wasn't removed" + TestSettings.StringSetting);
         }
 
     }

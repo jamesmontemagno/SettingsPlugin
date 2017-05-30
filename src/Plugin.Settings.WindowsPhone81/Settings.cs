@@ -1,5 +1,3 @@
-﻿
-
 using Windows.Storage;
 using Plugin.Settings.Abstractions;
 using System;
@@ -12,9 +10,15 @@ namespace Plugin.Settings
     /// </summary>
     public class SettingsImplementation : ISettings
     {
-        private static ApplicationDataContainer AppSettings
+        ApplicationDataContainer GetAppSettings(string fileName = null)
         {
-            get { return ApplicationData.Current.LocalSettings; }
+            if (string.IsNullOrWhiteSpace(fileName))
+                return ApplicationData.Current.LocalSettings;
+
+            if (!ApplicationData.Current.LocalSettings.Containers.ContainsKey(fileName))
+                ApplicationData.Current.LocalSettings.CreateContainer(fileName, ApplicationDataCreateDisposition.Always);
+
+            return ApplicationData.Current.LocalSettings.Containers[fileName];
         }
 
         private readonly object locker = new object();
@@ -25,21 +29,24 @@ namespace Plugin.Settings
         /// <typeparam name="T">Vaue of t (bool, int, float, long, string)</typeparam>
         /// <param name="key">Key for settings</param>
         /// <param name="defaultValue">default value if not set</param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
         /// <returns>Value or default</returns>
-        public T GetValueOrDefault<T>(string key, T defaultValue = default(T))
+        public T GetValueOrDefault<T>(string key, T defaultValue = default(T), string fileName = null)
         {
             
 
             object value;
             lock (locker)
             {
+                var settings = GetAppSettings(fileName);
+
                 if (typeof(T) == typeof(decimal))
                 {
                     string savedDecimal;
                     // If the key exists, retrieve the value.
-                    if (AppSettings.Values.ContainsKey(key))
+                    if (settings.Values.ContainsKey(key))
                     {
-                        savedDecimal = Convert.ToString(AppSettings.Values[key]);
+                        savedDecimal = Convert.ToString(settings.Values[key]);
                     }
                     // Otherwise, use the default value.
                     else
@@ -55,9 +62,9 @@ namespace Plugin.Settings
                 {
                     string savedTime = null;
                     // If the key exists, retrieve the value.
-                    if (AppSettings.Values.ContainsKey(key))
+                    if (settings.Values.ContainsKey(key))
                     {
-                        savedTime = Convert.ToString(AppSettings.Values[key]);
+                        savedTime = Convert.ToString(settings.Values[key]);
                     }
 
                     if (string.IsNullOrWhiteSpace(savedTime))
@@ -83,9 +90,9 @@ namespace Plugin.Settings
                 }
 
                 // If the key exists, retrieve the value.
-                if (AppSettings.Values.ContainsKey(key))
+                if (settings.Values.ContainsKey(key))
                 {
-                    var tempValue = AppSettings.Values[key];
+                    var tempValue = settings.Values[key];
                     if (tempValue != null)
                         value = (T)tempValue;
                     else
@@ -106,66 +113,68 @@ namespace Plugin.Settings
         /// </summary>
         /// <param name="key">key to update</param>
         /// <param name="value">value to set</param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
         /// <returns>True if added or update and you need to save</returns>
-        public bool AddOrUpdateValue<T>(string key, T value)
+        public bool AddOrUpdateValue<T>(string key, T value, string fileName = null)
         {
-
-            return InternalAddOrUpdateValue(key, value);
+            return InternalAddOrUpdateValue(key, value, fileName);
         }
         
 
-        private bool InternalAddOrUpdateValue(string key, object value)
+        private bool InternalAddOrUpdateValue(string key, object value, string fileName)
         {
             bool valueChanged = false;
             lock (locker)
             {
-
+                var settings = GetAppSettings(fileName);
                 if (value is decimal)
                 {
-                    return AddOrUpdateValue(key, Convert.ToString(Convert.ToDecimal(value), System.Globalization.CultureInfo.InvariantCulture));
+                    return AddOrUpdateValue(key, Convert.ToString(Convert.ToDecimal(value), System.Globalization.CultureInfo.InvariantCulture), fileName);
                 }
                 else if (value is DateTime)
                 {
-                    return AddOrUpdateValue(key, Convert.ToString(-(Convert.ToDateTime(value)).ToUniversalTime().Ticks, System.Globalization.CultureInfo.InvariantCulture));
+                    return AddOrUpdateValue(key, Convert.ToString(-(Convert.ToDateTime(value)).ToUniversalTime().Ticks, System.Globalization.CultureInfo.InvariantCulture), fileName);
                 }
 
 
                 // If the key exists
-                if (AppSettings.Values.ContainsKey(key))
+                if (settings.Values.ContainsKey(key))
                 {
 
                     // If the value has changed
-                    if (AppSettings.Values[key] != value)
+                    if (settings.Values[key] != value)
                     {
                         // Store key new value
-                        AppSettings.Values[key] = value;
+                        settings.Values[key] = value;
                         valueChanged = true;
                     }
                 }
                 // Otherwise create the key.
                 else
                 {
-                    AppSettings.CreateContainer(key, ApplicationDataCreateDisposition.Always);
-                    AppSettings.Values[key] = value;
+                    //settings.CreateContainer(key, ApplicationDataCreateDisposition.Always);
+                    settings.Values[key] = value;
                     valueChanged = true;
                 }
             }
 
             return valueChanged;
         }
-        
+
         /// <summary>
         /// Removes a desired key from the settings
         /// </summary>
         /// <param name="key">Key for setting</param>
-        public void Remove(string key)
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
+        public void Remove(string key, string fileName = null)
         {
             lock (locker)
             {
+                var settings = GetAppSettings(fileName);
                 // If the key exists remove
-                if (AppSettings.Values.ContainsKey(key))
+                if (settings.Values.ContainsKey(key))
                 {
-                    AppSettings.Values.Remove(key);
+                    settings.Values.Remove(key);
                 }
             }
         }
@@ -173,13 +182,15 @@ namespace Plugin.Settings
         /// <summary>
         /// Clear all keys from settings
         /// </summary>
-        public void Clear()
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
+        public void Clear(string fileName = null)
         {
             lock (locker)
             {
                 try
                 {
-                    AppSettings.Values.Clear();
+                    var settings = GetAppSettings(fileName);
+                    settings.Values.Clear();
                 }
                 catch (Exception ex)
                 {
@@ -192,14 +203,16 @@ namespace Plugin.Settings
         /// Checks to see if the key has been added.
         /// </summary>
         /// <param name="key">Key to check</param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
         /// <returns>True if contains key, else false</returns>
-        public bool Contains(string key)
+        public bool Contains(string key, string fileName = null)
         {
             lock (locker)
             {
                 try
                 {
-                    return AppSettings.Values.ContainsKey(key);
+                    var settings = GetAppSettings(fileName);
+                    return settings.Values.ContainsKey(key);
                 }
                 catch (Exception ex)
                 {

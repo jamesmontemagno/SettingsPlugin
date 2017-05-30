@@ -20,14 +20,15 @@ namespace Plugin.Settings
         /// <typeparam name="T">Vaue of t (bool, int, float, long, string)</typeparam>
         /// <param name="key">Key for settings</param>
         /// <param name="defaultValue">default value if not set</param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
         /// <returns>Value or default</returns>
-        public T GetValueOrDefault<T>(string key, T defaultValue = default(T))
+        public T GetValueOrDefault<T>(string key, T defaultValue = default(T), string fileName = null)
         {
             lock (locker)
             {
-                var defaults = NSUserDefaults.StandardUserDefaults;
+                var defaults = GetUserDefaults(fileName);
 
-                if (defaults.ValueForKey(new NSString(key)) == null)
+                if (defaults[key] == null)
                     return defaultValue;
 
                 Type typeOf = typeof(T);
@@ -118,8 +119,9 @@ namespace Plugin.Settings
         /// </summary>
         /// <param name="key">key to update</param>
         /// <param name="value">value to set</param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
         /// <returns>True if added or update and you need to save</returns>
-        public bool AddOrUpdateValue<T>(string key, T value)
+        public bool AddOrUpdateValue<T>(string key, T value, string fileName = null)
         {
 
             Type typeOf = typeof(T);
@@ -128,14 +130,14 @@ namespace Plugin.Settings
                 typeOf = Nullable.GetUnderlyingType(typeOf);
             }
             var typeCode = Type.GetTypeCode(typeOf);
-            return AddOrUpdateValue(key, value, typeCode);
+            return AddOrUpdateValue(key, value, typeCode, fileName);
         }
 
-        private bool AddOrUpdateValue(string key, object value, TypeCode typeCode)
+        private bool AddOrUpdateValue(string key, object value, TypeCode typeCode, string fileName)
         {
             lock (locker)
             {
-                var defaults = NSUserDefaults.StandardUserDefaults;
+                var defaults = GetUserDefaults(fileName);
                 switch (typeCode)
                 {
                     case TypeCode.Decimal:
@@ -194,15 +196,15 @@ namespace Plugin.Settings
         /// Removes a desired key from the settings
         /// </summary>
         /// <param name="key">Key for setting</param>
-        public void Remove(string key)
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
+        public void Remove(string key, string fileName = null)
         {
             lock (locker)
             {
-                var defaults = NSUserDefaults.StandardUserDefaults;
+                var defaults = GetUserDefaults(fileName);
                 try
                 {
-                    var nsString = new NSString(key);
-                    if (defaults.ValueForKey(nsString) != null)
+                    if (defaults[key] != null)
                     {
                         defaults.RemoveObject(key);
                         defaults.Synchronize();
@@ -218,14 +220,22 @@ namespace Plugin.Settings
         /// <summary>
         /// Clear all keys from settings
         /// </summary>
-        public void Clear()
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
+        public void Clear(string fileName = null)
         {
             lock (locker)
             {
-                var defaults = NSUserDefaults.StandardUserDefaults;
+                var defaults = GetUserDefaults(fileName);
                 try
                 {
-                    defaults.RemovePersistentDomain(NSBundle.MainBundle.BundleIdentifier);
+                    var items = defaults.ToDictionary();
+                    
+                    foreach (var item in items.Keys)
+                    {
+                        var nsString = item as NSString;
+                        if(nsString != null)
+                            defaults.RemoveObject(nsString);
+                    }
                     defaults.Synchronize();
                 }
                 catch (Exception ex)
@@ -239,16 +249,17 @@ namespace Plugin.Settings
         /// Checks to see if the key has been added.
         /// </summary>
         /// <param name="key">Key to check</param>
+        /// <param name="fileName">Name of</param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved (iOS = SuiteName, Android = Name, Windows Store/RT8.1/UWP = Container name, WinPhone 8 SL = Doesn't Apply)</param>
         /// <returns>True if contains key, else false</returns>
-        public bool Contains(string key)
+        public bool Contains(string key, string fileName = null)
         {
             lock (locker)
             {
-                var defaults = NSUserDefaults.StandardUserDefaults;
+                var defaults = GetUserDefaults(fileName);
                 try
                 {
-                    var nsString = new NSString(key);
-                    var setting = defaults.ValueForKey(nsString);
+                    var setting = defaults[key];
                     return setting != null;
                 }
                 catch (Exception ex)
@@ -259,6 +270,11 @@ namespace Plugin.Settings
                 return false;
             }
         }
+
+        NSUserDefaults GetUserDefaults(string fileName = null) =>
+            string.IsNullOrWhiteSpace(fileName) ?
+            NSUserDefaults.StandardUserDefaults :
+            new NSUserDefaults(fileName, NSUserDefaultsType.SuiteName);
 
     }
 

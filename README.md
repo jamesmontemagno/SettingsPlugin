@@ -7,6 +7,7 @@ Create and access settings from shared code across all of your mobile apps!
 * iOS/macOS: NSUserDefaults
 * Windows Phone: IsolatedStorageSettings
 * Windows RT / UWP: ApplicationDataContainer
+* Ability to override default save location with file name parameter
 
 
 ### Setup & Usage
@@ -91,11 +92,13 @@ public static int SomeInt
 
 There you have it! You are all done :)
 
+#### FileName Parameter
+Each method takes an additional parameter called `fileName`, which enables the setting to be stored a bit different on each platform.
 
-**iOS Specific**
-You must enable generic type sharing in the settings. It is on by default on new projects.
-
-![](http://content.screencast.com/users/JamesMontemagno/folders/Jing/media/7466bca6-a916-4fd9-9301-3c3403d3a6ad/00000097.png)
+* iOS: Specifies the [SuiteName](https://developer.xamarin.com/guides/ios/watch/working-with/settings/#Use_Settings_in_the_Watch_App)
+* Android: Specifies the [SharedPreferences Name](https://developer.android.com/reference/android/content/Context.html#getSharedPreferences(java.lang.String, int)
+* UWP/WinRT: Specifies the [Container Name](https://msdn.microsoft.com/library/windows/apps/br241611)
+* WP SL/.NET 4.5: Does not apply
 
 
 ### Data Types Supported
