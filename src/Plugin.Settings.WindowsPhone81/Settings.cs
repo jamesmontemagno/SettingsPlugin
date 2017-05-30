@@ -1,5 +1,3 @@
-﻿
-
 using Windows.Storage;
 using Plugin.Settings.Abstractions;
 using System;
@@ -35,6 +33,8 @@ namespace Plugin.Settings
         /// <returns>Value or default</returns>
         public T GetValueOrDefault<T>(string key, T defaultValue = default(T), string fileName = null)
         {
+            
+
             object value;
             lock (locker)
             {

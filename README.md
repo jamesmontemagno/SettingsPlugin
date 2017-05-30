@@ -9,6 +9,7 @@ Create and access settings from shared code across all of your mobile apps!
 * Windows RT / UWP: ApplicationDataContainer
 * Ability to override default save location with file name parameter
 
+
 ### Setup & Usage
 * Available on NuGet: https://www.nuget.org/packages/Xam.Plugins.Settings/ [![NuGet](https://img.shields.io/nuget/v/Xam.Plugins.Settings.svg?label=NuGet)](https://www.nuget.org/packages/Xam.Plugins.Settings/)
 * Install into your PCL project and Client projects.
@@ -29,6 +30,14 @@ Build Status: [![Build status](https://ci.appveyor.com/api/projects/status/24dn7
 |Windows 10 UWP|Yes|10+|
 |Xamarin.Mac|Yes|All|
 |.NET 4.5|Yes|All|
+
+
+#### Settings Pluggin or Xamarin.Forms App.Properties
+I get this question a lot, so here it is from a recent issue opened up. This plugin saves specific properties directly to each platforms native settings APIs (NSUserDefaults, SharedPreferences, etc). This ensures the fastest, most secure, and reliable creation and editing settings per application. Additionally, it works with **any Xamarin application**, not just Xamarin.Forms.
+
+App.Current.Properties actually serializes and deserializes items to disk as per implementations such as: https://github.com/xamarin/Xamarin.Forms/blob/e6d5186c8acbf37b877c7ca3c77a378352a3743d/Xamarin.Forms.Platform.iOS/Deserializer.cs
+
+To me that isn't as reliable as saving direct to the native platforms settings.
 
 #### Create a new static class
 You will want to create a new `static` class called "Settings" in your shared code project or PCL that will house all of your settings.
@@ -103,11 +112,13 @@ Each method takes an additional parameter called `fileName`, which enables the s
 * Decimal 
 * DateTime (Will always be stored and retrieved in UTC)
 
+Note that while the methods are generic that you may only pass in these specific data types. Additionally any default or values set must NOT be null as it is an illegal argument that can not be parsed correctly on all platforms, and will throw an exception.
+
 ### NuGet Creation & Packaging
 
 I created this NuGet PCL package by creating an interface that I would implement on each platform. This lives inside of my .Abstractions.dll that will be installed on each platform. I then create a base PCL project that has a Settings.cs file with an internal IoC to new up a CrossSettings class. The key here is that this file is linked to all of my platform specific projects to new up the correct version.
 
-You can find my nuspec here: https://github.com/jamesmontemagno/Xam.PCL.Plugins/blob/master/Settings/Common/Xam.Plugins.Settings.nuspec
+You can find my nuspec here: https://github.com/jamesmontemagno/SettingsPlugin/blob/master/nuget/Plugin.nuspec
 
 
 ### DataBinding in Xamarin.Forms

@@ -103,7 +103,7 @@ namespace Plugin.Settings
                         }
                         else
                         {
-                            throw new ArgumentException(string.Format("Value of type {0} is not supported.", value.GetType().Name));
+                            throw new ArgumentException($"Value of type {typeCode} is not supported.");
                         }
 
                         break;
@@ -123,6 +123,7 @@ namespace Plugin.Settings
         /// <returns>True if added or update and you need to save</returns>
         public bool AddOrUpdateValue<T>(string key, T value, string fileName = null)
         {
+
             Type typeOf = typeof(T);
             if (typeOf.IsGenericType && typeOf.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
@@ -173,7 +174,7 @@ namespace Plugin.Settings
                         }
                         else
                         {
-                            throw new ArgumentException(string.Format("Value of type {0} is not supported.", value.GetType().Name));
+                            throw new ArgumentException($"Value of type {typeCode} is not supported.");
                         }
                         break;
                 }

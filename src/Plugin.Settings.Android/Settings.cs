@@ -184,7 +184,7 @@ namespace Plugin.Settings
                     }
                     else
                     {
-                        throw new ArgumentException(string.Format("Value of type {0} is not supported.", value.GetType().Name));
+                        throw new ArgumentException($"Value of type {typeCode} is not supported.");
                     }
 
                     break;
@@ -257,8 +257,7 @@ namespace Plugin.Settings
                                 }
                                 else
                                 {
-                                    throw new ArgumentException(string.Format("Value of type {0} is not supported.",
-                                        value.GetType().Name));
+                                    throw new ArgumentException($"Value of type {typeCode} is not supported.");
                                 }
                                 break;
                         }
