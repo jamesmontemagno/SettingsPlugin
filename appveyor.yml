@@ -20,8 +20,6 @@ install:
   - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t build-tools-25.0.6
   - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t android-25
   - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t android-15
-  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t extra-google-m2repository
-  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t extra-android-m2repository
 build_script:
 - cmd: >-
     powershell .\bootstrapper.ps1 -Target Default -Verbosity diagnostic
