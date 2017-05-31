@@ -116,7 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj">
-      <Project>{d12d6afa-0696-4177-9c85-ec576277ef8e}</Project>
+      <Project>{b0596e33-ea85-41b5-9cb5-94df3c06d213}</Project>
       <Name>Plugin.Settings.Abstractions</Name>
     </ProjectReference>
   </ItemGroup>
