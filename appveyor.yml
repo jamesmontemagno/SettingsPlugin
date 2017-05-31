@@ -8,13 +8,13 @@ assembly_info:
   assembly_informational_version: '{version}'
 environment:
     ANDROID_HOME: "C:\\android-sdk-windows"
-  init:
+init:
   - mkdir %ANDROID_HOME%"
   - cd "%ANDROID_HOME%"
   - appveyor DownloadFile "https://dl.google.com/android/repository/tools_r25.2.5-windows.zip"
   - 7z x "tools_r25.2.5-windows.zip" > nul
   - cd "C:\projects\settingsplugin"
-  install: 
+install: 
   - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t tools
   - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t platform-tools
   - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t build-tools-25.0.6
