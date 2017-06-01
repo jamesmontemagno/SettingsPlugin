@@ -11,14 +11,14 @@
         <iconUrl>https://raw.githubusercontent.com/jamesmontemagno/SettingsPlugin/master/art/icon.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>
-            Settings Plugin for Xamarin and Windows provides a consistent, cross platform settings plugin for Windows Phone  Silverlight 8/8.1, Windows Phone 8.1, Windows Store, Xamarin.iOS, and Xamarin.Android when using a PCL or any project and is Xamarin.Forms and MvvmCross compatible.  This makes it easier to create cross-platform .NET apps and have cross platform settings. Manage and use all settings from one PCL and save natively on each platform. *This plugin stores settings natively on each platform and does NOT save them to Json. This allows you to use native functionality such as PreferenceActivity on Android.
+            Settings Plugin for Xamarin and Windows provides a consistent, cross platform settings plugin for Windows Phone Silverlight 8/8.1, Windows Phone 8.1, Windows Store, Xamarin.iOS, Xamarin.Android, and Tizen.NET when using a PCL or any project and is Xamarin.Forms and MvvmCross compatible.  This makes it easier to create cross-platform .NET apps and have cross platform settings. Manage and use all settings from one PCL and save natively on each platform. *This plugin stores settings natively on each platform and does NOT save them to Json. This allows you to use native functionality such as PreferenceActivity on Android.
 
             Support for: Int, Int64, Double, String, DateTime, Bool, Float, Decimal, Guid
 
             You can always serialize and deserialize a string out if needed.
         </description>
-        <summary>Cross platform settings for Xamarin.iOS, Xamarin.Android, Xamarin.Mac, Xamarin.Forms, and Windows</summary>
-        <tags>xamarin, pcl, xam.pcl, plugin for xamarin, plugin, settings, windows phone, winphone, wp8, winrt, android, xamarin.forms, ios, monoandroid, monodroid, monotouch, mvvmcross</tags>
+        <summary>Cross platform settings for Xamarin.iOS, Xamarin.Android, Xamarin.Mac, Xamarin.Forms, Windows, and Tizen.NET</summary>
+        <tags>xamarin, pcl, xam.pcl, plugin for xamarin, plugin, settings, windows phone, winphone, wp8, winrt, android, xamarin.forms, ios, tizen.net, monoandroid, monodroid, monotouch, mvvmcross</tags>
         <dependencies>
         </dependencies>
         <releaseNotes>

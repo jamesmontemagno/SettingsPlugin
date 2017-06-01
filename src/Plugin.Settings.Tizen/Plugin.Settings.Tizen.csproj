@@ -41,6 +41,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Plugin.Settings.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="Plugin.Settings.Tizen.project.json" />

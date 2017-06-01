@@ -9,6 +9,9 @@ using Tizen.Applications;
 
 namespace Plugin.Settings
 {
+    /// <summary>
+    /// Main Implementation for ISettings
+    /// </summary>
     public class SettingsImplementation : ISettings
     {
         private readonly object locker = new object();
