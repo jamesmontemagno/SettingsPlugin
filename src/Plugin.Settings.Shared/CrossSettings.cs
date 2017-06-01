@@ -38,7 +38,7 @@ namespace Plugin.Settings
 
         static ISettings CreateSettings()
         {
-#if PORTABLE
+#if NETSTANDARD1_0
             return null;
 #else
             return new SettingsImplementation();

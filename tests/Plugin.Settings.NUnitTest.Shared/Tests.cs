@@ -165,7 +165,7 @@ namespace Plugin.Settings.NUnitTest
 
 
         [Test]
-        public void Decimal_Max()
+        public void Decimal_Max_2()
         {
             decimal test = decimal.MaxValue;
 
@@ -174,7 +174,7 @@ namespace Plugin.Settings.NUnitTest
         }
 
         [Test]
-        public void Decimal_Min()
+        public void Decimal_Min_2()
         {
             decimal test = decimal.MinValue;
 

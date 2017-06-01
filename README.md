@@ -21,17 +21,16 @@ Build Status: [![Build status](https://ci.appveyor.com/api/projects/status/24dn7
 
 **Platform Support**
 
-|Platform|Supported|Version|
-| ------------------- | :-----------: | :------------------: |
-|Xamarin.iOS|Yes|iOS 7+|
-|Xamarin.Android|Yes|API 10+|
-|Windows Phone Silverlight|Yes|8.0+|
-|Windows Phone RT|Yes|8.1+|
-|Windows Store RT|Yes|8.1+|
-|Windows 10 UWP|Yes|10+|
-|Xamarin.Mac|Yes|All|
+|Platform|Version|
+| ------------------- | :-----------: |
+|Xamarin.iOS|iOS 7+|
+|Xamarin.Android|API 15+|
+|Windows 10 UWP|10+|
+|Xamarin.Mac|All|
+|Xamarin.tvOS|All|
+|Xamarin.watchOS|All|
 |Tizen.NET|Yes|3.0+|
-|.NET 4.5|Yes|All|
+|.NET 4.5|All|
 
 
 #### Settings Plugin or Xamarin.Forms App.Properties
@@ -81,14 +80,14 @@ Now it is time to setup your actual setting that can be accessed from **ANY** pr
 ```csharp
 public static string UserName
 {
-  get { return AppSettings.GetValueOrDefault<string>(UserNameKey, UserNameDefault); }
-  set { AppSettings.AddOrUpdateValue<string>(UserNameKey, value); }
+  get { return AppSettings.GetValueOrDefault(UserNameKey, UserNameDefault); }
+  set { AppSettings.AddOrUpdateValue(UserNameKey, value); }
 }
 
 public static int SomeInt
 {
-  get { return AppSettings.GetValueOrDefault<int>(SomeIntKey, SomeIntDefault); }
-  set { AppSettings.AddOrUpdateValue<int>(SomeIntKey, value); }
+  get { return AppSettings.GetValueOrDefault(SomeIntKey, SomeIntDefault); }
+  set { AppSettings.AddOrUpdateValue(SomeIntKey, value); }
 }
 ```
 
@@ -148,8 +147,8 @@ public static class Settings
 
     public static int Count
     {
-        get { return AppSettings.GetValueOrDefault<int>(CountKey, CountDefault); }
-        set { AppSettings.AddOrUpdateValue<int>(CountKey, value); }
+        get { return AppSettings.GetValueOrDefault(CountKey, CountDefault); }
+        set { AppSettings.AddOrUpdateValue(CountKey, value); }
     }
 }
 ```
@@ -296,11 +295,11 @@ public class Settings : BaseViewModel
     {
         get
         { 
-            return AppSettings.GetValueOrDefault<int>(CountKey, CountDefault); 
+            return AppSettings.GetValueOrDefault(CountKey, CountDefault); 
         }
         set
         { 
-            if (AppSettings.AddOrUpdateValue<int>(CountKey, value))
+            if (AppSettings.AddOrUpdateValue(CountKey, value))
                 OnPropertyChanged();
 
         }
