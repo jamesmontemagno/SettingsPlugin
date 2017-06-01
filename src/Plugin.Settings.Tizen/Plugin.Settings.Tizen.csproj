@@ -10,8 +10,8 @@
     <ProjectGuid>{223822C3-BF89-4D3E-9B4B-832673BD7E3E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Plugin.Settings.Tizen</RootNamespace>
-    <AssemblyName>Plugin.Settings.Tizen</AssemblyName>
+    <RootNamespace>Plugin.Settings</RootNamespace>
+    <AssemblyName>Plugin.Settings</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <DefaultLanguage>en-US</DefaultLanguage>
   </PropertyGroup>
