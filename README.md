@@ -6,7 +6,8 @@ Create and access settings from shared code across all of your mobile apps!
 * Android: SharedPreferences
 * iOS/macOS: NSUserDefaults
 * Windows Phone: IsolatedStorageSettings
-* Windows RT / UWP: ApplicationDataContainer
+* Windows RT/UWP: ApplicationDataContainer
+* Tizen.NET: Preference
 * Ability to override default save location with file name parameter
 
 
@@ -29,10 +30,11 @@ Build Status: [![Build status](https://ci.appveyor.com/api/projects/status/24dn7
 |Windows Store RT|Yes|8.1+|
 |Windows 10 UWP|Yes|10+|
 |Xamarin.Mac|Yes|All|
+|Tizen.NET|Yes|3.0+|
 |.NET 4.5|Yes|All|
 
 
-#### Settings Pluggin or Xamarin.Forms App.Properties
+#### Settings Plugin or Xamarin.Forms App.Properties
 I get this question a lot, so here it is from a recent issue opened up. This plugin saves specific properties directly to each platforms native settings APIs (NSUserDefaults, SharedPreferences, etc). This ensures the fastest, most secure, and reliable creation and editing settings per application. Additionally, it works with **any Xamarin application**, not just Xamarin.Forms.
 
 App.Current.Properties actually serializes and deserializes items to disk as per implementations such as: https://github.com/xamarin/Xamarin.Forms/blob/e6d5186c8acbf37b877c7ca3c77a378352a3743d/Xamarin.Forms.Platform.iOS/Deserializer.cs
@@ -142,11 +144,7 @@ public static class Settings
     const string CountKey = "count";
     private static readonly int CountDefault = 0;
 
-
-
     #endregion
-
-
 
     public static int Count
     {
@@ -270,7 +268,7 @@ public class BaseViewModel : INotifyPropertyChanged
 
 Notice my reference to **Settings.Current**, we will need to implement that now as a singleton, but we will use our BaseViewModel so we don't have to re-implement INotifyPropertyChanged:
 
-```cshapr
+```csharp
 public class Settings : BaseViewModel
 {
     static ISettings AppSettings
