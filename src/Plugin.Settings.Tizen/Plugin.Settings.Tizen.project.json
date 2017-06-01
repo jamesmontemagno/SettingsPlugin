@@ -1,0 +1,25 @@
+﻿{
+	"buildOptions": {
+		"emitEntryPoint": false
+	},
+	"dependencies": {
+		"Microsoft.NETCore.App": {
+		"version": "1.0.0"
+		},
+		"Tizen.Library": "1.0.0-pre3",
+		"Xamarin.Forms": "2.3.4.214-pre5",
+		"Xamarin.Forms.Platform.Tizen": "2.3.4-r214-002"
+	},
+	"runtimes": {
+		"win": {},
+		"linux": {}
+	},
+	"frameworks": {
+		"netcoreapp1.0": {
+			"imports": [
+				"portable-net45+wp80+win81+wpa81",
+				"netstandard1.6"
+			]
+		}
+	}
+}
