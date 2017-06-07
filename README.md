@@ -29,7 +29,7 @@ Build Status: [![Build status](https://ci.appveyor.com/api/projects/status/24dn7
 |Xamarin.Mac|All|
 |Xamarin.tvOS|All|
 |Xamarin.watchOS|All|
-|Tizen.NET|Yes|3.0+|
+|Tizen.NET|3.0+|
 |.NET 4.5|All|
 
 
