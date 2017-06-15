@@ -77,7 +77,6 @@
 
     <!--UWP-->
     <file src="src\Plugin.Settings.UWP\bin\Release\Plugin.Settings.*" target="lib\UAP10" />
-    <file src="src\Plugin.Settings.UWP\bin\Release\Properties\*.rd.xml" target="lib\UAP10\Plugin.Settings\Properties" />
 
     <!--Net 45-->
     <file src="src\Plugin.Settings.Net45\bin\Release\Plugin.Settings.*" target="lib\net45" />
