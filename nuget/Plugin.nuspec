@@ -65,7 +65,8 @@
 
     <!--NetStandard/PCL-->
     <file src="src\Plugin.Settings\bin\Release\netstandard1.0\Plugin.Settings.*" target="lib\netstandard1.0" />
-
+    <file src="files\Settings.cs.pp" target="content\netstandard1.0\Helpers\Settings.cs.pp" />
+    
     <!--Xamarin.Android-->
     <file src="src\Plugin.Settings.Android\bin\Release\Plugin.Settings.*" target="lib\MonoAndroid10" />
 
