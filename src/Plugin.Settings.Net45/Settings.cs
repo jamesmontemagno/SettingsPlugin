@@ -11,7 +11,7 @@ namespace Plugin.Settings
     /// </summary>
     public class SettingsImplementation : ISettings
     {
-        static IsolatedStorageFile Store => IsolatedStorageFile.GetUserStoreForAssembly();
+        static IsolatedStorageFile Store => IsolatedStorageFile.GetUserStoreForDomain();
         
 
         private readonly object locker = new object();
