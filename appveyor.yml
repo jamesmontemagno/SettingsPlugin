@@ -1,4 +1,4 @@
-version: 3.0.1
+version: 3.1.0-beta{build}
 image: Visual Studio 2017
 assembly_info:
   patch: true
