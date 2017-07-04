@@ -1,6 +1,8 @@
+**Failure to fill out this information will result in this issue being closed.**
+
 If you are creating an issue for a BUG please fill out this information. If you are asking a question or requesting a feature you can delete the sections below. 
 
-**Failure to fill out this information will result in this issue being closed.** If you post a full stack trace in a bug it will be closed, please post it to http://gist.github.com and then post the link here.
+ If you post a full stack trace in a bug it will be closed, please post it to http://gist.github.com and then post the link here.
 
 ## Bug Information
 
@@ -19,6 +21,6 @@ Versions of other things you are using:
 
 ### Code snippet
 
-### Screenshotst
+### Screenshots
 
 
