@@ -131,7 +131,7 @@
       <Version>5.2.3</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
-      <Version>3.0.0.66-beta</Version>
+      <Version>3.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
       <Version>2.3.4.247</Version>
