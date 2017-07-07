@@ -11,27 +11,13 @@ namespace SettingsSample.Helpers
 	/// </summary>
 	public static class Settings
 	{
-		private static ISettings AppSettings
-		{
-			get
-			{
-				return CrossSettings.Current;
-			}
-		}
-
-		#region Setting Constants
-
-		private const string SettingsKey = "settings_key";
-		private static readonly string SettingsDefault = string.Empty;
-
-		#endregion
-
+		private static ISettings AppSettings => CrossSettings.Current;
 
 		public static string GeneralSettings
 		{
-			get => AppSettings.GetValueOrDefault(SettingsKey, SettingsDefault);
+			get => AppSettings.GetValueOrDefault(nameof(GeneralSettings), string.Empty);
 			
-			set => AppSettings.AddOrUpdateValue(SettingsKey, value);
+			set => AppSettings.AddOrUpdateValue(nameof(GeneralSettings), value);
 			
 		}
 
