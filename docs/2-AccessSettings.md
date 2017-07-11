@@ -45,7 +45,7 @@ public static bool DidPurchase(string key) =>
 
 public static void SetDidPurchase(string key) =>
     AppSettings.AddOrUpdateValue("iap_" + key, true);
-``
+```
 
 
 
