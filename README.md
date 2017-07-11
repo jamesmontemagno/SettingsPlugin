@@ -3,7 +3,7 @@
 Create and access settings from shared code across all of your apps!
 
 ## Documentation
-Get started by reading through the [Settings Plugin documentation](docs).
+Get started by reading through the [Settings Plugin documentation](https://jamesmontemagno.github.io/SettingsPlugin/).
 
 ## NuGet
 * [Xam.Plugins.Settings](http://www.nuget.org/packages/Xam.Plugins.Settings) [![NuGet](https://img.shields.io/nuget/v/Xam.Plugins.Settings.svg?label=NuGet)](https://www.nuget.org/packages/Xam.Plugins.Settings)
