@@ -28,7 +28,7 @@ publc static void RemoveUserName() => AppSettings.Remove(nameof(UserName));
 ```
 
 ### Clear All Settings
-This should be used with caution as it will remove all of yoru specific app's settings that were ever created.
+This should be used with caution as it will remove all of your specific app's settings that were ever created.
 
 ```csharp
 /// <summary>
