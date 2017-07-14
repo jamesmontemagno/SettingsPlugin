@@ -155,4 +155,5 @@ Notice that we are now inheriting from BaseViewModel, which means our command ca
 </StackLayout>
 ```
 Notice I am setting the BindingContext to our Settings, which is in our BaseViewModel for the Label, this must be done because that is where it is located now. And there you have it.
+
 <= Back to [Table of Contents](README.md)
