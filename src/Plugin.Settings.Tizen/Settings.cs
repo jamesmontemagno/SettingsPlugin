@@ -1,10 +1,7 @@
 ﻿using Plugin.Settings.Abstractions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Tizen.Applications;
 
 namespace Plugin.Settings
@@ -148,15 +145,12 @@ namespace Plugin.Settings
                         Preference.Set(prefKey, Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture));
                         break;
                     case TypeCode.DateTime:
-                        Preference.Set(Convert.ToString(-(Convert.ToDateTime(value)).ToUniversalTime().Ticks), prefKey);
+                        Preference.Set(prefKey, Convert.ToString(-Convert.ToDateTime(value).ToUniversalTime().Ticks));
                         break;
                     default:
                         if (value is Guid)
                         {
-                            if (value == null)
-                                value = Guid.Empty;
-
-                            Preference.Set(((Guid)value).ToString(), prefKey);
+                            Preference.Set(prefKey, ((Guid)value).ToString());
                         }
                         else
                         {
