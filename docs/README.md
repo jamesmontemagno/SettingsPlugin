@@ -9,5 +9,5 @@ Here you will find detailed documentation on setting up and using the Settings  
 * [Checking for Settings](CheckingForSettings.md)
 * [Shared Settings](SharedSettings.md)
 * [DataBinding to Settings](DataBindingToSettings.md)
-* [Integrating with System Settings](DataBindingToSettings.md)
+* [Integrating with System Settings](SystemSettings.md)
 * [Architecture](Architecture.md)
