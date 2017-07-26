@@ -11,8 +11,13 @@ namespace Plugin.Settings.NUnitTest
     {
 
         [SetUp]
-        public void Setup() { }
+        public void Setup()
+        {
+            TestSettings.FileName = null;
+            TestSettings.Clear();
+        }
 
+        
 
         [TearDown]
         public void Tear() { }
@@ -34,7 +39,7 @@ namespace Plugin.Settings.NUnitTest
             TestSettings.Int64Setting = test;
             Assert.True(TestSettings.Int64Setting == test, "Int64 not saved");
 
-            TestSettings.AppSettings.Clear();
+            TestSettings.Clear();
 
             Assert.IsFalse(TestSettings.AppSettings.Contains("int64_setting"), "Setting was not removed");
         }
@@ -44,11 +49,11 @@ namespace Plugin.Settings.NUnitTest
         {
             Int64 test = 10;
 
-            Assert.IsFalse(TestSettings.AppSettings.Contains("int64_setting"), "Default value was not false");
+            Assert.IsFalse(TestSettings.AppSettings.Contains("int64_setting"), "Key should not exist, but does");
 
             TestSettings.Int64Setting = test;
 
-            Assert.IsTrue(TestSettings.AppSettings.Contains("int64_setting"), "Default value was not false");
+            Assert.IsTrue(TestSettings.AppSettings.Contains("int64_setting"), "Key should exist, but doesn't");
 
         }
 
@@ -130,15 +135,6 @@ namespace Plugin.Settings.NUnitTest
             Assert.True(TestSettings.DoubleSetting == test, "Double not saved");
         }
 
-        [Test]
-        public void Decimal()
-        {
-            decimal test = 0.099M;
-
-            TestSettings.DecimalSetting = test;
-            Assert.True(TestSettings.DecimalSetting == test, "Decimal not saved");
-        }
-
 
         [Test]
         public void Decimal_Max()
@@ -159,13 +155,41 @@ namespace Plugin.Settings.NUnitTest
         }
 
         [Test]
+        public void Decimal()
+        {
+            decimal test = 0.099M;
+
+            TestSettings.DecimalSetting = test;
+            Assert.True(TestSettings.DecimalSetting == test, "Decimal not saved");
+        }
+
+
+        [Test]
+        public void Decimal_Max_2()
+        {
+            decimal test = decimal.MaxValue;
+
+            TestSettings.DecimalSetting = test;
+            Assert.True(TestSettings.DecimalSetting == test, "DecimalSetting not saved");
+        }
+
+        [Test]
+        public void Decimal_Min_2()
+        {
+            decimal test = decimal.MinValue;
+
+            TestSettings.DecimalSetting = test;
+            Assert.True(TestSettings.DecimalSetting == test, "DecimalSetting not saved");
+        }
+
+        [Test]
         public void DateTime()
         {
 
             DateTime test = new DateTime(1986, 6, 25, 4, 0, 0).ToUniversalTime();
 
             TestSettings.DateTimeSetting = test;
-            Assert.True(TestSettings.DateTimeSetting.Value.Ticks == test.Ticks, "DateTime not saved");
+            Assert.True(TestSettings.DateTimeSetting.Ticks == test.Ticks, "DateTime not saved");
         }
 
         [Test]
@@ -183,34 +207,20 @@ namespace Plugin.Settings.NUnitTest
         {
             TestSettings.StringSetting = "Hello World";
 
-            TestSettings.DateTimeSetting = null;
+            Assert.AreEqual(TestSettings.StringSetting, "Hello World", "Date wasn't set to null, it is: " + TestSettings.StringSetting);
 
-            Assert.IsTrue(TestSettings.DateTimeSetting.HasValue, "Date wasn't set to null, it is: " + TestSettings.StringSetting);
+            var contains = TestSettings.AppSettings.Contains("settings_key");
+
+            Assert.IsTrue(contains, "String wasn't added" + TestSettings.StringSetting);
 
 
+            TestSettings.Remove("settings_key");
 
-            TestSettings.Remove("date_setting");
+            contains = TestSettings.AppSettings.Contains("settings_key");
 
-            Assert.IsFalse(TestSettings.DateTimeSetting.HasValue, "String should be back to default of string.empty, it is: " + TestSettings.StringSetting);
+            Assert.IsFalse(contains, "String wasn't removed" + TestSettings.StringSetting);
         }
 
-        [Test]
-        public void Upgrade140To150TestAddAndUpdate()
-        {
-            //old value was stored as a long to test
-            TestSettings.AppSettings.AddOrUpdateValue("test1", (long)100);
-            //new value is stored as a string via decimal
-            TestSettings.AppSettings.AddOrUpdateValue("test1", (decimal)100.01M);
-
-            Assert.IsTrue(TestSettings.AppSettings.GetValueOrDefault<decimal>("test1", (decimal)100.02M) == (decimal)100.01M, "Decimal did not upgrade correctly");
-
-
-            //old value was stored as a long to test
-            TestSettings.AppSettings.AddOrUpdateValue("test2", (long)100);
-            TestSettings.AppSettings.AddOrUpdateValue("test2", (double)100.01);
-
-            Assert.IsTrue(TestSettings.AppSettings.GetValueOrDefault<double>("test2", (double)100.02) == (double)100.01, "Double did not upgrade correctly");
-        }
 
     }
 }

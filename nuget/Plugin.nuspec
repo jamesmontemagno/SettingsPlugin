@@ -1,95 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-    <metadata minClientVersion="2.8.1">
-        <id>Xam.Plugins.Settings</id>
-        <version>$version$</version>
-        <title>Settings Plugin for Xamarin and Windows</title>
-        <authors>James Montemagno</authors>
-        <owners>James Montemagno</owners>
-        <licenseUrl>https://github.com/jamesmontemagno/SettingsPlugin/blob/master/LICENSE</licenseUrl>
-        <projectUrl>https://github.com/jamesmontemagno/SettingsPlugin</projectUrl>
-        <iconUrl>https://raw.githubusercontent.com/jamesmontemagno/SettingsPlugin/master/art/icon.png</iconUrl>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>
-            Settings Plugin for Xamarin and Windows provides a consistent, cross platform settings plugin for Windows Phone  Silverlight 8/8.1, Windows Phone 8.1, Windows Store, Xamarin.iOS, and Xamarin.Android when using a PCL or any project and is Xamarin.Forms and MvvmCross compatible.  This makes it easier to create cross-platform .NET apps and have cross platform settings. Manage and use all settings from one PCL and save natively on each platform. *This plugin stores settings natively on each platform and does NOT save them to Json. This allows you to use native functionality such as PreferenceActivity on Android.
+  <metadata minClientVersion="2.8.1">
+    <id>Xam.Plugins.Settings</id>
+    <version>$version$</version>
+    <title>Settings Plugin for Xamarin and Windows</title>
+    <authors>James Montemagno</authors>
+    <owners>James Montemagno</owners>
+    <licenseUrl>https://github.com/jamesmontemagno/SettingsPlugin/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/jamesmontemagno/SettingsPlugin</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/jamesmontemagno/SettingsPlugin/master/art/icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      Settings Plugin for Xamarin and Windows provides a consistent, cross platform settings/preferences plugin.
 
-            Support for: Int, Int64, Double, String, DateTime, Bool, Float, Decimal, Guid
+      This makes it easier to create cross-platform .NET apps and have cross platform settings.
+      Manage and use all settings from one PCL/NetStandard library and save natively on each platform.
 
-            You can always serialize and deserialize a string out if needed.
-        </description>
-        <summary>Cross platform settings for Xamarin.iOS, Xamarin.Android, Xamarin.Mac, Xamarin.Forms, and Windows</summary>
-        <tags>xamarin, pcl, xam.pcl, plugin for xamarin, plugin, settings, windows phone, winphone, wp8, winrt, android, xamarin.forms, ios, monoandroid, monodroid, monotouch, mvvmcross</tags>
-        <dependencies>
-        </dependencies>
-        <releaseNotes>
-            See Changelog: https://github.com/jamesmontemagno/SettingsPlugin/blob/master/CHANGELOG.md
-        </releaseNotes>
-    </metadata>
-    <files>
-        <file src="nuget\readme.txt" target="readme.txt"/>
-        <!--Core-->
-        <file src="src\Plugin.Settings\bin\Release\Plugin.Settings.dll" target="lib\portable-net45+wp80+win8+wpa81\Plugin.Settings.dll" />
-        <file src="src\Plugin.Settings\bin\Release\Plugin.Settings.xml" target="lib\portable-net45+wp80+win8+wpa81\Plugin.Settings.xml" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.dll" target="lib\portable-net45+wp80+win8+wpa81\Plugin.Settings.Abstractions.dll" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.xml" target="lib\portable-net45+wp80+win8+wpa81\Plugin.Settings.Abstractions.xml" />
-        <file src="files\Settings.cs.pp" target="content\portable-net45+wp80+win8+wpa81\Helpers\Settings.cs.pp" />
+      **This plugin stores settings natively on each platform and does NOT save them to Json.
+      This allows you to use native functionality such as PreferenceActivity on Android.
 
-        <!--Win Phone Silverlight-->
-        <file src="src\Plugin.Settings.WindowsPhone\bin\Release\Plugin.Settings.dll" target="lib\wp8\Plugin.Settings.dll" />
-        <file src="src\Plugin.Settings.WindowsPhone\bin\Release\Plugin.Settings.xml" target="lib\wp8\Plugin.Settings.xml" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.dll" target="lib\wp8\Plugin.Settings.Abstractions.dll" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.xml" target="lib\wp8\Plugin.Settings.Abstractions.xml" />
-         <file src="files\SettingsPlatform.cs.pp" target="content\wp8\Helpers\Settings.cs.pp" />
+      Support for: Int, Int64, Double, String, DateTime, Bool, Float, Decimal, Guid
 
-        <!--Win Phone 81-->
-        <file src="src\Plugin.Settings.WindowsPhone81\bin\Release\Plugin.Settings.dll" target="lib\wpa81\Plugin.Settings.dll" />
-        <file src="src\Plugin.Settings.WindowsPhone81\bin\Release\Plugin.Settings.xml" target="lib\wpa81\Plugin.Settings.xml" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.dll" target="lib\wpa81\Plugin.Settings.Abstractions.dll" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.xml" target="lib\wpa81\Plugin.Settings.Abstractions.xml" />
-        <file src="files\SettingsPlatform.cs.pp" target="content\wpa81\Helpers\Settings.cs.pp" />
+      You can always serialize and deserialize a string out if needed.**
+    </description>
+    <summary>Cross platform settings for Xamarin.iOS, Xamarin.Android, Xamarin.Mac, Xamarin.Forms, and Windows</summary>
+    <tags>xamarin, settings, preferences, nsuserdefaults, pcl, xam.pcl, plugin for xamarin, plugin, settings, windows phone, winphone, wp8, winrt, android, xamarin.forms, ios, monoandroid, monodroid, monotouch, mvvmcross</tags>
+    <dependencies>
+      <group targetFramework="net">
+      </group>
+      <group targetFramework="win">
+      </group>
+      <group targetFramework="wp">
+      </group>
+      <group targetFramework="wpa">
+      </group>
+      <group targetFramework="netstandard1.0">
+        <dependency id="NETStandard.Library" version="1.6.1" />
+      </group>
+      <group targetFramework="MonoAndroid10">
+      </group>
+      <group targetFramework="Xamarin.iOS10">
+      </group>
+      <group targetFramework="Xamarin.Mac20">
+      </group>
+      <group targetFramework="portable-net45+win+wpa81+wp80">
+      </group>
+      <group targetFramework="uap">
+      </group>
+      <group targetFramework="dotnet">
+      </group>
+      <group targetFramework="xamarintvos">
+      </group>
+      <group targetFramework="xamarinwatchos">
+      </group>
+    </dependencies>
+    <releaseNotes>
+      See Changelog: https://github.com/jamesmontemagno/SettingsPlugin/blob/master/CHANGELOG.md
+    </releaseNotes>
 
-        <!--WinStore-->
-        <file src="src\Plugin.Settings.WindowsStore\bin\Release\Plugin.Settings.dll" target="lib\win8\Plugin.Settings.dll" />
-        <file src="src\Plugin.Settings.WindowsStore\bin\Release\Plugin.Settings.xml" target="lib\win8\Plugin.Settings.xml" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.dll" target="lib\win8\Plugin.Settings.Abstractions.dll" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.xml" target="lib\win8\Plugin.Settings.Abstractions.xml" />
-        <file src="files\SettingsPlatform.cs.pp" target="content\win8\Helpers\Settings.cs.pp" />
-        
-        <!--Xamarin.Android-->
-        <file src="src\Plugin.Settings.Android\bin\Release\Plugin.Settings.dll" target="lib\MonoAndroid10\Plugin.Settings.dll" />
-        <file src="src\Plugin.Settings.Android\bin\Release\Plugin.Settings.xml" target="lib\MonoAndroid10\Plugin.Settings.xml" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.dll" target="lib\MonoAndroid10\Plugin.Settings.Abstractions.dll" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.xml" target="lib\MonoAndroid10\Plugin.Settings.Abstractions.xml" />
-        <file src="files\SettingsPlatform.cs.pp" target="content\MonoAndroid10\Helpers\Settings.cs.pp" />
-        
-        <!--Xamarin.iOS -->
-        <file src="src\Plugin.Settings.iOSUnified\bin\Release\Plugin.Settings.dll" target="lib\Xamarin.iOS10\Plugin.Settings.dll" />
-        <file src="src\Plugin.Settings.iOSUnified\bin\Release\Plugin.Settings.xml" target="lib\Xamarin.iOS10\Plugin.Settings.xml" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.dll" target="lib\Xamarin.iOS10\Plugin.Settings.Abstractions.dll" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.xml" target="lib\Xamarin.iOS10\Plugin.Settings.Abstractions.xml" />
-        <file src="files\SettingsPlatform.cs.pp" target="content\Xamarin.iOS10\Helpers\Settings.cs.pp" />
+  </metadata>
+
+  <files>
+    <file src="nuget\readme.txt" target="readme.txt"/>
+
+    <!--NetStandard/PCL-->
+    <file src="src\Plugin.Settings\bin\Release\netstandard1.0\Plugin.Settings.*" target="lib\netstandard1.0" />
+    <file src="files\Settings.cs.pp" target="content\netstandard1.0\Helpers\Settings.cs.pp" />
+    
+    <!--Xamarin.Android-->
+    <file src="src\Plugin.Settings.Android\bin\Release\Plugin.Settings.*" target="lib\MonoAndroid10" />
+    <file src="files\SettingsPlatform.cs.pp" target="content\MonoAndroid10\Helpers\Settings.cs.pp" />
+    
+    <!--Xamarin.iOS -->
+    <file src="src\Plugin.Settings.iOS\bin\Release\Plugin.Settings.*" target="lib\Xamarin.iOS10" />
+    <file src="files\SettingsPlatform.cs.pp" target="content\Xamarin.iOS10\Helpers\Settings.cs.pp" />
+
+    <!--Xamarin.macOS -->
+    <file src="src\Plugin.Settings.macOS\bin\Release\Plugin.Settings.*" target="lib\Xamarin.Mac20" />
+    <file src="files\SettingsPlatform.cs.pp" target="content\Xamarin.Mac20\Helpers\Settings.cs.pp" />
+
+    <!--UWP-->
+    <file src="src\Plugin.Settings.UWP\bin\Release\Plugin.Settings.*" target="lib\UAP10" />
+    <file src="files\SettingsPlatform.cs.pp" target="content\UAP10\Helpers\Settings.cs.pp" />
+
+    <!--Net 45-->
+    <file src="src\Plugin.Settings.Net45\bin\Release\Plugin.Settings.*" target="lib\net45" />
+    <file src="files\SettingsPlatform.cs.pp" target="content\net45\Helpers\Settings.cs.pp" />
+
+    <!--Xamarin.tvOS -->
+    <file src="src\Plugin.Settings.tvOS\bin\Release\Plugin.Settings.*" target="lib\xamarintvOS" />
+    <file src="files\SettingsPlatform.cs.pp" target="content\xamarintvOS\Helpers\Settings.cs.pp" />
+
+    <!--Xamarin.watchOS -->
+    <file src="src\Plugin.Settings.watchOS\bin\Release\Plugin.Settings.*" target="lib\xamarinwatchOS" />
+    <file src="files\SettingsPlatform.cs.pp" target="content\xamarinwatchOS\Helpers\Settings.cs.pp" />
 
 
-        <!--Xamarin.iOS -->
-        <file src="src\Plugin.Settings.macOS\bin\Release\Plugin.Settings.dll" target="lib\Xamarin.Mac20\Plugin.Settings.dll" />
-        <file src="src\Plugin.Settings.macOS\bin\Release\Plugin.Settings.xml" target="lib\Xamarin.Mac20\Plugin.Settings.xml" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.dll" target="lib\Xamarin.Mac20\Plugin.Settings.Abstractions.dll" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.xml" target="lib\Xamarin.Mac20\Plugin.Settings.Abstractions.xml" />
-        <file src="files\SettingsPlatform.cs.pp" target="content\Xamarin.Mac20\Helpers\Settings.cs.pp" />
-
-      
-      <!--UWP-->
-        <file src="src\Plugin.Settings.UWP\bin\Release\Plugin.Settings.dll" target="lib\UAP10\Plugin.Settings.dll" />
-        <file src="src\Plugin.Settings.UWP\bin\Release\Plugin.Settings.xml" target="lib\UAP10\Plugin.Settings.xml" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.dll" target="lib\UAP10\Plugin.Settings.Abstractions.dll" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.xml" target="lib\UAP10\Plugin.Settings.Abstractions.xml" />
-        <file src="files\SettingsPlatform.cs.pp" target="content\UAP10\Helpers\Settings.cs.pp" />
-        
-        <!--Net 45-->
-        <file src="src\Plugin.Settings.Net45\bin\Release\Plugin.Settings.dll" target="lib\net45\Plugin.Settings.dll" />
-        <file src="src\Plugin.Settings.Net45\bin\Release\Plugin.Settings.xml" target="lib\net45\Plugin.Settings.xml" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.dll" target="lib\net45\Plugin.Settings.Abstractions.dll" />
-        <file src="src\Plugin.Settings.Abstractions\bin\Release\Plugin.Settings.Abstractions.xml" target="lib\net45\Plugin.Settings.Abstractions.xml" />
-        <file src="files\SettingsPlatform.cs.pp" target="content\net45\Helpers\Settings.cs.pp" />
-    </files>
+  </files>
 </package>

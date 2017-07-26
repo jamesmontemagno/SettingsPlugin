@@ -1,17 +1,17 @@
 Settings Plugin Readme
 
-Changelog:
-[2.5.0]
-* Added ability to clear all settings
-* .NET 4.5 users user instead of machine
-
 See more at: https://github.com/jamesmontemagno/SettingsPlugin/blob/master/CHANGELOG.md
 
+## News
+- Plugins have moved to .NET Standard and have some important changes! Please read my blog:
+http://motzcod.es/post/162402194007/plugins-for-xamarin-go-dotnet-standard
+
+-New changes in Settings API: GetValueOrDefault and AddOrUpdateValue are no longer generic and you must pass in only supported types.
+
 ### Important
-Ensure that you install NuGet into PCL and all platform projects and see Helpers/Settings.cs
+Ensure that you install NuGet into ALL projects.
 
-If you are installing this in a normal project and not using a pcl create a new file called Settings.cs or whatever you want and copy this code in:
-
+Create a new file called Settings.cs or whatever you want and copy this code in to get started:
 
 // Helpers/Settings.cs
 using Plugin.Settings;
@@ -46,11 +46,11 @@ namespace $rootnamespace$.Helpers
     {
       get
       {
-        return AppSettings.GetValueOrDefault<string>(SettingsKey, SettingsDefault);
+        return AppSettings.GetValueOrDefault(SettingsKey, SettingsDefault);
       }
       set
       {
-        AppSettings.AddOrUpdateValue<string>(SettingsKey, value);
+        AppSettings.AddOrUpdateValue(SettingsKey, value);
       }
     }
 

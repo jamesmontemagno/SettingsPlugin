@@ -19,6 +19,8 @@ namespace Plugin.Settings.Tests.Portable.Helpers
             }
         }
 
+        public static string FileName { get; set; } = null;
+
         #region Setting Constants
 
         public const string SettingsKey = "settings_key";
@@ -30,12 +32,12 @@ namespace Plugin.Settings.Tests.Portable.Helpers
         {
             get
             {
-                return AppSettings.GetValueOrDefault("guid_setting", Guid.Empty);
+                return AppSettings.GetValueOrDefault("guid_setting", Guid.Empty, FileName);
             }
             set
             {
                 //if value has changed then save it!
-                AppSettings.AddOrUpdateValue("guid_setting", value);
+                AppSettings.AddOrUpdateValue("guid_setting", value, FileName);
             }
         }
 
@@ -43,12 +45,12 @@ namespace Plugin.Settings.Tests.Portable.Helpers
         {
             get
             {
-                return AppSettings.GetValueOrDefault("decimal_setting", (decimal)0);
+                return AppSettings.GetValueOrDefault("decimal_setting", (decimal)0, FileName);
             }
             set
             {
                 //if value has changed then save it!
-                AppSettings.AddOrUpdateValue("decimal_setting", value);
+                AppSettings.AddOrUpdateValue("decimal_setting", value, FileName);
             }
         }
 
@@ -56,12 +58,12 @@ namespace Plugin.Settings.Tests.Portable.Helpers
         {
             get
             {
-                return AppSettings.GetValueOrDefault("int_setting", (int)0);
+                return AppSettings.GetValueOrDefault("int_setting", (int)0, FileName);
             }
             set
             {
                 //if value has changed then save it!
-                AppSettings.AddOrUpdateValue("int_setting", value);
+                AppSettings.AddOrUpdateValue("int_setting", value, FileName);
             }
         }
 
@@ -69,12 +71,12 @@ namespace Plugin.Settings.Tests.Portable.Helpers
         {
             get
             {
-                return AppSettings.GetValueOrDefault("float_setting", (float)0);
+                return AppSettings.GetValueOrDefault("float_setting", (float)0, FileName);
             }
             set
             {
                 //if value has changed then save it!
-                AppSettings.AddOrUpdateValue("float_setting", value);
+                AppSettings.AddOrUpdateValue("float_setting", value, FileName);
             }
         }
 
@@ -82,12 +84,12 @@ namespace Plugin.Settings.Tests.Portable.Helpers
         {
             get
             {
-                return AppSettings.GetValueOrDefault("int64_setting", (Int64)0);
+                return AppSettings.GetValueOrDefault("int64_setting", (Int64)0, FileName);
             }
             set
             {
                 //if value has changed then save it!
-                AppSettings.AddOrUpdateValue("int64_setting", value);
+                AppSettings.AddOrUpdateValue("int64_setting", value, FileName);
             }
         }
 
@@ -95,25 +97,25 @@ namespace Plugin.Settings.Tests.Portable.Helpers
         {
             get
             {
-                return AppSettings.GetValueOrDefault("int32_setting", (Int32)0);
+                return AppSettings.GetValueOrDefault("int32_setting", (Int32)0, FileName);
             }
             set
             {
                 //if value has changed then save it!
-                AppSettings.AddOrUpdateValue("int32_setting", value);
+                AppSettings.AddOrUpdateValue("int32_setting", value, FileName);
             }
         }
 
-        public static DateTime? DateTimeSetting
+        public static DateTime DateTimeSetting
         {
             get
             {
-                return AppSettings.GetValueOrDefault<DateTime?>("date_setting");
+                return AppSettings.GetValueOrDefault("date_setting", DateTime.Now, FileName);
             }
             set
             {
                 //if value has changed then save it!
-                AppSettings.AddOrUpdateValue("date_setting", value);
+                AppSettings.AddOrUpdateValue("date_setting", value, FileName);
             }
         }
 
@@ -121,12 +123,12 @@ namespace Plugin.Settings.Tests.Portable.Helpers
         {
             get
             {
-                return AppSettings.GetValueOrDefault("double_setting", (double)0);
+                return AppSettings.GetValueOrDefault("double_setting", (double)0, FileName);
             }
             set
             {
                 //if value has changed then save it!
-                AppSettings.AddOrUpdateValue("double_setting", value);
+                AppSettings.AddOrUpdateValue("double_setting", value, FileName);
             }
         }
 
@@ -134,11 +136,11 @@ namespace Plugin.Settings.Tests.Portable.Helpers
         {
             get
             {
-                return AppSettings.GetValueOrDefault("bool_setting", false);
+                return AppSettings.GetValueOrDefault("bool_setting", false, FileName);
             }
             set
             {
-                AppSettings.AddOrUpdateValue("bool_setting", value);
+                AppSettings.AddOrUpdateValue("bool_setting", value, FileName);
             }
         }
 
@@ -146,18 +148,23 @@ namespace Plugin.Settings.Tests.Portable.Helpers
         {
             get
             {
-                return AppSettings.GetValueOrDefault(SettingsKey, SettingsDefault);
+                return AppSettings.GetValueOrDefault(SettingsKey, SettingsDefault, FileName);
             }
             set
             {
                 //if value has changed then save it!
-                AppSettings.AddOrUpdateValue(SettingsKey, value);
+                AppSettings.AddOrUpdateValue(SettingsKey, value, FileName);
             }
         }
 
         public static void Remove(string key)
         {
-            AppSettings.Remove(key);
+            AppSettings.Remove(key, FileName);
+        }
+
+        public static void Clear()
+        {
+            AppSettings.Clear(FileName);
         }
 
     }
