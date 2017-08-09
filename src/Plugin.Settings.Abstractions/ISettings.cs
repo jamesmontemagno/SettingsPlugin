@@ -177,5 +177,13 @@ namespace Plugin.Settings.Abstractions
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>True if contains key, else false</returns>
         bool Contains(string key, string fileName = null);
+
+
+
+        /// <summary>
+        /// Attempts to open the app settings page.
+        /// </summary>
+        /// <returns>true if success, else false and not supported</returns>
+        bool OpenAppSettings();
     }
 }

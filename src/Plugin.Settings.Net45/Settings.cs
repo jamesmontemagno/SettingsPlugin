@@ -421,5 +421,11 @@ namespace Plugin.Settings
             AddOrUpdateValueInternal(key, value, fileName);
 
         #endregion
+
+        /// <summary>
+        /// Attempts to open the app settings page.
+        /// </summary>
+        /// <returns>true if success, else false and not supported</returns>
+        public bool OpenAppSettings() => false;
     }
 }

@@ -1,3 +1,6 @@
+### 3.1.0-beta
+* Add ability to open app settings page in iOS/Android
+
 ### 3.0.0
 * Strongly Type all Gets and Sets
 * Re-targeted to .NET Standard 1.0
