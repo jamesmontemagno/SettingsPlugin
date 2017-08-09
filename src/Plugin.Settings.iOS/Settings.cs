@@ -478,7 +478,6 @@ namespace Plugin.Settings
             return false;
 #endif
         }
-    }
 
     }
 
