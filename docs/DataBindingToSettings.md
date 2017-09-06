@@ -99,6 +99,19 @@ public class BaseViewModel : INotifyPropertyChanged
 {
     public Settings Settings => Settings.Current;
   
+	protected bool SetProperty<T>(
+		ref T backingStore, T value,
+		[CallerMemberName]string propertyName = "",
+		Action onChanged = null)
+	{
+		if (EqualityComparer<T>.Default.Equals(backingStore, value))
+			return false;
+
+		backingStore = value;
+		onChanged?.Invoke();
+		OnPropertyChanged(propertyName);
+		return true;
+	}
 
     #region INotifyPropertyChanged implementation
 
@@ -128,8 +141,9 @@ public class Settings : BaseViewModel
         get => AppSettings.GetValueOrDefault(nameof(Count), CountDefault);
         set
         { 
+			var original = Count;
             if (AppSettings.AddOrUpdateValue(nameof(Count), value))
-                OnPropertyChanged();
+                SetProperty(ref original, value);
 
         }
     }
