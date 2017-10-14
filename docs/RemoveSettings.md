@@ -24,7 +24,7 @@ public static string UserName
   set => AppSettings.AddOrUpdateValue(nameof(UserName), value); 
 }
 
-publc static void RemoveUserName() => AppSettings.Remove(nameof(UserName));
+public static void RemoveUserName() => AppSettings.Remove(nameof(UserName));
 ```
 
 ### Clear All Settings
