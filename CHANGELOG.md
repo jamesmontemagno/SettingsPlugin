@@ -1,4 +1,4 @@
-### 3.1.0-beta
+### 3.1.1
 * Add ability to open app settings page in iOS/Android
 * Android: Better parsing of double's with exponents. #101
 
