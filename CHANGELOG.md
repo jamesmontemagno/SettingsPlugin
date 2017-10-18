@@ -1,5 +1,6 @@
 ### 3.1.0-beta
 * Add ability to open app settings page in iOS/Android
+* Android: Better parsing of double's with exponents. #101
 
 ### 3.0.0
 * Strongly Type all Gets and Sets
