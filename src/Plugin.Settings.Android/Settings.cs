@@ -137,7 +137,7 @@ namespace Plugin.Settings
                     else
                     {
 
-                        if (!double.TryParse(savedDouble, NumberStyles.Number, CultureInfo.InvariantCulture, out double outDouble))
+                        if (!double.TryParse(savedDouble, NumberStyles.Number | NumberStyles.AllowExponent, CultureInfo.InvariantCulture, out double outDouble))
                         {
                             var maxString = Convert.ToString(double.MaxValue, CultureInfo.InvariantCulture);
                             outDouble = savedDouble.Equals(maxString) ? double.MaxValue : double.MinValue;

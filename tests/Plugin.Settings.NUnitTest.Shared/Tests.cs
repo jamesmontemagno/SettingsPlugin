@@ -154,7 +154,18 @@ namespace Plugin.Settings.NUnitTest
             Assert.True(TestSettings.DecimalSetting == test, "DecimalSetting not saved");
         }
 
-        [Test]
+		[Test]
+		public void Bug101()
+		{
+			double i = 0.001;
+			var inStuff = i / 100;
+			TestSettings.txt_MinRate = inStuff;
+
+			var val = TestSettings.txt_MinRate;
+			Assert.True(val == inStuff, "Double not saved");
+		}
+
+		[Test]
         public void Decimal()
         {
             decimal test = 0.099M;
