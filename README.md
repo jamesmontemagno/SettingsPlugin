@@ -22,7 +22,7 @@ Get started by reading through the [Settings Plugin documentation](https://james
 |Xamarin.Mac|All|
 |Xamarin.tvOS|All|
 |Xamarin.watchOS|All|
-|Tizen.NET|4.0+|
+|Tizen.NET|3.0+|
 |.NET 4.5|All|
 
 
