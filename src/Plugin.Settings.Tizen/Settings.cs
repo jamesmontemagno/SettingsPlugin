@@ -392,6 +392,8 @@ namespace Plugin.Settings
         public bool AddOrUpdateValue(string key, double value, string fileName = null) =>
             AddOrUpdateValueInternal(key, value, fileName);
 
-        #endregion
+		#endregion
+
+		public bool OpenAppSettings() => false;
     }
 }
