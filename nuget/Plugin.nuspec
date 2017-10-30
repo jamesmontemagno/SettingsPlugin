@@ -20,8 +20,8 @@
 
       You can always serialize and deserialize a string out if needed.**
     </description>
-    <summary>Cross platform settings for Xamarin.iOS, Xamarin.Android, Xamarin.Mac, Xamarin.Forms, and Windows</summary>
-    <tags>xamarin, settings, preferences, nsuserdefaults, pcl, xam.pcl, plugin for xamarin, plugin, settings, windows phone, winphone, wp8, winrt, android, xamarin.forms, ios, monoandroid, monodroid, monotouch, mvvmcross</tags>
+    <summary>Cross platform settings for Xamarin.iOS, Xamarin.Android, Xamarin.Mac, Xamarin.Forms, Tizen.NET and Windows</summary>
+    <tags>xamarin, settings, preferences, nsuserdefaults, pcl, xam.pcl, plugin for xamarin, plugin, settings, windows phone, winphone, wp8, winrt, android, xamarin.forms, ios, monoandroid, monodroid, monotouch, tizen.net, mvvmcross</tags>
     <dependencies>
       <group targetFramework="net">
       </group>
