@@ -81,7 +81,7 @@ namespace Plugin.Settings.Abstractions
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>Value or default</returns>
         Double GetValueOrDefault(string key, Double defaultValue, string fileName = null);
-       
+
 
         /// <summary>
         /// Adds or updates the value 
@@ -155,7 +155,7 @@ namespace Plugin.Settings.Abstractions
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>True of was added or updated and you need to save it.</returns>
         bool AddOrUpdateValue(string key, Double value, string fileName = null);
-     
+
 
         /// <summary>
         /// Removes a desired key from the settings
@@ -177,5 +177,13 @@ namespace Plugin.Settings.Abstractions
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>True if contains key, else false</returns>
         bool Contains(string key, string fileName = null);
+
+
+
+        /// <summary>
+        /// Attempts to open the app settings page.
+        /// </summary>
+        /// <returns>true if success, else false and not supported</returns>
+        bool OpenAppSettings();
     }
 }

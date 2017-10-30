@@ -1,6 +1,9 @@
 ﻿
 using System;
 using Foundation;
+#if __IOS__
+using UIKit;
+#endif
 using Plugin.Settings.Abstractions;
 
 namespace Plugin.Settings
@@ -8,7 +11,7 @@ namespace Plugin.Settings
     /// <summary>
     /// Main implementation for ISettings
     /// </summary>
-    [Preserve(AllMembers =true)]
+    [Preserve(AllMembers = true)]
     public class SettingsImplementation : ISettings
     {
 
@@ -234,7 +237,7 @@ namespace Plugin.Settings
                 try
                 {
                     var items = defaults.ToDictionary();
-                    
+
                     foreach (var item in items.Keys)
                     {
                         if (item is NSString nsString)
@@ -281,7 +284,7 @@ namespace Plugin.Settings
 
 
 
-        #region GetValueOrDefault
+#region GetValueOrDefault
         /// <summary>
         /// Gets the current value or the default that you specify.
         /// </summary>
@@ -363,9 +366,9 @@ namespace Plugin.Settings
         /// <returns>Value or default</returns>
         public double GetValueOrDefault(string key, double defaultValue, string fileName = null) =>
             GetValueOrDefaultInternal(key, defaultValue, fileName);
-        #endregion
+#endregion
 
-        #region AddOrUpdateValue
+#region AddOrUpdateValue
         /// <summary>
         /// Adds or updates the value 
         /// </summary>
@@ -449,6 +452,32 @@ namespace Plugin.Settings
             AddOrUpdateValueInternal(key, value, fileName);
 
         #endregion
+
+
+        /// <summary>
+        /// Attempts to open the app settings page.
+        /// </summary>
+        /// <returns>true if success, else false and not supported</returns>
+        public bool OpenAppSettings()
+        {
+#if __IOS__
+            //Opening settings only open in iOS 8+
+            if (!UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
+                return false;
+
+            try
+            {
+                UIApplication.SharedApplication.OpenUrl(new NSUrl(UIApplication.OpenSettingsUrlString));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+#else
+            return false;
+#endif
+        }
 
     }
 

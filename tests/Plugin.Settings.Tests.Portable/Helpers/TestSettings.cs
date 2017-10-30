@@ -144,7 +144,15 @@ namespace Plugin.Settings.Tests.Portable.Helpers
             }
         }
 
-        public static string StringSetting
+		private const string txt_MinRateyKey = "txt_MinRate_Key";
+		private static readonly double txt_MinRateDefault = 0.0;
+		public static double txt_MinRate
+		{
+			get => AppSettings.GetValueOrDefault(txt_MinRateyKey, txt_MinRateDefault);
+			set => AppSettings.AddOrUpdateValue(txt_MinRateyKey, value);
+		}
+
+		public static string StringSetting
         {
             get
             {

@@ -137,7 +137,7 @@ namespace Plugin.Settings
                     else
                     {
 
-                        if (!double.TryParse(savedDouble, NumberStyles.Number, CultureInfo.InvariantCulture, out double outDouble))
+                        if (!double.TryParse(savedDouble, NumberStyles.Number | NumberStyles.AllowExponent, CultureInfo.InvariantCulture, out double outDouble))
                         {
                             var maxString = Convert.ToString(double.MaxValue, CultureInfo.InvariantCulture);
                             outDouble = savedDouble.Equals(maxString) ? double.MaxValue : double.MinValue;
@@ -526,5 +526,38 @@ namespace Plugin.Settings
             AddOrUpdateValueInternal(key, value, fileName);
 
         #endregion
+
+
+        /// <summary>
+        /// Opens settings to app page
+        /// </summary>
+        /// <returns>true if could open.</returns>
+        public bool OpenAppSettings()
+        {
+
+            var context = Application.Context;
+            if (context == null)
+                return false;
+
+            try
+            {
+                var settingsIntent = new Intent();
+                settingsIntent.SetAction(Android.Provider.Settings.ActionApplicationDetailsSettings);
+                settingsIntent.AddCategory(Intent.CategoryDefault);
+                settingsIntent.SetData(Android.Net.Uri.Parse("package:" + context.PackageName));
+                settingsIntent.AddFlags(ActivityFlags.NewTask);
+                settingsIntent.AddFlags(ActivityFlags.ClearTask);
+                settingsIntent.AddFlags(ActivityFlags.NoHistory);
+                settingsIntent.AddFlags(ActivityFlags.ExcludeFromRecents);
+                context.StartActivity(settingsIntent);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+
+        }
     }
 }

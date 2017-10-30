@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Settings.Android", "Plugin.Settings.Android\Plugin.Settings.Android.csproj", "{91B25A78-62C8-41AA-8D22-DA326A5EA64D}"
 EndProject
@@ -9,12 +9,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Settings.iOS", "Plug
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3E1F951A-5B27-4BB7-8D11-0150C9B427A4}"
 	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
 		..\appveyor.yml = ..\appveyor.yml
 		..\build.cake = ..\build.cake
 		..\CHANGELOG.md = ..\CHANGELOG.md
 		..\nuget\Plugin.nuspec = ..\nuget\Plugin.nuspec
 		..\README.md = ..\README.md
 		..\nuget\readme.txt = ..\nuget\readme.txt
+		..\files\Settings.cs.pp = ..\files\Settings.cs.pp
+		..\files\SettingsPlatform.cs.pp = ..\files\SettingsPlatform.cs.pp
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Settings.UWP", "Plugin.Settings.UWP\Plugin.Settings.UWP.csproj", "{C1B59CE7-B44B-4F31-B671-02E685ED036F}"

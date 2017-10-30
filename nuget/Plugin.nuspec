@@ -62,27 +62,35 @@
 
     <!--NetStandard/PCL-->
     <file src="src\Plugin.Settings\bin\Release\netstandard1.0\Plugin.Settings.*" target="lib\netstandard1.0" />
-
+    <file src="files\Settings.cs.pp" target="content\netstandard1.0\Helpers\Settings.cs.pp" />
+    
     <!--Xamarin.Android-->
     <file src="src\Plugin.Settings.Android\bin\Release\Plugin.Settings.*" target="lib\MonoAndroid10" />
-
+    <file src="files\SettingsPlatform.cs.pp" target="content\MonoAndroid10\Helpers\Settings.cs.pp" />
+    
     <!--Xamarin.iOS -->
     <file src="src\Plugin.Settings.iOS\bin\Release\Plugin.Settings.*" target="lib\Xamarin.iOS10" />
+    <file src="files\SettingsPlatform.cs.pp" target="content\Xamarin.iOS10\Helpers\Settings.cs.pp" />
 
     <!--Xamarin.macOS -->
     <file src="src\Plugin.Settings.macOS\bin\Release\Plugin.Settings.*" target="lib\Xamarin.Mac20" />
+    <file src="files\SettingsPlatform.cs.pp" target="content\Xamarin.Mac20\Helpers\Settings.cs.pp" />
 
     <!--UWP-->
     <file src="src\Plugin.Settings.UWP\bin\Release\Plugin.Settings.*" target="lib\UAP10" />
+    <file src="files\SettingsPlatform.cs.pp" target="content\UAP10\Helpers\Settings.cs.pp" />
 
     <!--Net 45-->
     <file src="src\Plugin.Settings.Net45\bin\Release\Plugin.Settings.*" target="lib\net45" />
+    <file src="files\SettingsPlatform.cs.pp" target="content\net45\Helpers\Settings.cs.pp" />
 
     <!--Xamarin.tvOS -->
     <file src="src\Plugin.Settings.tvOS\bin\Release\Plugin.Settings.*" target="lib\xamarintvOS" />
-    
+    <file src="files\SettingsPlatform.cs.pp" target="content\xamarintvOS\Helpers\Settings.cs.pp" />
+
     <!--Xamarin.watchOS -->
     <file src="src\Plugin.Settings.watchOS\bin\Release\Plugin.Settings.*" target="lib\xamarinwatchOS" />
+    <file src="files\SettingsPlatform.cs.pp" target="content\xamarinwatchOS\Helpers\Settings.cs.pp" />
     
     <!-- Tizen .NET Support -->
     <file src="src\Plugin.Settings.Tizen\bin\Release\Plugin.Settings.*" target="lib\Tizen30\Plugin.Settings.dll" />
