@@ -50,7 +50,7 @@
       </group>
       <group targetFramework="xamarinwatchos">
       </group>
-      <group targetFramework="Tizen30">
+      <group targetFramework="Tizen40">
       </group>
     </dependencies>
     <releaseNotes>
@@ -93,7 +93,7 @@
     <file src="files\SettingsPlatform.cs.pp" target="content\xamarinwatchOS\Helpers\Settings.cs.pp" />
     
     <!-- Tizen .NET Support -->
-    <file src="src\Plugin.Settings.Tizen\bin\Release\Plugin.Settings.*" target="lib\Tizen30\Plugin.Settings.dll" />
+    <file src="src\Plugin.Settings.Tizen\bin\Release\Plugin.Settings.*" target="lib\Tizen40\Plugin.Settings.dll" />
        
 
   </files>

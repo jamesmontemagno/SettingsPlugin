@@ -1,7 +1,7 @@
-﻿using Plugin.Settings.Abstractions;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
+using Plugin.Settings.Abstractions;
 using Tizen.Applications;
 
 namespace Plugin.Settings

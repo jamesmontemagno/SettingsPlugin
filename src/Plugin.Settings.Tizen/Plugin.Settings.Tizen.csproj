@@ -1,91 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectTypeGuids>{2F98DAC9-6F16-457B-AED7-D43CAC379341};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{223822C3-BF89-4D3E-9B4B-832673BD7E3E}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>tizen40</TargetFramework>
     <RootNamespace>Plugin.Settings</RootNamespace>
     <AssemblyName>Plugin.Settings</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <DefaultLanguage>en-US</DefaultLanguage>
   </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworkIdentifier>DNXCore</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
-    <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
-    <NuGetTargetMoniker>.NETCoreApp,Version=v1.0</NuGetTargetMoniker>
-    <NoStdLib>true</NoStdLib>
-    <NoWarn>$(NoWarn);1701</NoWarn>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Plugin.Settings.xml</DocumentationFile>
-  </PropertyGroup>
+
   <ItemGroup>
-    <None Include="Plugin.Settings.Tizen.project.json" />
+    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.1.0" PrivateAssets="All" />
+    <PackageReference Include="Tizen.Applications" Version="1.0.2" />
+    <PackageReference Include="Tizen.NET" Version="3.0.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs" />
+    <ProjectReference Include="..\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj">
-      <Project>{d12d6afa-0696-4177-9c85-ec576277ef8e}</Project>
-      <Name>Plugin.Settings.Abstractions</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\Plugin.Settings.Shared\Plugin.Settings.Shared.projitems" Label="Shared" Condition="Exists('..\Plugin.Settings.Shared\Plugin.Settings.Shared.projitems')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-		Other similar extension points exist, see Microsoft.Common.targets.
-	<Target Name="BeforeBuild">
-	</Target>
-	<Target Name="AfterBuild">
-	</Target>
-	-->
-  <PropertyGroup>
-    <!-- https://github.com/dotnet/corefxlab/tree/master/samples/NetCoreSample and
-			 https://docs.microsoft.com/en-us/dotnet/articles/core/tutorials/target-dotnetcore-with-msbuild
-		-->
-    <!-- We don't use any of MSBuild's resolution logic for resolving the framework, so just set these two
-			 properties to any folder that exists to skip the GetReferenceAssemblyPaths task (not target) and
-			 to prevent it from outputting a warning (MSB3644).
-		-->
-    <_TargetFrameworkDirectories>$(MSBuildThisFileDirectory)</_TargetFrameworkDirectories>
-    <_FullFrameworkReferenceAssemblyPaths>$(MSBuildThisFileDirectory)</_FullFrameworkReferenceAssemblyPaths>
-    <AutoUnifyAssemblyReferences>true</AutoUnifyAssemblyReferences>
-  </PropertyGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <FlavorProperties GUID="{2F98DAC9-6F16-457B-AED7-D43CAC379341}" Configuration="Debug|Any CPU">
-        <ProjectCommonFlavorCfg />
-      </FlavorProperties>
-      <FlavorProperties GUID="{2F98DAC9-6F16-457B-AED7-D43CAC379341}" Configuration="Release|Any CPU">
-        <ProjectCommonFlavorCfg />
-      </FlavorProperties>
-    </VisualStudio>
-  </ProjectExtensions>
+
+  <Import Project="..\Plugin.Settings.Shared\Plugin.Settings.Shared.projitems" Label="Shared" />
+  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>
