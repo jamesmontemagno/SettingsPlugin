@@ -37,6 +37,8 @@
       <group targetFramework="netstandard1.0">
         <dependency id="NETStandard.Library" version="1.6.1" />
       </group>
+      <group targetFramework="netcoreapp2.0">
+      </group>
       <group targetFramework="MonoAndroid10">
       </group>
       <group targetFramework="Xamarin.iOS10">
@@ -94,6 +96,10 @@
     <!--Xamarin.watchOS -->
     <file src="src\Plugin.Settings.watchOS\bin\Release\Plugin.Settings.*" target="lib\xamarinwatchOS" />
     <file src="files\SettingsPlatform.cs.pp" target="content\xamarinwatchOS\Helpers\Settings.cs.pp" />
+
+    <!--Net Core-->
+    <file src="src\Plugin.Settings.NetCore\bin\Release\netcoreapp2.0\Plugin.Settings.*" target="lib\netcoreapp2.0" />
+    <file src="files\SettingsPlatform.cs.pp" target="content\netcoreapp2.0\Helpers\Settings.cs.pp" />
 
 
   </files>

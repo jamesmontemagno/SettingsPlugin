@@ -1,3 +1,6 @@
+### 3.2.0
+* Add .NET Core 2.0 Support
+
 ### 3.1.1
 * Add ability to open app settings page in iOS/Android
 * Android: Better parsing of double's with exponents. #101
