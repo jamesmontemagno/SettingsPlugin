@@ -1,0 +1,208 @@
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <UsingTask AssemblyFile="$(MSBuildThisFileDirectory)lib\Xamarin.Android.Tools.BootstrapTasks.dll" TaskName="Xamarin.Android.Tools.BootstrapTasks.Adb" />
+    <UsingTask AssemblyFile="$(MSBuildThisFileDirectory)lib\Xamarin.Android.Tools.BootstrapTasks.dll" TaskName="Xamarin.Android.Tools.BootstrapTasks.CheckAdbTarget" />
+    <UsingTask AssemblyFile="$(MSBuildThisFileDirectory)lib\Xamarin.Android.Tools.BootstrapTasks.dll" TaskName="Xamarin.Android.Tools.BootstrapTasks.CreateAndroidEmulator" />
+    <UsingTask AssemblyFile="$(MSBuildThisFileDirectory)lib\Xamarin.Android.Tools.BootstrapTasks.dll" TaskName="Xamarin.Android.Tools.BootstrapTasks.RenameTestCases" />
+    <UsingTask AssemblyFile="$(MSBuildThisFileDirectory)lib\Xamarin.Android.Tools.BootstrapTasks.dll" TaskName="Xamarin.Android.Tools.BootstrapTasks.RunInstrumentationTests" />
+    <UsingTask AssemblyFile="$(MSBuildThisFileDirectory)lib\Xamarin.Android.Tools.BootstrapTasks.dll" TaskName="Xamarin.Android.Tools.BootstrapTasks.RunUITests" />
+    <UsingTask AssemblyFile="$(MSBuildThisFileDirectory)lib\Xamarin.Android.Tools.BootstrapTasks.dll" TaskName="Xamarin.Android.Tools.BootstrapTasks.StartAndroidEmulator" />
+    <UsingTask AssemblyFile="$(MSBuildThisFileDirectory)lib\Xamarin.Android.Tools.BootstrapTasks.dll" TaskName="Xamarin.Android.Tools.BootstrapTasks.KillProcess" />
+    <UsingTask AssemblyFile="$(MSBuildThisFileDirectory)lib\xa-prep-tasks.dll" TaskName="Xamarin.Android.BuildTools.PrepTasks.Sleep" />
+    <UsingTask AssemblyFile="$(MSBuildThisFileDirectory)lib\xa-prep-tasks.dll" TaskName="Xamarin.Android.BuildTools.PrepTasks.ProcessLogcatTiming" />
+    
+
+    <PropertyGroup>
+        <_TestImageName>XamarinAndroidTestRunner</_TestImageName>
+        <_AdbEmulatorPort>5570</_AdbEmulatorPort>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <_AotName Condition=" '$(AotAssemblies)' == 'true' ">-Aot</_AotName>
+    </PropertyGroup>
+
+    <Target Name="AcquireAndroidTarget">
+        <Xamarin.Android.Tools.BootstrapTasks.CheckAdbTarget
+            Condition=" '$(RequireNewEmulator)' != 'True' "
+            AdbTarget="$(AdbTarget)"
+            ToolExe="$(AdbToolExe)"
+            ToolPath="$(AdbToolPath)">
+            <Output TaskParameter="AdbTarget"     PropertyName="_AdbTarget" />
+            <Output TaskParameter="IsValidTarget" PropertyName="_ValidAdbTarget"  />
+        </Xamarin.Android.Tools.BootstrapTasks.CheckAdbTarget>
+        <CreateAndroidEmulator
+            Condition=" '$(_ValidAdbTarget)' != 'True' "
+            AndroidAbi="x86"
+            AndroidSdkHome="$(AndroidSdkDirectory)"
+            JavaSdkHome="$(JavaSdkDirectory)"
+            SdkVersion="21"
+            ImageName="$(_TestImageName)"
+            ToolExe="$(AvdManagerToolExe)"
+            ToolPath="$(AndroidToolsBinPath)"
+        />
+        <StartAndroidEmulator
+            Condition=" '$(_ValidAdbTarget)' != 'True' "
+            AndroidSdkHome="$(AndroidSdkDirectory)"
+            ImageName="$(_TestImageName)"
+            Port="$(_AdbEmulatorPort)"
+            ToolExe="$(EmulatorToolExe)"
+            ToolPath="$(EmulatorToolPath)">
+        <Output TaskParameter="AdbTarget" PropertyName="_AdbTarget" />
+        <Output TaskParameter="AdbTarget" PropertyName="_EmuTarget" />
+        <Output TaskParameter="EmulatorProcessId" PropertyName="_EmuPid" />
+        </StartAndroidEmulator>
+        <Xamarin.Android.Tools.BootstrapTasks.Adb
+            EnvironmentVariables="ADB_TRACE=all"
+            Condition=" '$(_ValidAdbTarget)' != 'True' "
+            Arguments="$(_AdbTarget) wait-for-device"
+            ToolExe="$(AdbToolExe)"
+            ToolPath="$(AdbToolPath)"
+        />
+        <Xamarin.Android.Tools.BootstrapTasks.Adb
+            EnvironmentVariables="ADB_TRACE=all"
+            Condition=" '$(_ValidAdbTarget)' != 'True' "
+            Arguments="$(_EmuTarget) shell 'counter=0; while [ $counter -lt 60 ] &amp;&amp; [ &quot;`getprop sys.boot_completed`&quot; != &quot;1&quot; ]; do echo Waiting for device to fully boot; sleep 1; let &quot;counter++&quot;; done'"
+            ToolExe="$(AdbToolExe)"
+            ToolPath="$(AdbToolPath)"
+        />
+        <Xamarin.Android.Tools.BootstrapTasks.Adb
+            Arguments="$(_AdbTarget) shell setprop debug.mono.log timing"
+            ToolExe="$(AdbToolExe)"
+            ToolPath="$(AdbToolPath)"
+        />
+        <Xamarin.Android.Tools.BootstrapTasks.Adb
+            Arguments="$(_AdbTarget) logcat -G 4M"
+            ToolExe="$(AdbToolExe)"
+            ToolPath="$(AdbToolPath)"
+        />
+        <Message
+            Condition=" '$(_EmuTarget)' != '' "
+            Text="Launched Android emulator; `adb` target: '$(_AdbTarget)'"
+        />
+    </Target>
+    <Target Name="DeployTestApks"
+      Condition=" '@(TestApk)' != '' ">
+    <Xamarin.Android.Tools.BootstrapTasks.Adb
+        Arguments="$(_AdbTarget) $(AdbOptions) install &quot;%(TestApk.Identity)&quot;"
+        ToolExe="$(AdbToolExe)"
+        ToolPath="$(AdbToolPath)"
+      />
+    </Target>
+      <Target Name="RunTestApks"
+      Condition=" '@(TestApk)' != '' ">
+    <RunInstrumentationTests
+        Condition=" '%(TestApk.InstrumentationType)' != ''"
+        AdbTarget="$(_AdbTarget)"
+        AdbOptions="$(AdbOptions)"
+        Component="%(TestApk.Package)/%(TestApk.InstrumentationType)"
+        NUnit2TestResultsFile="%(TestApk.ResultsPath)"
+        TestFixture="$(TestFixture)"
+        ToolExe="$(AdbToolExe)"
+        ToolPath="$(AdbToolPath)">
+      <Output TaskParameter="FailedToRun" ItemName="_FailedComponent"/>
+    </RunInstrumentationTests>
+    <PropertyGroup>
+      <_LogcatFilename>logcat-$(Configuration)$(_AotName).txt</_LogcatFilename>
+    </PropertyGroup>
+    <Exec Command="&quot;$(AdbToolPath)\$(AdbToolExe)&quot; $(_AdbTarget) $(AdbOptions) logcat -v threadtime -d > $(_LogcatFilename)" />
+    <ProcessLogcatTiming
+        Condition=" '%(TestApk.TimingDefinitionsFilename)' != '' "
+        InputFilename="$(_LogcatFilename)"
+        ApplicationPackageName="%(TestApk.Package)"
+        ResultsFilename="%(TestApk.TimingResultsFilename)"
+        DefinitionsFilename="%(TestApk.TimingDefinitionsFilename)"
+        AddResults="true"
+        LabelSuffix="-$(Configuration)$(_AotName)"
+        Activity="%(TestApk.Activity)" />
+  </Target>
+    <Target Name="UndeployTestApks"
+      Condition=" '@(TestApk)' != '' ">
+      <Xamarin.Android.Tools.BootstrapTasks.Adb
+          Arguments="$(_AdbTarget) $(AdbOptions) uninstall &quot;%(TestApk.Package)&quot;"
+          ToolExe="$(AdbToolExe)"
+          ToolPath="$(AdbToolPath)"
+      />
+    </Target>
+    <Target Name="ReleaseAndroidTarget">
+    <Xamarin.Android.Tools.BootstrapTasks.Adb
+        Condition="'@(_FailedComponent)' != ''"
+        ContinueOnError="True"
+        Arguments="$(_EmuTarget) logcat -d"
+        ToolExe="$(AdbToolExe)"
+        ToolPath="$(AdbToolPath)"
+    />
+    <Xamarin.Android.Tools.BootstrapTasks.Adb
+        Condition=" '$(_EmuTarget)' != '' "
+        ContinueOnError="True"
+        Arguments="$(_EmuTarget) emu kill"
+        ToolExe="$(AdbToolExe)"
+        ToolPath="$(AdbToolPath)"
+    />
+    <KillProcess
+        Condition=" '$(_EmuTarget)' != '' "
+        ContinueOnError="True"
+        ProcessId="$(_EmuPid)"
+    />
+    <Xamarin.Android.Tools.BootstrapTasks.Adb
+        Arguments="kill-server"
+        ContinueOnError="True"
+        ToolExe="$(AdbToolExe)"
+        ToolPath="$(AdbToolPath)"
+    />
+    <Exec
+        Condition=" '$(HostOS)' != 'Windows' And '$(_EmuTarget)' != '' "
+        ContinueOnError="True"
+        Command="kill -HUP $(_EmuPid)"
+    />
+    <Sleep
+        Condition=" '$(HostOS)' != 'Windows' And '$(_EmuTarget)' != '' "
+        Milliseconds="5000"
+    />
+    <Exec
+        Condition=" '$(HostOS)' != 'Windows' And '$(_EmuTarget)' != '' "
+        ContinueOnError="True"
+        Command="kill -KILL $(_EmuPid)"
+    />
+    <Error
+        Condition="'@(_FailedComponent)' != ''"
+        Text="Execution of the following components did not complete successfully: @(_FailedComponent->'%(Identity)', ', ')"
+    />
+  </Target>
+   <Target Name="RenameTestCases">
+    <Error
+        Condition=" '$(RenameTestCasesGlob)' == '' "
+        Text="Please set `%24(RenameTestCasesGlob)`."
+    />
+    <Error
+        Condition=" '$(Configuration)' == '' "
+        Text="Please set `%24(Configuration)`."
+    />
+    <PropertyGroup>
+      <_DeleteSource Condition=" '$(DeleteTestCaseSourceFiles)' != '' ">$(DeleteTestCaseSourceFiles)</_DeleteSource>
+      <_DeleteSource Condition=" '$(_DeleteSource)' == '' ">True</_DeleteSource>
+    </PropertyGroup>
+    <ItemGroup>
+      <_RenameSource1 Include="$(RenameTestCasesGlob)" />
+    </ItemGroup>
+    <ItemGroup>
+      <_RenameSource  Include="%(_RenameSource1.Identity)">
+        <DestinationFolder>@(_RenameSource1->'%(RootDir)%(Directory)')</DestinationFolder>
+      </_RenameSource>
+    </ItemGroup>
+    <RenameTestCases
+        Configuration="$(Configuration)"
+        DeleteSourceFiles="$(_DeleteSource)"
+        SourceFile="%(_RenameSource.Identity)"
+        DestinationFolder="%(_RenameSource.DestinationFolder)"
+    />
+  </Target>
+    <Target Name="RenameApkTestCases"
+      Condition=" '@(TestApk)' != '' ">
+    <RenameTestCases
+        Condition=" '%(TestApk.ResultsPath)' != '' "
+        Configuration="$(Configuration)$(_AotName)"
+        DeleteSourceFiles="True"
+        DestinationFolder="$(MyBuildOutputPath)"
+        SourceFile="%(TestApk.ResultsPath)"
+    />
+  </Target>
+</Project>
