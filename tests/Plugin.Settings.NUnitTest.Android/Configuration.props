@@ -1,6 +1,6 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AndroidSdkDirectory>$(ANDROID_HOME)</AndroidSdkDirectory>
+    <AndroidSdkDirectory>$(HOME)/Library/Developer/Xamarin/android-sdk-macosx</AndroidSdkDirectory>
     <JavaSdkDirectory>$(JAVA_HOME)</JavaSdkDirectory>
 
     <AndroidSdkFullPath>$([System.IO.Path]::GetFullPath ('$(AndroidSdkDirectory)'))</AndroidSdkFullPath>
