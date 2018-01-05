@@ -35,5 +35,7 @@
 		<string>Default.png</string>
 		<string>Default-568h@2x.png</string>
 	</array>
+	<key>CFBundleName</key>
+	<string>Plugin.Settings.NUnitTest.iOSUnified</string>
 </dict>
 </plist>
