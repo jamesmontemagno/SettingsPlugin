@@ -17,8 +17,6 @@ namespace Plugin.Settings.NUnitTest
             TestSettings.Clear();
         }
 
-        
-
         [TearDown]
         public void Tear() { }
 
@@ -32,7 +30,7 @@ namespace Plugin.Settings.NUnitTest
         }
 
         [Test]
-        public void Clear()
+        public void When_Clear_Is_Called_Then_All_KeyValue_Pairs_Should_Be_Cleared_From_Settings()
         {
             Int64 test = 10;
 
@@ -45,12 +43,11 @@ namespace Plugin.Settings.NUnitTest
         }
 
         [Test]
-        public void ContainsKey()
+        public void When_Value_Is_Saved_A_Preference_Then_Settings_Should_Contain_The_Key_For_Value()
         {
             Int64 test = 10;
 
             Assert.IsFalse(TestSettings.AppSettings.Contains("int64_setting"), "Key should not exist, but does");
-
             TestSettings.Int64Setting = test;
 
             Assert.IsTrue(TestSettings.AppSettings.Contains("int64_setting"), "Key should exist, but doesn't");
@@ -65,16 +62,6 @@ namespace Plugin.Settings.NUnitTest
 
             TestSettings.Int32Setting = test;
             Assert.True(TestSettings.Int32Setting == test, "Int32 not saved");
-        }
-
-
-        [Test]
-        public void Int()
-        {
-            int test = 10;
-
-            TestSettings.IntSetting = test;
-            Assert.True(TestSettings.IntSetting == test, "Int not saved");
         }
 
         [Test]
@@ -96,11 +83,11 @@ namespace Plugin.Settings.NUnitTest
         }
 
         [Test]
+        [SetCulture("es-ES")]
+        [SetUICulture("es-ES")]
         public void Double15Comma()
         {
             double test = 1.5;
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("es-ES");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("es-ES");
 
             TestSettings.DoubleSetting = test;
 
@@ -155,8 +142,10 @@ namespace Plugin.Settings.NUnitTest
         }
 
 		[Test]
-		public void Bug101()
+        public void Issue_101_Given_A_Five_Decimal_Double_Value_When_Saved_Then_It_Should_Saved_To_Preferences()
 		{
+            //https://github.com/jamesmontemagno/SettingsPlugin/issues/101
+
 			double i = 0.001;
 			var inStuff = i / 100;
 			TestSettings.txt_MinRate = inStuff;

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Settings", "..\src\Plugin.Settings\Plugin.Settings.csproj", "{747706F4-ECBF-4D50-8D72-B0DDCC18395C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Settings", "..\src\Plugin.Settings\Plugin.Settings.csproj", "{747706F4-ECBF-4D50-8D72-B0DDCC18395C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Settings.Android", "..\src\Plugin.Settings.Android\Plugin.Settings.Android.csproj", "{91B25A78-62C8-41AA-8D22-DA326A5EA64D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Settings.Abstractions", "..\src\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj", "{D12D6AFA-0696-4177-9C85-EC576277EF8E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Settings.Abstractions", "..\src\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj", "{D12D6AFA-0696-4177-9C85-EC576277EF8E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Settings.UWP", "..\src\Plugin.Settings.UWP\Plugin.Settings.UWP.csproj", "{C1B59CE7-B44B-4F31-B671-02E685ED036F}"
 EndProject
@@ -155,7 +155,6 @@ Global
 		{91B25A78-62C8-41AA-8D22-DA326A5EA64D}.Debug|ARM.ActiveCfg = Debug|Any CPU
 		{91B25A78-62C8-41AA-8D22-DA326A5EA64D}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{91B25A78-62C8-41AA-8D22-DA326A5EA64D}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{91B25A78-62C8-41AA-8D22-DA326A5EA64D}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{91B25A78-62C8-41AA-8D22-DA326A5EA64D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{91B25A78-62C8-41AA-8D22-DA326A5EA64D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{91B25A78-62C8-41AA-8D22-DA326A5EA64D}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -212,6 +211,7 @@ Global
 		{D12D6AFA-0696-4177-9C85-EC576277EF8E}.Release|x64.ActiveCfg = Release|Any CPU
 		{D12D6AFA-0696-4177-9C85-EC576277EF8E}.Release|x86.ActiveCfg = Release|Any CPU
 		{D12D6AFA-0696-4177-9C85-EC576277EF8E}.Release|x86.Build.0 = Release|Any CPU
+		{D12D6AFA-0696-4177-9C85-EC576277EF8E}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{C1B59CE7-B44B-4F31-B671-02E685ED036F}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
 		{C1B59CE7-B44B-4F31-B671-02E685ED036F}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
 		{C1B59CE7-B44B-4F31-B671-02E685ED036F}.Ad-Hoc|ARM.ActiveCfg = Release|ARM
