@@ -35,3 +35,6 @@ To me that isn't as reliable as saving direct to the native platforms settings.
 
 ## License
 The MIT License (MIT) see [License file](LICENSE)
+
+### Want To Support This Project?
+All I have ever asked is to be active by submitting bugs, features, and sending those pull requests down! Want to go further? Make sure to subscribe to my weekly development podcast [Merge Conflict](http://mergeconflict.fm), where I talk all about awesome Xamarin goodies and you can optionally support the show by becoming a [supporter on Patreon](https://www.patreon.com/mergeconflictfm).
