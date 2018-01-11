@@ -8,8 +8,7 @@
 *.sln.docstates
 [Cc]ake
 logcat*.txt
-tools/package*
-tools/nuget*
+[Tt]ools
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
