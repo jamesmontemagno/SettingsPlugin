@@ -24,8 +24,9 @@ namespace Plugin.Settings
         /// <param name="key">Key for settings</param>
         /// <param name="defaultValue">default value if not set</param>
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
+        /// <param name="getter">Retrieve value strategy</param>
         /// <returns>Value or default</returns>
-        T GetValueOrDefaultInternal<T>(string key, T defaultValue = default(T), string fileName = null)
+        T GetValueOrDefaultInternal<T>(string key, T defaultValue, string fileName, Func<string, NSUserDefaults, T> getter)
         {
             lock (locker)
             {
@@ -34,87 +35,75 @@ namespace Plugin.Settings
                 if (defaults[key] == null)
                     return defaultValue;
 
-                Type typeOf = typeof(T);
-                if (typeOf.IsGenericType && typeOf.GetGenericTypeDefinition() == typeof(Nullable<>))
-                {
-                    typeOf = Nullable.GetUnderlyingType(typeOf);
-                }
-                object value = null;
-                var typeCode = Type.GetTypeCode(typeOf);
-                switch (typeCode)
-                {
-                    case TypeCode.Decimal:
-                        var savedDecimal = defaults.StringForKey(key);
-                        value = Convert.ToDecimal(savedDecimal, System.Globalization.CultureInfo.InvariantCulture);
-                        break;
-                    case TypeCode.Boolean:
-                        value = defaults.BoolForKey(key);
-                        break;
-                    case TypeCode.Int64:
-                        var savedInt64 = defaults.StringForKey(key);
-                        value = Convert.ToInt64(savedInt64, System.Globalization.CultureInfo.InvariantCulture);
-                        break;
-                    case TypeCode.Double:
-                        value = defaults.DoubleForKey(key);
-                        break;
-                    case TypeCode.String:
-                        value = defaults.StringForKey(key);
-                        break;
-                    case TypeCode.Int32:
-                        value = (Int32)defaults.IntForKey(key);
-                        break;
-                    case TypeCode.Single:
-                        value = defaults.FloatForKey(key);
-                        break;
-
-                    case TypeCode.DateTime:
-                        var savedTime = defaults.StringForKey(key);
-                        if (string.IsNullOrWhiteSpace(savedTime))
-                        {
-                            value = defaultValue;
-                        }
-                        else
-                        {
-                            var ticks = Convert.ToInt64(savedTime, System.Globalization.CultureInfo.InvariantCulture);
-                            if (ticks >= 0)
-                            {
-                                //Old value, stored before update to UTC values
-                                value = new DateTime(ticks);
-                            }
-                            else
-                            {
-                                //New value, UTC
-                                value = new DateTime(-ticks, DateTimeKind.Utc);
-                            }
-                        }
-                        break;
-                    default:
-
-                        if (defaultValue is Guid)
-                        {
-                            var outGuid = Guid.Empty;
-                            var savedGuid = defaults.StringForKey(key);
-                            if (string.IsNullOrWhiteSpace(savedGuid))
-                            {
-                                value = outGuid;
-                            }
-                            else
-                            {
-                                Guid.TryParse(savedGuid, out outGuid);
-                                value = outGuid;
-                            }
-                        }
-                        else
-                        {
-                            throw new ArgumentException($"Value of type {typeCode} is not supported.");
-                        }
-
-                        break;
-                }
-
-
-                return null != value ? (T)value : defaultValue;
+                return getter.Invoke(key, defaults);
             }
+        }
+
+        decimal OnDecimalRetrieved(string key, NSUserDefaults defaults)
+        => decimal.Parse(defaults.StringForKey(key), System.Globalization.CultureInfo.InvariantCulture);
+
+        bool OnBoolRetrieved(string key, NSUserDefaults defaults)
+        => defaults.BoolForKey(key);
+
+        int OnIntRetrieved(string key, NSUserDefaults defaults)
+        => (int)defaults.IntForKey(key);
+
+        long OnLongRetrieved(string key, NSUserDefaults defaults)
+        => long.Parse(defaults.StringForKey(key), System.Globalization.CultureInfo.InvariantCulture);
+
+        double OnDoubleRetrieved(string key, NSUserDefaults defaults)
+        => defaults.DoubleForKey(key);
+
+        float OnFloatRetrieved(string key, NSUserDefaults defaults)
+        => defaults.FloatForKey(key);
+
+        string OnStringRetrieved(string key, NSUserDefaults defaults)
+        => defaults.StringForKey(key);
+
+        Guid OnGuidRetrieved(string key, NSUserDefaults defaults)
+        {
+            var savedGuid = defaults.StringForKey(key);
+            if (string.IsNullOrWhiteSpace(savedGuid))
+            {
+                return Guid.Empty;
+            }
+            Guid.TryParse(savedGuid, out Guid outGuid);
+            return outGuid;
+        }
+
+        DateTime OnDateTimeRetrieved(string key, NSUserDefaults defaults)
+        {
+            var savedTime = defaults.StringForKey(key);
+            if (string.IsNullOrWhiteSpace(savedTime))
+            {
+                return DateTime.MinValue;
+            }
+
+            var ticks = Convert.ToInt64(savedTime, System.Globalization.CultureInfo.InvariantCulture);
+            if (ticks >= 0)
+            {
+                return new DateTime(ticks); //Old value, stored before update to UTC values
+            }
+            return new DateTime(-ticks, DateTimeKind.Utc); //New value, UTC
+        }
+
+        /// <summary>
+        /// Adds or updates a reference value
+        /// </summary>
+        /// <param name="key">key to update</param>
+        /// <param name="value">value to set</param>
+        /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
+        /// <param name="handler">Store value strategy</param>
+        /// <returns>True if added or update and you need to save</returns>
+        bool AddOrUpdateRefValueInternal<T>(string key, T value, string fileName, Action<string, T, NSUserDefaults> handler) where T : class
+        {
+            if (value == null)
+            {
+                Remove(key, fileName);
+                return true;
+            }
+
+            return AddOrUpdateValueInternal(key, value, fileName, handler);
         }
 
         /// <summary>
@@ -123,71 +112,16 @@ namespace Plugin.Settings
         /// <param name="key">key to update</param>
         /// <param name="value">value to set</param>
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
+        /// <param name="handler">Store value strategy</param>
         /// <returns>True if added or update and you need to save</returns>
-        bool AddOrUpdateValueInternal<T>(string key, T value, string fileName = null)
-        {
-            if (value == null)
-            {
-                Remove(key, fileName);
-                return true;
-            }
-
-            Type typeOf = typeof(T);
-            if (typeOf.IsGenericType && typeOf.GetGenericTypeDefinition() == typeof(Nullable<>))
-            {
-                typeOf = Nullable.GetUnderlyingType(typeOf);
-            }
-            var typeCode = Type.GetTypeCode(typeOf);
-            return AddOrUpdateValueCore(key, value, typeCode, fileName);
-        }
-
-        bool AddOrUpdateValueCore(string key, object value, TypeCode typeCode, string fileName)
+        bool AddOrUpdateValueInternal<T>(string key, T value, string fileName, Action<string, T, NSUserDefaults> handler)
         {
             lock (locker)
             {
-                var defaults = GetUserDefaults(fileName);
-                switch (typeCode)
-                {
-                    case TypeCode.Decimal:
-                        defaults.SetString(Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture), key);
-                        break;
-                    case TypeCode.Boolean:
-                        defaults.SetBool(Convert.ToBoolean(value), key);
-                        break;
-                    case TypeCode.Int64:
-                        defaults.SetString(Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture), key);
-                        break;
-                    case TypeCode.Double:
-                        defaults.SetDouble(Convert.ToDouble(value, System.Globalization.CultureInfo.InvariantCulture), key);
-                        break;
-                    case TypeCode.String:
-                        defaults.SetString(Convert.ToString(value), key);
-                        break;
-                    case TypeCode.Int32:
-                        defaults.SetInt(Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture), key);
-                        break;
-                    case TypeCode.Single:
-                        defaults.SetFloat(Convert.ToSingle(value, System.Globalization.CultureInfo.InvariantCulture), key);
-                        break;
-                    case TypeCode.DateTime:
-                        defaults.SetString(Convert.ToString(-(Convert.ToDateTime(value)).ToUniversalTime().Ticks), key);
-                        break;
-                    default:
-                        if (value is Guid)
-                        {
-                            if (value == null)
-                                value = Guid.Empty;
-
-                            defaults.SetString(((Guid)value).ToString(), key);
-                        }
-                        else
-                        {
-                            throw new ArgumentException($"Value of type {typeCode} is not supported.");
-                        }
-                        break;
-                }
                 try
                 {
+                    var defaults = GetUserDefaults(fileName);
+                    handler.Invoke(key, value, defaults);
                     defaults.Synchronize();
                 }
                 catch (Exception ex)
@@ -196,9 +130,35 @@ namespace Plugin.Settings
                 }
             }
 
-
             return true;
         }
+
+        void OnDecimalSaved(string key, decimal value, NSUserDefaults defaults)
+        => defaults.SetString(value.ToString(System.Globalization.CultureInfo.InvariantCulture), key);
+
+        void OnBoolSaved(string key, bool value, NSUserDefaults defaults)
+        => defaults.SetBool(value, key);
+
+        void OnIntSaved(string key, int value, NSUserDefaults defaults)
+        => defaults.SetInt(value, key);
+
+        void OnLongSaved(string key, long value, NSUserDefaults defaults)
+        => defaults.SetString(value.ToString(System.Globalization.CultureInfo.InvariantCulture), key);
+
+        void OnDoubleSaved(string key, double value, NSUserDefaults defaults)
+        => defaults.SetDouble(value, key);
+
+        void OnFloatSaved(string key, float value, NSUserDefaults defaults)
+        => defaults.SetFloat(value, key);
+
+        void OnStringSaved(string key, string value, NSUserDefaults defaults)
+        => defaults.SetString(value, key);
+
+        void OnGuidSaved(string key, Guid value, NSUserDefaults defaults)
+        => defaults.SetString(value.ToString(), key);
+
+        void OnDateTimeSaved(string key, DateTime value, NSUserDefaults defaults)
+        => defaults.SetString((-value.ToUniversalTime().Ticks).ToString(), key);
 
         /// <summary>
         /// Removes a desired key from the settings
@@ -293,7 +253,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>Value or default</returns>
         public decimal GetValueOrDefault(string key, decimal defaultValue, string fileName = null) =>
-            GetValueOrDefaultInternal(key, defaultValue, fileName);
+            GetValueOrDefaultInternal(key, defaultValue, fileName, OnDecimalRetrieved);
         /// <summary>
         /// Gets the current value or the default that you specify.
         /// </summary>
@@ -302,7 +262,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>Value or default</returns>
         public bool GetValueOrDefault(string key, bool defaultValue, string fileName = null) =>
-            GetValueOrDefaultInternal(key, defaultValue, fileName);
+            GetValueOrDefaultInternal(key, defaultValue, fileName, OnBoolRetrieved);
         /// <summary>
         /// Gets the current value or the default that you specify.
         /// </summary>
@@ -311,7 +271,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>Value or default</returns>
         public long GetValueOrDefault(string key, long defaultValue, string fileName = null) =>
-            GetValueOrDefaultInternal(key, defaultValue, fileName);
+            GetValueOrDefaultInternal(key, defaultValue, fileName, OnLongRetrieved);
         /// <summary>
         /// Gets the current value or the default that you specify.
         /// </summary>
@@ -320,7 +280,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>Value or default</returns>
         public string GetValueOrDefault(string key, string defaultValue, string fileName = null) =>
-            GetValueOrDefaultInternal(key, defaultValue, fileName);
+            GetValueOrDefaultInternal(key, defaultValue, fileName, OnStringRetrieved);
         /// <summary>
         /// Gets the current value or the default that you specify.
         /// </summary>
@@ -329,7 +289,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>Value or default</returns>
         public int GetValueOrDefault(string key, int defaultValue, string fileName = null) =>
-            GetValueOrDefaultInternal(key, defaultValue, fileName);
+            GetValueOrDefaultInternal(key, defaultValue, fileName, OnIntRetrieved);
         /// <summary>
         /// Gets the current value or the default that you specify.
         /// </summary>
@@ -338,7 +298,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>Value or default</returns>
         public float GetValueOrDefault(string key, float defaultValue, string fileName = null) =>
-            GetValueOrDefaultInternal(key, defaultValue, fileName);
+            GetValueOrDefaultInternal(key, defaultValue, fileName, OnFloatRetrieved);
         /// <summary>
         /// Gets the current value or the default that you specify.
         /// </summary>
@@ -347,7 +307,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>Value or default</returns>
         public DateTime GetValueOrDefault(string key, DateTime defaultValue, string fileName = null) =>
-            GetValueOrDefaultInternal(key, defaultValue, fileName);
+            GetValueOrDefaultInternal(key, defaultValue, fileName, OnDateTimeRetrieved);
         /// <summary>
         /// Gets the current value or the default that you specify.
         /// </summary>
@@ -356,7 +316,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>Value or default</returns>
         public Guid GetValueOrDefault(string key, Guid defaultValue, string fileName = null) =>
-            GetValueOrDefaultInternal(key, defaultValue, fileName);
+            GetValueOrDefaultInternal(key, defaultValue, fileName, OnGuidRetrieved);
         /// <summary>
         /// Gets the current value or the default that you specify.
         /// </summary>
@@ -365,7 +325,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>Value or default</returns>
         public double GetValueOrDefault(string key, double defaultValue, string fileName = null) =>
-            GetValueOrDefaultInternal(key, defaultValue, fileName);
+            GetValueOrDefaultInternal(key, defaultValue, fileName, OnDoubleRetrieved);
 #endregion
 
 #region AddOrUpdateValue
@@ -377,7 +337,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>True of was added or updated and you need to save it.</returns>
         public bool AddOrUpdateValue(string key, decimal value, string fileName = null) =>
-            AddOrUpdateValueInternal(key, value, fileName);
+            AddOrUpdateValueInternal(key, value, fileName, OnDecimalSaved);
         /// <summary>
         /// Adds or updates the value 
         /// </summary>
@@ -386,7 +346,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>True of was added or updated and you need to save it.</returns>
         public bool AddOrUpdateValue(string key, bool value, string fileName = null) =>
-            AddOrUpdateValueInternal(key, value, fileName);
+            AddOrUpdateValueInternal(key, value, fileName, OnBoolSaved);
         /// <summary>
         /// Adds or updates the value 
         /// </summary>
@@ -395,7 +355,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>True of was added or updated and you need to save it.</returns>
         public bool AddOrUpdateValue(string key, long value, string fileName = null) =>
-            AddOrUpdateValueInternal(key, value, fileName);
+            AddOrUpdateValueInternal(key, value, fileName, OnLongSaved);
         /// <summary>
         /// Adds or updates the value 
         /// </summary>
@@ -404,7 +364,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>True of was added or updated and you need to save it.</returns>
         public bool AddOrUpdateValue(string key, string value, string fileName = null) =>
-            AddOrUpdateValueInternal(key, value, fileName);
+            AddOrUpdateRefValueInternal(key, value, fileName, OnStringSaved);
         /// <summary>
         /// Adds or updates the value 
         /// </summary>
@@ -413,7 +373,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>True of was added or updated and you need to save it.</returns>
         public bool AddOrUpdateValue(string key, int value, string fileName = null) =>
-            AddOrUpdateValueInternal(key, value, fileName);
+            AddOrUpdateValueInternal(key, value, fileName, OnIntSaved);
         /// <summary>
         /// Adds or updates the value 
         /// </summary>
@@ -422,7 +382,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>True of was added or updated and you need to save it.</returns>
         public bool AddOrUpdateValue(string key, float value, string fileName = null) =>
-            AddOrUpdateValueInternal(key, value, fileName);
+            AddOrUpdateValueInternal(key, value, fileName, OnFloatSaved);
         /// <summary>
         /// Adds or updates the value 
         /// </summary>
@@ -431,7 +391,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>True of was added or updated and you need to save it.</returns>
         public bool AddOrUpdateValue(string key, DateTime value, string fileName = null) =>
-            AddOrUpdateValueInternal(key, value, fileName);
+            AddOrUpdateValueInternal(key, value, fileName, OnDateTimeSaved);
         /// <summary>
         /// Adds or updates the value 
         /// </summary>
@@ -440,7 +400,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>True of was added or updated and you need to save it.</returns>
         public bool AddOrUpdateValue(string key, Guid value, string fileName = null) =>
-            AddOrUpdateValueInternal(key, value, fileName);
+            AddOrUpdateValueInternal(key, value, fileName, OnGuidSaved);
         /// <summary>
         /// Adds or updates the value 
         /// </summary>
@@ -449,7 +409,7 @@ namespace Plugin.Settings
         /// <param name="fileName">Name of file for settings to be stored and retrieved </param>
         /// <returns>True of was added or updated and you need to save it.</returns>
         public bool AddOrUpdateValue(string key, double value, string fileName = null) =>
-            AddOrUpdateValueInternal(key, value, fileName);
+            AddOrUpdateValueInternal(key, value, fileName, OnDoubleSaved);
 
         #endregion
 
