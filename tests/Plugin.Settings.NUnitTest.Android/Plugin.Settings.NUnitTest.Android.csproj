@@ -42,13 +42,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
-    <AndroidLinkSkip />
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <AndroidSupportedAbis>armeabi-v7a,x86</AndroidSupportedAbis>
-    <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
     <JavaMaximumHeapSize />
-    <JavaOptions />
     <MonoDroidExtraArgs />
   </PropertyGroup>
   <ItemGroup>
@@ -87,9 +84,9 @@
       <Project>{91b25a78-62c8-41aa-8d22-da326a5ea64d}</Project>
       <Name>Plugin.Settings.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plugin.Settings.Tests.Portable\Plugin.Settings.Tests.Portable.csproj">
-      <Project>{2961bec8-6e97-4943-af17-491e25309619}</Project>
-      <Name>Plugin.Settings.Tests.Portable</Name>
+    <ProjectReference Include="..\Plugin.Settings.Tests.Standard\Plugin.Settings.Tests.Standard.csproj">
+      <Project>{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}</Project>
+      <Name>Plugin.Settings.Tests.Standard</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\Plugin.Settings.NUnitTest.Shared\Plugin.Settings.NUnitTest.Shared.projitems" Label="Shared" />

@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Plugin.Settings\Plugin.Settings.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+</Project>

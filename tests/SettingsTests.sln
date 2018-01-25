@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Settings.macOS", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Settings.watchOS", "..\src\Plugin.Settings.watchOS\Plugin.Settings.watchOS.csproj", "{43488E9D-5A8A-44B2-8B00-ADBEFB8313D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Settings.Tests.Standard", "Plugin.Settings.Tests.Standard\Plugin.Settings.Tests.Standard.csproj", "{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\src\Plugin.Settings.Shared\Plugin.Settings.Shared.projitems*{2e77620e-1a41-4a10-8816-4528d1c34695}*SharedItemsImports = 4
@@ -763,6 +765,62 @@ Global
 		{43488E9D-5A8A-44B2-8B00-ADBEFB8313D7}.Release|x64.Build.0 = Release|Any CPU
 		{43488E9D-5A8A-44B2-8B00-ADBEFB8313D7}.Release|x86.ActiveCfg = Release|Any CPU
 		{43488E9D-5A8A-44B2-8B00-ADBEFB8313D7}.Release|x86.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|ARM.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|ARM.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|iPhoneSimulator.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|Mixed Platforms.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|x64.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|x64.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|x86.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Ad-Hoc|x86.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|Any CPU.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|ARM.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|ARM.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|iPhone.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|iPhoneSimulator.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|Mixed Platforms.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|x64.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|x64.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|x86.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.AppStore|x86.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|ARM.Build.0 = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|x64.Build.0 = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Debug|x86.Build.0 = Debug|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|ARM.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|ARM.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|iPhone.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|x64.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|x64.Build.0 = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|x86.ActiveCfg = Release|Any CPU
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -773,6 +831,7 @@ Global
 		{2961BEC8-6E97-4943-AF17-491E25309619} = {6B56CF03-9506-46A9-BF28-FEBDA3776AA5}
 		{159A55AF-9531-4107-8444-CA9C96107EF5} = {6B56CF03-9506-46A9-BF28-FEBDA3776AA5}
 		{C2FE861E-33BF-4C3E-998D-FB1EB85E930E} = {6B56CF03-9506-46A9-BF28-FEBDA3776AA5}
+		{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7} = {6B56CF03-9506-46A9-BF28-FEBDA3776AA5}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Refractored.Xam.Settings\Refractored.Xam.Settings.csproj

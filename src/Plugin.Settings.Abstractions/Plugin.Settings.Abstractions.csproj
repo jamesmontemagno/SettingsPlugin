@@ -13,7 +13,4 @@
     <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-  </PropertyGroup>
 </Project>
