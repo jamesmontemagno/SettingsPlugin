@@ -9,6 +9,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using Plugin.Settings.Abstractions;
 
 namespace Plugin.Settings
@@ -44,6 +45,7 @@ namespace Plugin.Settings
         static ISettings CreateSettings()
         {
 #if NETSTANDARD1_0
+            Debug.WriteLine("In NET standard");
             return null;
 #else
 #pragma warning disable IDE0022 // Use expression body for methods
