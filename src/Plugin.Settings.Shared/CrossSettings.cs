@@ -44,14 +44,11 @@ namespace Plugin.Settings
 
         static ISettings CreateSettings()
         {
-#if NETSTANDARD1_0
-            Debug.WriteLine("In NET standard");
-            return null;
-#else
+
 #pragma warning disable IDE0022 // Use expression body for methods
 			return new SettingsImplementation();
 #pragma warning restore IDE0022 // Use expression body for methods
-#endif
+
 		}
 
         internal static Exception NotImplementedInReferenceAssembly() =>
