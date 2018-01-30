@@ -9,7 +9,6 @@
  */
 
 using System;
-using System.Diagnostics;
 using Plugin.Settings.Abstractions;
 
 namespace Plugin.Settings
@@ -21,15 +20,15 @@ namespace Plugin.Settings
     {
         static Lazy<ISettings> implementation = new Lazy<ISettings>(() => CreateSettings(), System.Threading.LazyThreadSafetyMode.PublicationOnly);
 
-		/// <summary>
-		/// Gets if the plugin is supported on the current platform.
-		/// </summary>
-		public static bool IsSupported => implementation.Value == null ? false : true;
+        /// <summary>
+        /// Gets if the plugin is supported on the current platform.
+        /// </summary>
+        public static bool IsSupported => implementation.Value == null ? false : true;
 
-		/// <summary>
-		/// Current plugin implementation to use
-		/// </summary>
-		public static ISettings Current
+        /// <summary>
+        /// Current plugin implementation to use
+        /// </summary>
+        public static ISettings Current
         {
             get
             {
@@ -45,17 +44,16 @@ namespace Plugin.Settings
         static ISettings CreateSettings()
         {
 #if NETSTANDARD1_0
-
             return null;
 #else
 #pragma warning disable IDE0022 // Use expression body for methods
-			return new SettingsImplementation();
+            return new SettingsImplementation();
 #pragma warning restore IDE0022 // Use expression body for methods
 #endif
-		}
+        }
 
         internal static Exception NotImplementedInReferenceAssembly() =>
-			new NotImplementedException("This functionality is not implemented in the portable version of this assembly.  You should reference the NuGet package from your main application project in order to reference the platform-specific implementation.");
-        
+            new NotImplementedException("This functionality is not implemented in the portable version of this assembly.  You should reference the NuGet package from your main application project in order to reference the platform-specific implementation.");
+
     }
 }
