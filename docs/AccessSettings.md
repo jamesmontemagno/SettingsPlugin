@@ -86,6 +86,6 @@ public static bool IsAppInitialized
   get => AppSettings.GetValueOrDefault(); 
   set => AppSettings.AddOrUpdateValue(value); 
 }
-
+```
 <= Back to [Table of Contents](README.md)
 
