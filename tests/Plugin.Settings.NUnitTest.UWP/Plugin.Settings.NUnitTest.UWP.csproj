@@ -11,7 +11,7 @@
     <AssemblyName>Plugin.Settings.NUnitTest.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
@@ -126,16 +126,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj">
-      <Project>{d12d6afa-0696-4177-9c85-ec576277ef8e}</Project>
-      <Name>Plugin.Settings.Abstractions</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Plugin.Settings.UWP\Plugin.Settings.UWP.csproj">
-      <Project>{c1b59ce7-b44b-4f31-b671-02e685ed036f}</Project>
-      <Name>Plugin.Settings.UWP</Name>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\Plugin.Settings.Tests.Portable\Plugin.Settings.Tests.Portable.csproj">
       <Project>{2961bec8-6e97-4943-af17-491e25309619}</Project>
       <Name>Plugin.Settings.Tests.Portable</Name>
