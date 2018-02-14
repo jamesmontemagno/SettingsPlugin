@@ -9,8 +9,8 @@ Get started by reading through the [Settings Plugin documentation](https://james
 * [Xam.Plugins.Settings](http://www.nuget.org/packages/Xam.Plugins.Settings) [![NuGet](https://img.shields.io/nuget/v/Xam.Plugins.Settings.svg?label=NuGet)](https://www.nuget.org/packages/Xam.Plugins.Settings)
 
 ## Build: 
-* [![Build status](https://ci.appveyor.com/api/projects/status/24dn7jw4it6jbd39?svg=true)](https://ci.appveyor.com/project/JamesMontemagno/settingsplugin)
-* CI NuGet Feed: https://ci.appveyor.com/nuget/settingsplugin
+* ![Build status](https://jamesmontemagno.visualstudio.com/_apis/public/build/definitions/6b79a378-ddd6-4e31-98ac-a12fcd68644c/14/badge)
+* CI NuGet Feed: http://myget.org/F/xamarin-plugins
 
 **Platform Support**
 
