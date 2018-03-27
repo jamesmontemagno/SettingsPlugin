@@ -76,14 +76,6 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj">
-      <Project>{d12d6afa-0696-4177-9c85-ec576277ef8e}</Project>
-      <Name>Plugin.Settings.Abstractions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Plugin.Settings.Android\Plugin.Settings.Android.csproj">
-      <Project>{91b25a78-62c8-41aa-8d22-da326a5ea64d}</Project>
-      <Name>Plugin.Settings.Android</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Plugin.Settings.Tests.Standard\Plugin.Settings.Tests.Standard.csproj">
       <Project>{0F4F0FF0-7B70-47DE-A22A-47E7E57E7BB7}</Project>
       <Name>Plugin.Settings.Tests.Standard</Name>

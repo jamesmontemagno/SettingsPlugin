@@ -54,7 +54,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-<MtouchExtraArgs>-setenv=NUNIT_ENABLE_XML_OUTPUT=true --setenv=NUNIT_SKIP_LOG_HEADER=true</MtouchExtraArgs>
+    <MtouchExtraArgs>-setenv=NUNIT_ENABLE_XML_OUTPUT=true --setenv=NUNIT_SKIP_LOG_HEADER=true</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -114,16 +114,6 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj">
-      <Project>{d12d6afa-0696-4177-9c85-ec576277ef8e}</Project>
-      <Name>Plugin.Settings.Abstractions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Plugin.Settings.iOS\Plugin.Settings.iOS.csproj">
-      <Project>{fcf19725-8c2f-44c5-aa52-513ee32469e2}</Project>
-      <Name>Plugin.Settings.iOS</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
-    </ProjectReference>
     <ProjectReference Include="..\Plugin.Settings.Tests.Portable\Plugin.Settings.Tests.Portable.csproj">
       <Project>{2961bec8-6e97-4943-af17-491e25309619}</Project>
       <Name>Plugin.Settings.Tests.Portable</Name>

@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Plugin.Settings.Abstractions\Plugin.Settings.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\Plugin.Settings\Plugin.Settings.csproj" />
   </ItemGroup>
   <ItemGroup>
