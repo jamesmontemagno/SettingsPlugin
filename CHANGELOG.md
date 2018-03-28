@@ -1,3 +1,7 @@
+### 4.0.0
+* Refactored code (no breaking changes)
+* Added Tizen Support
+
 ### 3.2.0
 * Add .NET Core 2.0 Support
 
