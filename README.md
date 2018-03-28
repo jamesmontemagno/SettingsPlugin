@@ -24,6 +24,7 @@ Get started by reading through the [Settings Plugin documentation](https://james
 |Xamarin.watchOS|All|
 |.NET|4.5+|
 |.NET Core|2.0+|
+|Tizen|4.0+|
 
 
 #### Settings Plugin or Xamarin.Forms App.Properties
