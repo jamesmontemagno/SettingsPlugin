@@ -65,7 +65,7 @@ namespace Plugin.Settings
                         return AddOrUpdateValue(key, Convert.ToString(-(Convert.ToDateTime(value)).ToUniversalTime().Ticks, System.Globalization.CultureInfo.InvariantCulture));
                     }
                     else
-                        str = Convert.ToString(value);
+                        str = Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture);
 
                     string oldValue = null;
 
