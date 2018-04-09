@@ -1,3 +1,6 @@
+### 4.0.1
+* Fix #126 (handling invarient culture in .NET 4.5/WPF apps)
+
 ### 4.0.0
 * Refactored code (no breaking changes)
 * Added Tizen Support
