@@ -54,8 +54,8 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\nuget\readme.txt" Pack="true" />
-    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.2.0" PrivateAssets="All" />
+    <None Include="..\..\nuget\readme.txt" PackagePath="readme.txt" Pack="true" />
+    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.4.0" PrivateAssets="All" />
     <Compile Include="**\*.shared.cs" />
   </ItemGroup>
 
