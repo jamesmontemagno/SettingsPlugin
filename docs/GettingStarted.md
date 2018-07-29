@@ -8,7 +8,7 @@
 ## Where Do Settings Get Saved?
 This library uses the native settings management, which means all settings are persisted across app updates, saved natively, and can be integrated into native settings.
 
-* Android: SharedPreferences
+* Android: SharedPreferences -> (This means they may get [backedup automatically](https://developer.android.com/guide/topics/data/autobackup))
 * Apple: NSUserDefaults
 * UWP: ApplicationDataContainer
 * .NET: UserStore -> IsolcatedStorageFile
