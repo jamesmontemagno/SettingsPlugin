@@ -24,7 +24,11 @@ namespace Plugin.Settings
         /// <summary>
         /// Gets if the plugin is supported on the current platform.
         /// </summary>
-        public static bool IsSupported => implementation == null ? false : true;
+#if NETSTANDARD1_0 || NETSTANDARD2_0
+        public static bool IsSupported => false;
+#else
+		public static bool IsSupported => true;
+#endif
 
         /// <summary>
         /// Current plugin implementation to use
