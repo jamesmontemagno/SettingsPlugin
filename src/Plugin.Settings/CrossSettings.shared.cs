@@ -18,9 +18,8 @@ namespace Plugin.Settings
     /// </summary>
     public static class CrossSettings
     {
-		static ISettings _implementation;
 
-		static ISettings implementation => _implementation ?? (_implementation = CreateSettings());
+		static ISettings implementation;
 
         /// <summary>
         /// Gets if the plugin is supported on the current platform.
@@ -34,7 +33,7 @@ namespace Plugin.Settings
         {
             get
             {
-                ISettings ret = implementation;
+                var ret = implementation ?? (implementation = CreateSettings());
                 if (ret == null)
                 {
                     throw NotImplementedInReferenceAssembly();
@@ -43,7 +42,7 @@ namespace Plugin.Settings
             }
 			set
 			{
-				_implementation = value;
+				implementation = value;
 			}
         }
 
