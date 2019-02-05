@@ -18,12 +18,14 @@ namespace Plugin.Settings
     /// </summary>
     public static class CrossSettings
     {
-        static Lazy<ISettings> implementation = new Lazy<ISettings>(() => CreateSettings(), System.Threading.LazyThreadSafetyMode.PublicationOnly);
+		static ISettings _implementation;
+
+		static ISettings implementation => _implementation ?? (_implementation = CreateSettings());
 
         /// <summary>
         /// Gets if the plugin is supported on the current platform.
         /// </summary>
-        public static bool IsSupported => implementation.Value == null ? false : true;
+        public static bool IsSupported => implementation == null ? false : true;
 
         /// <summary>
         /// Current plugin implementation to use
@@ -32,13 +34,17 @@ namespace Plugin.Settings
         {
             get
             {
-                ISettings ret = implementation.Value;
+                ISettings ret = implementation;
                 if (ret == null)
                 {
                     throw NotImplementedInReferenceAssembly();
                 }
                 return ret;
             }
+			set
+			{
+				_implementation = value;
+			}
         }
 
         static ISettings CreateSettings()
