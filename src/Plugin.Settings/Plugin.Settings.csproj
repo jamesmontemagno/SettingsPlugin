@@ -1,5 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="MSBuild.Sdk.Extras/1.6.61">
   <PropertyGroup>
     <TargetFrameworks>netstandard1.0;netstandard2.0;MonoAndroid44;Xamarin.iOS10;uap10.0.15063;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;netcoreapp2.0;net45;Tizen40</TargetFrameworks>
     <AssemblyName>Plugin.Settings</AssemblyName>
@@ -46,16 +45,25 @@
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
-    <DebugType>pdbonly</DebugType>
-  </PropertyGroup>
-  <ItemGroup>
+	<PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)'=='Release' And '$(OS)' == 'Windows_NT' ">
+		<DebugType>pdbonly</DebugType>
+		<!-- sourcelink: Declare that the Repository URL can be published to NuSpec -->
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<!-- sourcelink: Embed source files that are not tracked by the source control manager to the PDB -->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<!-- sourcelink: Include PDB in the built .nupkg -->
+		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+	</PropertyGroup>
+	<ItemGroup Condition=" '$(Configuration)'=='Release' And '$(OS)' == 'Windows_NT' ">
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
     <None Include="..\..\nuget\readme.txt" PackagePath="readme.txt" Pack="true" />
-    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.4.0" PrivateAssets="All" />
     <Compile Include="**\*.shared.cs" />
   </ItemGroup>
 
@@ -63,7 +71,6 @@
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="5.2.3" />
     <Compile Include="**\*.uwp.cs" />
   </ItemGroup>
 
@@ -96,15 +103,7 @@
     <Compile Include="**\*.dotnet.cs" />
   </ItemGroup>
 
-
-
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Tizen')) ">
     <Compile Include="**\*.tizen.cs" />
-    <PackageReference Include="Tizen.NET" Version="4.0.0" />
   </ItemGroup>
-
-
-
-  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
-
 </Project>
