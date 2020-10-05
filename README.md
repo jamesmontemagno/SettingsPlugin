@@ -5,7 +5,7 @@ Create and access settings from shared code across all of your apps!
 ## Documentation
 Get started by reading through the [Settings Plugin documentation](https://jamesmontemagno.github.io/SettingsPlugin/).
 
-Looking to store credentials and sensitive information? Use Xamarin.Essential's [Secure Storage](https://docs.microsoft.com/xamarin/essentials/secure-storage)
+Looking to store credentials and sensitive information? Use Xamarin.Essential's [Secure Storage](https://docs.microsoft.com/xamarin/essentials/secure-storage?WT.mc_id=settingsplugin-github-jamont)
 
 ## NuGet
 * [Xam.Plugins.Settings](http://www.nuget.org/packages/Xam.Plugins.Settings) [![NuGet](https://img.shields.io/nuget/v/Xam.Plugins.Settings.svg?label=NuGet)](https://www.nuget.org/packages/Xam.Plugins.Settings)
@@ -21,7 +21,7 @@ I will continue to work and maintain my Plugins, but I do recommend you checkout
 This plugin and Xamarin.Essentials store information in the same exact location :). This means you can seemlessly swap out this plugin for Xamarin.Essentials and not lose any data. Checkout my blog for more info: https://montemagno.com/upgrading-from-plugins-to-xamarin-essentials/
 
 ## Build: 
-* ![Build status](https://jamesmontemagno.visualstudio.com/_apis/public/build/definitions/6b79a378-ddd6-4e31-98ac-a12fcd68644c/14/badge)
+* ![Build status](https://jamesmontemagno.visualstudio.com/_apis/public/build/definitions/6b79a378-ddd6-4e31-98ac-a12fcd68644c/14/badge?WT.mc_id=settingsplugin-github-jamont)
 * CI NuGet Feed: http://myget.org/F/xamarin-plugins
 
 **Platform Support**
