@@ -5,6 +5,7 @@ Create and access settings from shared code across all of your apps!
 ## Documentation
 Get started by reading through the [Settings Plugin documentation](https://jamesmontemagno.github.io/SettingsPlugin/).
 
+
 Looking to store credentials and sensitive information? Use Xamarin.Essential's [Secure Storage](https://docs.microsoft.com/xamarin/essentials/secure-storage?WT.mc_id=friends-0000-jamont)
 
 ## NuGet
