@@ -49,7 +49,7 @@ namespace Plugin.Settings
 
         static ISettings CreateSettings()
         {
-#if NETSTANDARD1_0 || NETSTANDARD2_0
+#if NETSTANDARD 
             return null;
 #else
 #pragma warning disable IDE0022 // Use expression body for methods
