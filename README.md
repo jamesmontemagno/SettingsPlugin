@@ -1,5 +1,7 @@
 # Settings Plugin for Xamarin And Windows
 
+Preferences/Settings are part of [.NET MAUI[(https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences), please use this API going foward.
+
 Create and access settings from shared code across all of your apps!
 
 ## Documentation
@@ -11,7 +13,7 @@ Looking to store credentials and sensitive information? Use Xamarin.Essential's 
 ## NuGet
 * [Xam.Plugins.Settings](http://www.nuget.org/packages/Xam.Plugins.Settings) [![NuGet](https://img.shields.io/nuget/v/Xam.Plugins.Settings.svg?label=NuGet)](https://www.nuget.org/packages/Xam.Plugins.Settings)
 
-### The Future: [Xamarin.Essentials](https://docs.microsoft.com/xamarin/essentials/index?WT.mc_id=friends-0000-jamont)
+### The Future: [Xamarin.Essentials](https://docs.microsoft.com/xamarin/essentials/index?WT.mc_id=friends-0000-jamont) & [.NET MAUI[(https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences)
 
 I have been working on Plugins for Xamarin for a long time now. Through the years I have always wanted to create a single, optimized, and official package from the Xamarin team at Microsoft that could easily be consumed by any application. The time is now with [Xamarin.Essentials](https://docs.microsoft.com/xamarin/essentials/index?WT.mc_id=friends-0000-jamont), which offers over 50 cross-platform native APIs in a single optimized package. I worked on this new library with an amazing team of developers and I highly highly highly recommend you check it out.
 
