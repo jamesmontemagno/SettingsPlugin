@@ -38,8 +38,13 @@ This plugin and Xamarin.Essentials store information in the same exact location 
 |Xamarin.tvOS|All|
 |Xamarin.watchOS|All|
 |.NET|4.5+|
-|.NET Core|2.0+|
+|.NET|6.0+|
 |Tizen|4.0+|
+|.NET for iOS |iOS 10+|
+|.NET for Android |API 21+|
+|Windows App SDK (WinUI3)|10+|
+|.NET for Mac Catalyst|All|
+|.NET for Mac|All|
 
 
 #### Settings Plugin or Xamarin.Forms App.Properties
