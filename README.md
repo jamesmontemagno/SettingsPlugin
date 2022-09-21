@@ -37,7 +37,7 @@ This plugin and Xamarin.Essentials store information in the same exact location 
 |Xamarin.Mac|All|
 |Xamarin.tvOS|All|
 |Xamarin.watchOS|All|
-|.NET|4.5+|
+|.NET Framework|4.5+|
 |.NET|6.0+|
 |Tizen|4.0+|
 |.NET for iOS |iOS 10+|
